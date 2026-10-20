@@ -1,0 +1,20 @@
+{
+  "name": "design-skills",
+  "version": "0.1.0",
+  "description": "All 69 design skills: research, UX, content, accessibility, build, review, and handoff.",
+  "author": {
+    "name": "Marco Paulo Lopes",
+    "url": "https://github.com/marcopslopes"
+  },
+  "homepage": "https://thedesignharness.com/skills.html",
+  "repository": "https://github.com/marcopslopes/design-skills",
+  "license": "MIT",
+  "keywords": [
+    "design",
+    "ux",
+    "product-design",
+    "research",
+    "accessibility",
+    "design-system"
+  ]
+}

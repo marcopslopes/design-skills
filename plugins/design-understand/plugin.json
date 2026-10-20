@@ -1,0 +1,36 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "design-understand",
+  "version": "0.1.0",
+  "description": "Frame the problem before designing: assumptions, objects, decisions, strategy, and priorities.",
+  "author": {
+    "name": "Marco Paulo Lopes",
+    "url": "https://github.com/marcopslopes"
+  },
+  "homepage": "https://thedesignharness.com/skills.html",
+  "repository": "https://github.com/marcopslopes/design-skills",
+  "license": "MIT",
+  "keywords": [
+    "design",
+    "ux",
+    "product-design",
+    "research",
+    "accessibility",
+    "design-system"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Understand the problem",
+        "shortDescription": "Frame the problem before designing: assumptions, objects, decisions, strategy, and priorities.",
+        "developerName": "Marco Paulo Lopes",
+        "category": "Design",
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "websiteURL": "https://thedesignharness.com/skills.html"
+      }
+    }
+  }
+}

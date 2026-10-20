@@ -1,0 +1,104 @@
+{
+  "name": "design-skills",
+  "interface": {
+    "displayName": "Design Skills"
+  },
+  "plugins": [
+    {
+      "name": "design-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/design-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    },
+    {
+      "name": "design-understand",
+      "source": {
+        "source": "local",
+        "path": "./plugins/design-understand"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    },
+    {
+      "name": "design-research",
+      "source": {
+        "source": "local",
+        "path": "./plugins/design-research"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    },
+    {
+      "name": "design-shape",
+      "source": {
+        "source": "local",
+        "path": "./plugins/design-shape"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    },
+    {
+      "name": "design-build",
+      "source": {
+        "source": "local",
+        "path": "./plugins/design-build"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    },
+    {
+      "name": "design-review",
+      "source": {
+        "source": "local",
+        "path": "./plugins/design-review"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    },
+    {
+      "name": "design-handoff",
+      "source": {
+        "source": "local",
+        "path": "./plugins/design-handoff"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    },
+    {
+      "name": "design-operate",
+      "source": {
+        "source": "local",
+        "path": "./plugins/design-operate"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    }
+  ]
+}

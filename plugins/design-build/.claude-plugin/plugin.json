@@ -1,0 +1,20 @@
+{
+  "name": "design-build",
+  "version": "0.1.0",
+  "description": "Build screens on real design tokens and components, and keep Figma and code in sync.",
+  "author": {
+    "name": "Marco Paulo Lopes",
+    "url": "https://github.com/marcopslopes"
+  },
+  "homepage": "https://thedesignharness.com/skills.html",
+  "repository": "https://github.com/marcopslopes/design-skills",
+  "license": "MIT",
+  "keywords": [
+    "design",
+    "ux",
+    "product-design",
+    "research",
+    "accessibility",
+    "design-system"
+  ]
+}
