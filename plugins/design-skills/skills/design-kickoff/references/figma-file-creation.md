@@ -144,8 +144,8 @@ Update `projects/<slug>/brief.md`:
 ## Sources
 
 - **Figma:** [Project Name — Design Exploration](figma-url)
-- **Jira:** [ticket] (if exists)
-- **Confluence:** [doc] (if exists)
+- **Ticket:** [ticket] (if exists)
+- **Doc:** [doc] (if exists)
 ```
 
 ### 8. Share with designer

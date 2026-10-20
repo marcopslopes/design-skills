@@ -152,7 +152,7 @@ elsewhere) / Opinion (drop unless sourced)
 ## Persist
 
 Append the finished insight + so-what verdict to `projects/<slug>/findings.md`
-(dated, named `insight-writer`). Insights feeding a PRD or Confluence
+(dated, named `insight-writer`). Insights feeding a PRD or docs
 draft still pass through `references/shared/anti-ai-writing.md` before
 that doc ships — substance (this skill) and prose tells (that file) are
 checked separately.

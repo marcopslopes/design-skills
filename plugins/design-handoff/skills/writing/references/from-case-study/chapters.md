@@ -213,7 +213,7 @@ an expectation over silence if the brief has success criteria.
 **Job:** Hand-off. Where to go for the ticket, IA doc, research or live
 prototype, so the case study isn't the only artifact.
 
-**Source:** `brief.md` Sources + Jira keys; task-folder doc paths;
+**Source:** `brief.md` Sources + ticket keys; task-folder doc paths;
 gallery or public deck URLs.
 
 **Write like:** 3–6 links with human labels (`Design ticket`, `IA
@@ -222,7 +222,7 @@ detail`), not raw URL walls. Drop designer-only scratch paths.
 **Settings-ia example:** PROJ-169, PROJ-151 · `calendar-settings-prd-and-ia.md`
 · Nav phase 1 validation wiki · live prototype route
 
-**Skip when:** Never entirely — at minimum the Jira key from `brief.md`.
+**Skip when:** Never entirely — at minimum the ticket key from `brief.md`.
 If Sources is empty, fix the brief first.
 
 ---

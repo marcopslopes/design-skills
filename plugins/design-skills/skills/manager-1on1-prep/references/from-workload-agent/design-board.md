@@ -1,83 +1,81 @@
-# Designer execution boards (`DES` + `UXR`)
+# Designer execution boards
 
-Design team work is split across **two** Jira Software projects — checking
-only one will miss real assignments. Proven miss (example): a designer's
-work on one squad's feature area lived on `UXR`, not `DES` — always check
-both, don't assume by squad.
+Design team work often lives in **more than one** tracker container — two
+Jira projects, two Linear teams, or a design repo plus a product repo on
+GitHub. Checking only one will miss real assignments. Proven miss (example):
+a designer's work on one squad's feature area lived on the second design
+project, not the main one — always check every design container, don't
+assume by squad.
 
-*(`DES` / `UXR` are this harness's own worked-example project keys —
-replace with your org's real design-team Jira project key(s), recorded in
-`COMPANY-SQUADS.md` org-pack, once you know them. Board URL and roster
-below are illustrative — resolve your own via live Jira query, never
-hardcode a real name/board list here.)*
+Which tracker the team uses comes from `references/shared/work-tools.md`.
+Which containers count as "design work" comes from `COMPANY-SQUADS.md`
+§ Design execution boards (org-pack). This harness's worked example uses two
+containers, keyed `DES` and `UXR` below — replace them with your own.
 
-| Project | Key | Board (known) | Who tends to use it |
-|---|---|---|---|
-| Design | `DES` | *(your board URL — record in `COMPANY-SQUADS.md`)* | Most designers |
-| UX Designs | `UXR` | (legacy/squad-linked board) | Payments-squad designers, financial-services squads |
+| Container | Example key | Who tends to use it |
+|---|---|---|
+| Design | `DES` | Most designers |
+| UX Designs | `UXR` | Squad-linked design tickets |
 
-**Last verified:** 2026-07-14
+*(Board URLs and rosters are illustrative — resolve your own via a live
+query, never hardcode a real name or board list here.)*
 
 ---
 
 ## Shared facts
 
-- **Issue types:** `UX task` (majority), `Story`, `Epic`, `Task`, `Bug`, `Copy`, `Sub-task`, `UX`
-- **`DES` statuses:** `Backlog`, `To Do`, `In Progress`, `Review`, `Done`, `On Hold`, `Canceled`
-- **`UXR` statuses:** same family, plus `Closed` as done-equivalent — treat `Closed` like `Done` when filtering active work
+- **Done-equivalent states differ per container.** In the example, `DES`
+  closes with `Done` / `Canceled`; `UXR` adds `Closed`. Linear groups these
+  as state type `completed` / `canceled`; GitHub uses `closed`. Filter on the
+  status **group**, not one status name, wherever the tool supports it.
+- **Active work** = in progress or in review. **Queued** = backlog or to do.
+  **On hold** = any paused / blocked state the team uses.
 
-## Live query — run **both** projects
+## Live query — run **every** design container
 
-**DES:**
+Same intent, three trackers. Discover the server's tool names first
+(`work-tools.md` § Tracker).
 
-```
-project = DES AND status NOT IN (Done, Canceled)
-ORDER BY assignee ASC, status ASC
-```
+**All open design work:**
 
-**UXR:**
+| Jira (JQL) | Linear (filters) | GitHub (search) |
+|---|---|---|
+| `project in (DES, UXR) AND statusCategory != Done ORDER BY assignee ASC, status ASC` | team in design teams · state type not completed or canceled · order by assignee | `is:issue is:open repo:org/design repo:org/ux sort:updated-desc` (or `label:design` across repos) |
 
-```
-project = UXR AND status NOT IN (Done, Closed, Canceled)
-ORDER BY assignee ASC, status ASC
-```
+**When a person is named**, resolve them in the tracker first (Jira
+`lookupJiraAccountId`, Linear `list_users`, GitHub user search) — duplicate
+first names happen — then filter **every** design container by that assignee:
 
-**When a person is named**, resolve the full display name via
-`lookupJiraAccountId` first — duplicate first names happen — then query
-**both** projects:
+| Jira | Linear | GitHub |
+|---|---|---|
+| `assignee = "<accountId or full name>" AND project in (DES, UXR) AND statusCategory != Done ORDER BY updated DESC` | assignee = resolved user · design teams · not completed | `is:issue is:open assignee:<login> repo:org/design repo:org/ux` |
 
-```
-assignee = "<Full Display Name>" AND project in (DES, UXR) AND status NOT IN (Done, Closed, Canceled)
-ORDER BY updated DESC
-```
+**Keyword / feature search** (e.g. "Live Activity") — search every container:
 
-**Keyword / feature search** (e.g. "Live Activity") — search **both**:
+| Jira | Linear | GitHub |
+|---|---|---|
+| `project in (DES, UXR) AND statusCategory != Done AND text ~ "<keyword>"` | text query `<keyword>` · design teams · not completed | `is:issue is:open "<keyword>" repo:org/design repo:org/ux` |
 
-```
-project in (DES, UXR) AND status NOT IN (Done, Closed, Canceled) AND text ~ "<keyword>"
-ORDER BY updated DESC
-```
-
-Fields: `assignee`, `status`, `summary`, `updated`, `project`
+Fields to pull: assignee, status, title, updated, container (project / team /
+repo).
 
 ## Reporting rules
 
 - Group by **assignee**, not status
-- Count `In Progress` + `Review` separately from `Backlog`/`To Do`
-- Call out `On Hold` by name
-- When results span `DES` and `UXR`, show which project each ticket is on
-- **Link every issue key** in chat/table output:
-  `[PROJ-151](https://your-org.atlassian.net/browse/PROJ-151)` — see
+- Count active (in progress + review) separately from queued
+- Call out on-hold items by name
+- When results span containers, show which one each ticket is on
+- **Link every ticket** in chat/table output with its real URL — see
   `references/shared/source-links.md`
-- **Also check** the latest DT1 weekly stand-up (`Confluence` space `DT1`,
-  title pattern `*Weekly Stand-up*`) when Jira returns zero but a designer
-  name is expected — some work is logged in standups before (or instead of)
-  a ticket. Cite the standup page + date; don't treat it as a substitute
-  for a ticket when one exists on `UXR`.
+- **Also check** the team's latest weekly stand-up page in the docs tool
+  (location recorded in `COMPANY-SOURCES.md`, if the team keeps one) when the
+  tracker returns zero but a designer name is expected — some work is logged
+  in stand-ups before (or instead of) a ticket. Cite the page + date; don't
+  treat it as a substitute for a ticket when one exists.
 
-## Designer roster hint (not exhaustive — verify in Jira)
+## Designer roster hint (not exhaustive — verify in the tracker)
 
-Do not hardcode real names/squads here — resolve live via Jira and
+Do not hardcode real names/squads here — resolve live via the tracker and
 `COMPANY-SQUADS.md` (org-pack). This section intentionally stays empty in
 the public harness.
 
@@ -88,20 +86,16 @@ the public harness.
 Used by `workload-agent` § Manager mode and `./`
 when the requester's profile has `role: manager` (or the request names
 several specific reports directly). Batches all reports into **one**
-query instead of N — cheaper against the real API and the source of the
-"whichever is cheaper" call from the manager-role spec:
+query instead of N where the tracker allows it:
 
-```
-assignee in ("Name A", "Name B", "Name C") AND project in (DES, UXR)
-AND status NOT IN (Done, Closed, Canceled)
-ORDER BY assignee ASC, status ASC
-```
+| Jira | Linear | GitHub |
+|---|---|---|
+| `assignee in ("A", "B", "C") AND project in (DES, UXR) AND statusCategory != Done ORDER BY assignee ASC, status ASC` | assignee in resolved users · design teams · not completed | one search per person (GitHub search takes a single `assignee:`), then merge |
 
-Resolve every name via `lookupJiraAccountId` first (same duplicate-first-
-name caveat as the single-assignee case above), then run the batched
-query once. Group the results by assignee in the output — same grouping
-rule as the rest of this file, just multiple people in one response
-instead of one.
+Resolve every name first (same duplicate-first-name caveat as the
+single-assignee case above), then run the query. Group the results by
+assignee in the output — same grouping rule as the rest of this file, just
+multiple people in one response instead of one.
 
 ### ⚙️ Staleness threshold (single source of truth — change here, not inline elsewhere)
 
@@ -109,11 +103,11 @@ instead of one.
 MANAGER_MODE_STALE_DAYS = 7
 ```
 
-A ticket is **stale** if its `status` is `In Progress` or `Review` **and**
-its `updated` field is more than `MANAGER_MODE_STALE_DAYS` days old. `On
-Hold` tickets are always called out by name regardless of age (existing
-rule, unchanged) — staleness is specifically about active-but-untouched
-work, not the already-flagged on-hold bucket.
+A ticket is **stale** if it is active (in progress or in review) **and**
+its last update is more than `MANAGER_MODE_STALE_DAYS` days old. On-hold
+tickets are always called out by name regardless of age — staleness is
+specifically about active-but-untouched work, not the already-flagged
+on-hold bucket.
 
 **Every other file that talks about "stale" or "queue hygiene" in manager
 mode (`workload-agent/SKILL.md`, `manager-1on1-prep/SKILL.md`,

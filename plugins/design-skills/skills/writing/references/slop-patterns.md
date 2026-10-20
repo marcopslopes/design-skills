@@ -7,10 +7,10 @@ not by softening — cutting the sentence is usually right.
 
 **This file is prose-specific** (rhythm, structure, paragraph-level tells
 that assume free-flowing text). The vocabulary/attribution/fake-specificity
-rules below also apply to PRDs, Confluence briefs, tickets, and deck
+rules below also apply to PRDs, docs briefs, tickets, and deck
 narration — those live in the shared
 [`references/shared/anti-ai-writing.md`](./shared/anti-ai-writing.md)
-so `design-kickoff`, `confluence-brief`, `ticket-create`, `research-agent`,
+so `design-kickoff`, `docs-brief`, `ticket-create`, `research-agent`,
 and `deck-builder` can run the same checks without duplicating this list
 five times. This file adds prose-only rules on top of that shared base —
 run both when writing an article/essay/case-study.

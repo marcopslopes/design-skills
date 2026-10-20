@@ -6,7 +6,7 @@ Use this as a **copy-paste reference** for kickoff pages: **info blocks**, **lis
 
 | Path | When to use |
 | --- | --- |
-| **Markdown** | Working from `references/confluence-template.md` and pasting into Confluence’s markdown-capable editor, or for human-readable draft files. |
+| **Markdown** | Working from `references/brief-template.md` and pasting into Confluence’s markdown-capable editor, or for human-readable draft files. |
 | **HTML fragment** | `createConfluencePage` / `updateConfluencePage` with `contentFormat: "html"`, or `npm run confluence:put-draft-body` — see [confluence-large-bodies.md](./confluence-large-bodies.md). |
 
 Valid HTML for the API must follow **ADF nesting rules** (no block elements inside inline-only wrappers, etc.). When in doubt, keep structures **flat**: `p`, `h2`, `ul`/`ol`, `table`, macros/panels as siblings.
@@ -89,7 +89,7 @@ Use `##` / `###` for section titles to match the briefing scaffold (`## 1 · Hea
 
 ```markdown
 - First item with **bold** and a [link](https://example.com).
-- Second item with inline `code` or `DT1` style keys.
+- Second item with inline `code` or `DESIGN` style keys.
 - Third item — use an em dash for asides.
 ```
 
@@ -113,7 +113,7 @@ Use `##` / `###` for section titles to match the briefing scaffold (`## 1 · Hea
 | --- | --- | --- |
 | Slack channel name + ID | REQUIRED | Right-click channel → **Copy link** for ID |
 | Topic focus | REQUIRED | Be specific — `payment checkout` beats `payments` |
-| Confluence space key | REQUIRED | From URL (e.g. `DT1`) |
+| Confluence space key | REQUIRED | From URL (e.g. `DESIGN`) |
 | Market scope | RECOMMENDED | `US only` / `all markets` |
 ```
 
@@ -214,4 +214,4 @@ Use these **inside** the HTML file you upload (no `<html>` / `<head>` wrapper; f
 ## 10 · See also
 
 - [confluence-large-bodies.md](./confluence-large-bodies.md) — full HTML body, MCP vs REST.
-- [`references/confluence-template.md`](../references/confluence-template.md) — required section order for kickoff drafts.
+- [`references/brief-template.md`](../references/brief-template.md) — required section order for kickoff drafts.

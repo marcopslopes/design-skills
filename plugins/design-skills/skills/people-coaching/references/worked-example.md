@@ -30,6 +30,6 @@ description get refreshed the morning of any external walkthrough.
 - Does the 12-day quiet on PROJ-210 match a real blocker we should clear?
 
 ### Data sources for this prep doc
-Jira (PROJ-210) · `projects/referral-entry-points-notifications/` · No
-Confluence · No public Slack. **No Slack DMs or private channels were
+Tracker (PROJ-210) · `projects/referral-entry-points-notifications/` · No
+docs pages · No public chat. **No chat DMs or private channels were
 queried for this doc.**

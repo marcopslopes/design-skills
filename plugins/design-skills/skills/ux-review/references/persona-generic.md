@@ -56,7 +56,7 @@ treated as more or less valuable than new ones.
 
 She reads the hero copy and knows within one sentence whether it was
 written for the user or for the brand team. "Be brave" tells her
-everything. "Find and book beauty appointments near you" tells her
+everything. "Order parts for pickup today" tells her
 something different.
 
 She asks one question about every page: does everything here serve the

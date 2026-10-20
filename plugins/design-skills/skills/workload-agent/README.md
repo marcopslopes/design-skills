@@ -1,6 +1,6 @@
 # Workload agent
 
-Live Jira snapshot: Roadmap + designer execution (`DES` + `UXR`) +
+Live tracker snapshot (Jira, Linear, or GitHub): Roadmap + designer execution +
 cross-reference.
 
 **Human guide:** [`docs/HOWTO-WORKLOAD-AGENT.md`](https://github.com/marcopslopes/design-harness/blob/main/docs/HOWTO-WORKLOAD-AGENT.md)

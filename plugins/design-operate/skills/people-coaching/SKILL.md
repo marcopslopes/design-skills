@@ -7,7 +7,7 @@ description: >-
   difficult conversation with [name]", "hard conversation with [name]",
   "growth plan for [name]", "development plan for [name]", "help me coach
   [name]". Gated to `role: manager` profiles — declines for ICs. Same
-  source and privacy rules as `manager-1on1-prep` (Jira + task folders;
+  source and privacy rules as `manager-1on1-prep` (tracker + task folders;
   never Slack DMs). Does not replace 1:1 status prep (`manager-1on1-prep`)
   or team snapshots (`workload-agent`). Never invents performance claims.
 ---
@@ -51,7 +51,7 @@ Never fire automatically. One named report per request. If asked for
 
 1. **`workload-agent` manager mode** filtered to the one named report.
 2. **`projects/<slug>/`** heuristic name match — say so if uncertain.
-3. **Confluence/Jira** with cite/date/link discipline.
+3. **Docs tool / tracker** with cite/date/link discipline.
 4. **Public Slack only**, and only to confirm a work fact already implied
    by 1–3 — never sentiment.
 
@@ -141,7 +141,7 @@ to script a performance confrontation from vibes.
 [one line on which mode and why]
 
 ### Evidence on file
-- [fact] — Source: [Jira KEY / projects/slug / …]
+- [fact] — Source: [ticket KEY / projects/slug / …]
 - (or: thin — only questions below)
 
 [Mode 1:]
@@ -179,7 +179,7 @@ to script a performance confrontation from vibes.
 - …
 
 ### Data sources for this prep doc
-Jira (…) · `projects/…` (…) · … **No Slack DMs or private channels were
+Tracker (…) · `projects/…` (…) · … **No chat DMs or private channels were
 queried for this doc.**
 ```
 
@@ -203,7 +203,7 @@ task folder without asking.
 - Never run for IC profiles
 - Never invent behaviours, motives, or performance ratings
 - Never query Slack DMs / private channels
-- Never send messages, book meetings, or create Jira tickets unless the
+- Never send messages, book meetings, or create tickets unless the
   manager explicitly chains another skill (`scheduling`, `ticket-create`)
 - Never replace `manager-1on1-prep` for routine status 1:1s
 - Never ambush: if Mode 1/2 content would surprise someone in a formal
@@ -216,7 +216,7 @@ task folder without asking.
 | File | Role |
 |------|------|
 | `../manager-1on1-prep/SKILL.md` | Status 1:1 prep — sibling; same gate/sources |
-| `../workload-agent/SKILL.md` § Step 2b′ | Manager Jira leg |
+| `../workload-agent/SKILL.md` § Step 2b′ | Manager tracker leg |
 | `../stakeholder-alignment/SKILL.md` | Cross-functional buy-in — not people coaching |
 | `references/worked-example.md` | Worked feedback + growth sketches |
 | `docs/HOWTO-PEOPLE-COACHING.md` | Designer-facing guide |

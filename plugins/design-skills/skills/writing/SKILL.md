@@ -1,6 +1,6 @@
 ---
 name: writing
-description: "Long-form prose writing assistant — articles, essays, case-study writeups, LinkedIn/blog posts, \"how I work\" pieces. Triggers on: \"write an article\", \"write a blog post\", \"turn this into an essay\", \"write up how we got here\" (prose, not slides), \"draft a LinkedIn post\", \"write a case-study writeup\", \"run anti-slop on this\", \"use the writing skill on this article\", \"how will this read after the anti-ai pass\". Every claim must trace to a real dated source in `projects/<slug>/` (findings.md / log.md / decisions.md) or Atlassian/Slack — or, on an existing-article pass, to the pasted text only. Never invented evidence. Runs an anti-slop pass (`references/slop-patterns.md` + `references/shared/anti-ai-writing.md`) before returning output, and always labels output DRAFT pending a human edit pass. Does NOT do UI/product copy (see `content`) or slide decks (see `deck-builder`). If the ask is actually \"turn this into a deck/presentation,\" redirect to `deck-builder`."
+description: "Long-form prose writing assistant — articles, essays, case-study writeups, LinkedIn/blog posts, \"how I work\" pieces. Triggers on: \"write an article\", \"write a blog post\", \"turn this into an essay\", \"write up how we got here\" (prose, not slides), \"draft a LinkedIn post\", \"write a case-study writeup\", \"run anti-slop on this\", \"use the writing skill on this article\", \"how will this read after the anti-ai pass\". Every claim must trace to a real dated source in `projects/<slug>/` (findings.md / log.md / decisions.md) or the team's docs, tracker, and chat — or, on an existing-article pass, to the pasted text only. Never invented evidence. Runs an anti-slop pass (`references/slop-patterns.md` + `references/shared/anti-ai-writing.md`) before returning output, and always labels output DRAFT pending a human edit pass. Does NOT do UI/product copy (see `content`) or slide decks (see `deck-builder`). If the ask is actually \"turn this into a deck/presentation,\" redirect to `deck-builder`."
 ---
 
 # Writing
@@ -194,7 +194,7 @@ Before writing a single sentence of the piece itself:
 1. Read the anchor project(s)' `brief.md`, `findings.md`, `log.md`,
    `decisions.md` in full.
 2. Pull only claims that trace to something real and dated in those
-   files (or a linked Jira/Confluence/Slack source already cited there).
+   files (or a linked ticket, docs page, or chat source already cited there).
    Every stat, quote, or timeline claim in the draft must be traceable
    back to one of these — if you can't point to the line it came from,
    cut the claim or mark it `[UNVERIFIED — confirm before publishing]`.

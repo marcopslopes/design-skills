@@ -21,7 +21,7 @@ description: >-
 
 > **Design Skills package.** This skill comes from the Design Harness and works on its own. If a path it mentions isn't in your project, follow [references/standalone-mode.md](references/standalone-mode.md).
 
-Turns live Jira data and this repo's own task-folder history into a short
+Turns live tracker data (Jira, Linear, or GitHub) and this repo's own task-folder history into a short
 prep doc for a manager's 1:1 with one specific report — questions to ask
 in the conversation, not conclusions about what's going on. This skill
 never runs on its own; it fires only when a manager explicitly asks for
@@ -59,7 +59,7 @@ This skill uses exactly these sources, and no others:
 1. **`workload-agent` manager mode** (`../workload-agent/SKILL.md`
    § Step 2b′), filtered to the **one named report** — a single-person
    subset of the batched query, not the whole team. Resolve their name
-   via `lookupJiraAccountId` first, same as every other Jira leg in this
+   in the tracker first (`references/shared/work-tools.md` § Tracker → Find a person), same as every other tracker leg in this
    repo.
 2. **`projects/<slug>/` task-folder data** for anything that report owns
    or is named in — `brief.md`, `findings.md`, `decisions.md`, `log.md`.
@@ -68,14 +68,14 @@ This skill uses exactly these sources, and no others:
    `decisions.md` "Made by:" line, or a dated `findings.md`/`log.md`
    entry) — say so if the match is uncertain, don't present it as a
    confirmed link.
-3. **Confluence/Jira**, same sourcing discipline as every other skill in
+3. **Docs tool / tracker**, same sourcing discipline as every other skill in
    this repo (cite, date, link).
 4. **Public Slack channels only**, and only to confirm a work fact already
    implied by 1–3 — never to characterize sentiment or tone. See the hard
    rule below before touching Slack at all.
 
 **Explicitly out of scope — do not build a workaround for this, ever:**
-research-agent's general-purpose Confluence/Jira/Slack/Figma/Miro sweep is
+research-agent's general-purpose docs/tracker/chat/Figma/Miro sweep is
 *not* this skill's job. If the manager wants that depth on a topic, route
 to `research-agent` instead — this skill stays narrow: one report, one
 snapshot, one set of questions.
@@ -99,7 +99,7 @@ private conversations, so it doesn't get to try:
   carve-out that would justify a private-channel search in the first
   place.
 - **If Slack is used at all, public channels only**, and only to confirm
-  a **work fact** already visible in Jira/task-folders (e.g. confirming a
+  a **work fact** already visible in the tracker or task folders (e.g. confirming a
   ticket's context) — never to summarize what someone said, their tone,
   their mood, or anything that reads as sentiment.
 - **Never summarize a private conversation back to a manager**, full
@@ -123,19 +123,19 @@ the threshold that decides *whether* to flag it at all still lives in
 `workload-agent/references/design-board.md` § Manager mode) — never "X said
 they're blocked on Y" (that would require Slack sentiment/DM sourcing
 this skill doesn't have anyway, but the framing rule holds even for
-legitimate Jira/task-folder findings: state the observable fact, not an
+legitimate tracker/task-folder findings: state the observable fact, not an
 inferred cause).
 
 ```markdown
 ## 1:1 prep — [Report] — [date]
 
 ### Worth asking about
-- [KEY](https://your-org.atlassian.net/browse/KEY) "[summary]" — In Progress, no update in [N] days (past the
+- [KEY](<ticket URL>) "[summary]" — In Progress, no update in [N] days (past the
   staleness threshold — see `workload-agent/references/design-board.md` §
   Manager mode). Worth asking what's blocking it?
-- [KEY](https://your-org.atlassian.net/browse/KEY) "[summary]" — On Hold since [date]. Still blocked, or ready to
+- [KEY](<ticket URL>) "[summary]" — On Hold since [date]. Still blocked, or ready to
   pick back up?
-- [KEY](https://your-org.atlassian.net/browse/KEY) "[summary]" queued next — does that match what they'd expect to
+- [KEY](<ticket URL>) "[summary]" queued next — does that match what they'd expect to
   pick up, or has priority shifted since this was queued?
 
 ### From their task folders
@@ -153,8 +153,8 @@ match was found — don't pad with a weak/uncertain match to fill space.)*
   reflect that priority, or is there a mismatch worth raising?
 
 ### Data sources for this prep doc
-Jira ([tickets queried, DES/UXR]) · `projects/<slug>/` task folders
-([list, or "none matched"]) · [Confluence pages, if any] · [public Slack
+Tracker ([tickets queried, design containers]) · `projects/<slug>/` task folders
+([list, or "none matched"]) · [docs pages, if any] · [public chat
 channels, named, if any — work-content only]. **No Slack DMs or private
 channels were queried for this doc.**
 ```
@@ -198,7 +198,7 @@ free/busy checks (its own Hard rule: free/busy signal only, never event
 titles/descriptions/attendees, on any calendar including the requester's
 own), slot proposal, confirmation, and booking. This skill does not
 duplicate any of that logic itself, the same way it never re-implements
-`workload-agent`'s Jira querying. If the designer declines, or doesn't
+`workload-agent`'s tracker querying. If the designer declines, or doesn't
 respond, or Calendar isn't connected: **this skill's output is unchanged
 either way** — the prep doc is already complete and correct without this
 line, and nothing about the doc's content, sourcing, or framing depends
@@ -236,7 +236,7 @@ doc's own sources (§ Scope above) are entirely independent of Calendar.
 
 | File | Role |
 |---|---|
-| `../workload-agent/SKILL.md` § Step 2b′ | Manager-mode Jira leg this skill filters to one person |
+| `../workload-agent/SKILL.md` § Step 2b′ | Manager-mode tracker leg this skill filters to one person |
 | `references/from-workload-agent/design-board.md` § Manager mode | Batched query technique + `MANAGER_MODE_STALE_DAYS` (single source of truth for the staleness threshold used above) |
 | `harness/designer-onboarding/SKILL.md` § Manager role focus | Where `role: manager` and `Reports:` come from |
 | `references/from-research-agent/agents.md` § Privacy & sensitive content | The general Slack guardrail this skill's hard rule is stricter than |

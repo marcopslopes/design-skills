@@ -44,9 +44,9 @@ This uses exactly these sources, and no others:
    match isn't a clean one, the same honesty standard
    `manager-1on1-prep` § Scope already applies to its own heuristic
    `projects/` matches.
-3. **A single, explicitly named Jira/Confluence reference** — if a ticket
+3. **A single, explicitly named ticket or docs-page reference** — if a ticket
    key or link is already in the request or the conversation, one direct
-   lookup (`getJiraIssue` / a Confluence page fetch) for its current
+   lookup (the tracker's get-ticket call / a docs page fetch) for its current
    status is fair game. This is **not** a search or a sweep — only look
    up something that's already been named, don't go hunting for related
    tickets nobody mentioned.
@@ -81,9 +81,9 @@ lines of `decisions.md` you're inferring current relevance from.
 
 - **1–4 short talking points, each tied to a real source** — a
   conversation moment, a `projects/<slug>/` file + section, or a cited
-  Jira/Confluence link (markdown link, per
+  ticket or docs-page link (markdown link, per
   `references/shared/source-links.md` — never a bare ticket key when
-  Atlassian is connected).
+  the tool is connected).
 - **If nothing groundable turns up beyond the stated topic** — say so
   plainly and keep the draft to the topic alone. Do **not** pad with
   generic filler ("catch up," "sync on priorities," "touch base") to
@@ -100,7 +100,7 @@ lines of `decisions.md` you're inferring current relevance from.
 > A few things that might be worth covering:
 > - `projects/checkout-redesign/decisions.md` logged going with the
 >   card-list layout on [date] — still holding, or has that shifted?
-> - [PROJ-482](https://your-org.atlassian.net/browse/PROJ-482) "Checkout
+> - [PROJ-482](<ticket URL>) "Checkout
 >   error states" is still In Progress — good time to check in on it?
 >
 > (Pulled from the project folder and that one ticket — nothing beyond
@@ -153,5 +153,5 @@ isn't there yet.
 | `../scheduling/SKILL.md` | Calls this at Step 1, before any draft or booking that includes content — also owns the "draft stays a draft until approved" hard rule for the Slack-message path |
 | `references/from-scheduling/calendar-check.md` | The separate, Calendar-connection-specific check — this file is about content, that one's about access |
 | `SKILL.md` | The "questions to ask, not conclusions" framing and the closed-source-list pattern this file borrows |
-| `references/shared/source-links.md` | Markdown-link citation rule for any Jira/Confluence reference surfaced here |
+| `references/shared/source-links.md` | Markdown-link citation rule for any ticket or docs-page reference surfaced here |
 | `projects/README.md` | The task-folder schema this file heuristically matches against |

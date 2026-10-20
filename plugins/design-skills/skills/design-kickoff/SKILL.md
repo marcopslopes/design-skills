@@ -29,8 +29,8 @@ Ask ONLY what routing needs, nothing more — this **replaces**
 in addition to them:
 
 1. What's the working name / one-line description of the thing?
-2. Is there ANY existing material you already know of? (PRD, brief, Jira
-   epic, Slack thread, Figma, Miro)
+2. Is there ANY existing material you already know of? (PRD, brief, epic
+   or ticket, chat thread, Figma, Miro)
 3. Who's the PM / requester?
 
 Do not interview them about the problem — that's what research is for.
@@ -55,7 +55,7 @@ miss (proven: Live Activity owned by Tom Becker on `PROJ-154` while
 `DES` showed nothing).
 
 **Also read `COMPANY-SOURCES.md`** at the start of Step 1. Open any
-linked Docs/Confluence/boards whose topic or “When to open” matches the
+linked docs pages and boards whose topic or “When to open” matches the
 project (strategy / planning rows especially). Do not invent quarter
 priority from memory — open or list inaccessible URLs honestly.
 
@@ -74,15 +74,15 @@ project name + domain from Step 0. Run at minimum:
 1. **Roadmap leg** — relevant roadmap board(s) from
    `workload-agent/references/roadmap-boards.md` (infer domain: payments →
    `PAY`, core product → `CORE`, provider growth → `GROW`, etc.). Level 1
-   (Opportunities) **and** Level 2 / keyword search when the topic names a
+   (initiatives) **and** Level 2 / keyword search when the topic names a
    feature — see `roadmap-check.md`.
-2. **Execution leg** — `project in (DES, UXR)` keyword search for the
-   topic; if Step 0 named a person, run `lookupJiraAccountId` first.
+2. **Execution leg** — keyword search across every design container for
+   the topic; if Step 0 named a person, resolve them in the tracker first.
 3. **Cross-reference** — aligned / roadmap-without-design / design-without-
    roadmap-parent buckets per workload-agent Step 3.
 
 Append to `findings.md` as `workload-agent`. This leg is **report-only** —
-no PRD, no Confluence page from workload-agent during kickoff.
+no PRD, no docs page from workload-agent during kickoff.
 
 ### Step 1b — Deep discovery (Leg B)
 
@@ -92,13 +92,14 @@ says "there's nothing written down" — absence of material is itself a
 finding that goes in the PRD.
 
 Per `research-agent`'s own checklist, the sweep covers at minimum:
-- **Atlassian** — Confluence pages (full bodies) + Jira issues (mandatory)
-- **Slack** — public + private threads on the topic (mandatory) — private
+- **Docs + tracker** — full page bodies + full tickets, in whichever tools the
+  team uses (`references/shared/work-tools.md`) (mandatory when connected)
+- **Chat** — public + private threads on the topic (mandatory) — private
   hits are filtered per `research-agent`'s privacy guardrail
   (`references/agents.md` § Privacy & sensitive content) before anything
   from them reaches `findings.md` or the PRD; comp/HR/health/legal/conflict
   content is withheld outright, never surfaced for the requester to decide
-- **Figma** — any design files linked from Confluence/Jira bodies
+- **Figma** — any design files linked from docs or ticket bodies
 - **Miro** — any workshop boards linked from bodies
 
 While sweeping, collect with source + date on every claim (data hygiene
@@ -194,9 +195,9 @@ that only got stubbed out. Rules:
 
 - Every claim carries a source link + date. No source = goes in
   "Assumptions & open questions", never in "What we know".
-- **Jira keys and other source IDs:** markdown links per
+- **Ticket keys and other source IDs:** markdown links per
   `references/shared/source-links.md` in chat, `findings.md`, and the PRD —
-  never bare `PROJ-123` when Atlassian is connected.
+  never bare `PROJ-123` when the tracker is connected.
 - The three questions must have answers or explicit "UNKNOWN — needs
   decision/research": Why are we doing this? What problem does it solve?
   How will we know it worked?
@@ -208,7 +209,7 @@ that only got stubbed out. Rules:
   abandoned boards), include a "History" section — what was tried, why it
   died, what's reusable.
 - **Step 1a's workload cross-reference must land in §1 "Existing work &
-  ownership"** — who owns in-flight design (`DES`/`UXR`), what's on the
+  ownership"** — who owns in-flight design (the design containers), what's on the
   roadmap (`Make`/`Plan`), and whether this kickoff duplicates or
   extends existing work. If Leg A found an owner, name them and link the
   ticket — never leave §1 empty when Leg A returned results.
@@ -247,11 +248,12 @@ lines are filled — never copy it into `galleryData.ts`. Failure → `[GALLERY-
 flag, leave unlisted, never invent, never block the kickoff gate. Audit
 Step 3.5 is the safety net.
 
-## Step 2.5 — Offer Confluence (optional, private space only, never a gate)
+## Step 2.5 — Offer a docs copy (optional, private space only, never a gate)
 
 After drafting the PRD, ask **once**: *"Want this as a page in your private
-Confluence space too, so [PM/stakeholder] can comment there instead of
-here?"*
+[docs tool] space too, so [PM/stakeholder] can comment there instead of
+here?"* — name the team's docs tool (Confluence, Notion, or Google Docs).
+No docs tool connected → skip this step silently.
 
 - **If yes:** create the page in the **requester's private space only** —
   never a shared/team space pre-gate. Title matches the project name,
@@ -260,24 +262,24 @@ here?"*
 - **If no, or no response:** proceed straight to Step 3. This step never
   blocks the gate either way.
 - If the PRD gets revised after a "fill gaps first" loop back from Step 3,
-  ask **once more** whether to update the Confluence copy (if one exists).
+  ask **once more** whether to update the docs copy (if one exists).
   Don't let it go silently stale — but don't re-ask if they declined the
   first time.
 
-Log the choice in `projects/<slug>/decisions.md`: Confluence created (yes/no),
+Log the choice in `projects/<slug>/decisions.md`: docs copy created (yes/no),
 link if yes. This is what lets `harness-audit` and a future resume know
 where the reference copy lives without re-asking.
 
-**Confluence is a comment/reference surface for stakeholders — it is never
+**The docs copy is a comment/reference surface for stakeholders — it is never
 a second gate.** It is never polled, checked, or treated as an approval
-source. If the person says "they commented on Confluence, it's good," take
+source. If the person says "they commented on the page, it's good," take
 that as their verbal confirmation at the Step 3 gate — same as any other
 input — not as a reason to skip Step 3 or check the page for a reaction.
 
-## Step 3 — THE GATE (hard stop, chat-only, regardless of Confluence)
+## Step 3 — THE GATE (hard stop, chat-only, regardless of the docs copy)
 
 The approval conversation always happens here, in chat — whether or not a
-Confluence copy exists from Step 2.5 makes no difference to this step.
+docs copy exists from Step 2.5 makes no difference to this step.
 
 Present the PRD to the human with exactly this framing:
 - **Existing work & ownership** (from Step 1a — overlaps, gaps, named owners)
@@ -390,9 +392,9 @@ Next: **[Name]**
   short. Run it anyway; "known" problems with no sources are folklore.
 - "The PM said it's approved" → approval of the *idea* is not approval of
   the *PRD*. Gate stands.
-- Skipping Slack/Jira because "there's probably nothing" → the sweep is
+- Skipping chat or the tracker because "there's probably nothing" → the sweep is
   cheap; missed context is not.
-- "Check if they've approved it on Confluence" → Confluence is never
+- "Check if they've approved it on the page" → the docs copy is never
   polled or treated as an approval source. The gate is a chat question;
   if someone tells you what was said there, that's their verbal input at
   Step 3, not a substitute for asking it.
@@ -401,7 +403,7 @@ Next: **[Name]**
 
 | File | Role |
 |---|---|
-| `references/prd-template.md` | The PRD structure used in Step 2, with the Confluence-link footer from Step 2.5 |
+| `references/prd-template.md` | The PRD structure used in Step 2, with the docs-copy link footer from Step 2.5 |
 | `../workload-agent/SKILL.md` | Mandatory Step 1a — roadmap + designer ownership cross-ref |
 | `../research-agent/SKILL.md` | Mandatory Step 1b — deep discovery sweep |
 | `../assumption-mapper/SKILL.md` | Mandatory Step 1c — known vs believed from 1a/1b; feeds Step 1.5 |
@@ -410,7 +412,7 @@ Next: **[Name]**
 | `projects/<slug>/sources.md` | Step 0/1 — project link catalog; append pasted / discovered durable URLs |
 | `harness/ORCHESTRATOR.md` §2 | Where this skill sits as the front door, ahead of the build row |
 | `projects/<slug>/brief.md` | Where the PRD is written and later marked approved |
-| `projects/<slug>/decisions.md` | Where gate approval is logged, plus the Step 2.5 Confluence choice (yes/no, link) |
+| `projects/<slug>/decisions.md` | Where gate approval is logged, plus the Step 2.5 docs-copy choice (yes/no, link) |
 
 ---
 

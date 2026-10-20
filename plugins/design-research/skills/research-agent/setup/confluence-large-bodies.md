@@ -14,7 +14,7 @@ keeping the **same** synthesized content in the repo and on the page.
 
 1. **Compose the full briefing in the workspace first** — write or overwrite
    `drafts/_confluence-draft-<topic-slug>-body.md` (or `.html`) with the
-   **complete** scaffold from `references/confluence-template.md`:
+   **complete** scaffold from `references/brief-template.md`:
    all `##` sections **1–17**, **section intros** (1–3 sentences) before each
    evidence table where the template requires them, placeholders where needed.
    **This file must match what readers should see in Confluence** — not a longer

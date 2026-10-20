@@ -6,7 +6,7 @@ invent house lenses.
 
 ## Load order
 
-1. A pasted "How we critique" / UX-review Confluence (or wiki) URL —
+1. A pasted "How we critique" / UX-review docs page (Confluence, Notion, Google Docs, or wiki) URL —
    use that page's lenses and frame questions.
 2. Else a `COMPANY-SOURCES.md` row that names the critique / UX-review
    ritual (org-pack resolution, `harness/ORCHESTRATOR.md` §0a).

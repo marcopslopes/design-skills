@@ -69,7 +69,7 @@ signal, isn't a KR.
 ## Step 3 — Tie to an actual business/team priority
 
 Cross-check against `designer-profile.local.md`'s Active work, a named
-Jira epic, or `COMPANY-SQUADS.md`'s stream ownership — a goal
+epic, or `COMPANY-SQUADS.md`'s stream ownership — a goal
 that doesn't connect to anything the team already cares about is
 unlikely to get resourced or tracked. If it doesn't connect to anything
 stated, say so honestly rather than inventing a connection.
@@ -102,7 +102,7 @@ key result where that risk is real.
    event / dashboard / "not yet instrumented"].
 2. ...
 
-**Ties to:** [named business priority / squad stream / Jira epic, or
+**Ties to:** [named business priority / squad stream / epic, or
 "no existing tie found — flagging"]
 
 **Gaming risk:** [any KR that could be gamed against the real intent, or

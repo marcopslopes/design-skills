@@ -1,12 +1,14 @@
 # Project Briefing Agent
 
-A research agent for product designers and PMs. You tell it a topic — a feature, a flow, a project — and it searches everything your team has written about it across Confluence, Jira, Slack, Figma, and Miro. Then it writes a structured draft page in Confluence and sends you a short summary.
+A research agent for product designers and PMs. You tell it a topic — a feature, a flow, a project — and it searches everything your team has written about it across your docs tool, tracker, chat, Figma, and Miro. Then it writes a structured draft page in your docs tool and sends you a short summary.
+
+It works with whichever tools your team uses: Confluence, Notion, or Google Docs for docs; Jira, Linear, or GitHub Issues for tickets; Slack or Teams for chat. If a tool isn't connected, it says what it skipped and works from what you paste.
 
 ---
 
 ## What it does
 
-Most projects have a history: past research, old Jira epics, design explorations, Slack threads where decisions were made. That context is spread across tools and hard to find before a new discovery kickoff. This agent finds it for you.
+Most projects have a history: past research, old epics, design explorations, chat threads where decisions were made. That context is spread across tools and hard to find before a new discovery kickoff. This agent finds it for you.
 
 **For existing projects** — it surfaces everything done before so you know what to reuse and what to ignore. You skip the "did we already research this?" conversation.
 
@@ -16,16 +18,16 @@ Most projects have a history: past research, old Jira epics, design explorations
 
 | Source | What it reads |
 |--------|--------------|
-| Confluence | Full page bodies — PRDs, research summaries, programme docs, linked children |
-| Jira | Full issues — status, assignee, components, labels, epics, comments |
-| Slack | Public and private messages, threads, canvases — sensitive content is filtered before it reaches you, see Privacy below |
+| Docs (Confluence, Notion, Google Docs) | Full page bodies — PRDs, research summaries, programme docs, linked children |
+| Tracker (Jira, Linear, GitHub Issues) | Full tickets — status, assignee, components, labels, epics, comments |
+| Chat (Slack, Teams) | Public and private messages, threads, canvases — sensitive content is filtered before it reaches you, see Privacy below |
 | Figma | Design files and FigJam boards linked from any of the above |
 | Miro | Workshop boards linked from any of the above |
-| Google Docs | Docs linked from Confluence or Jira, opened in browser when signed in |
+| Linked Google Docs | Docs linked from pages or tickets, opened in browser when signed in |
 
 ### What it produces
 
-**1. A Confluence draft page** — a PRD-style scaffold with 17 sections:
+**1. A draft page in your docs tool** — a PRD-style scaffold with 17 sections:
 
 | Section | What it answers |
 |---------|----------------|
@@ -40,14 +42,14 @@ Most projects have a history: past research, old Jira epics, design explorations
 | Competitive / market context | Only when requested |
 | Open questions & decisions | The decisions the team still needs to make |
 | Recommendations | Prioritised actions from sources, not invented |
-| Jira tickets index | Every relevant issue from this pass, deduped |
+| Tickets index | Every relevant ticket from this pass, deduped |
 | Who's involved | Who to talk to, with team/squad and recent activity |
 | Conflicts, staleness, data gaps | What to verify before treating as current |
 | Appendix — relevant links | All sources grouped by tool |
 
 Sections with no data are **not removed** — they get a placeholder row and a fill-in prompt. That tells you exactly what to bring to the kickoff workshop.
 
-**2. A short chat summary** — sent back in Slack or in chat:
+**2. A short chat summary** — sent back in Slack, Teams, or the agent chat:
 
 ```
 📋 Discovery kickoff draft: [Topic] · [High/Medium/Low confidence]
@@ -59,20 +61,20 @@ Sections with no data are **not removed** — they get a placeholder row and a f
 Biggest open question: [one sentence]
 Next action: [one sentence]
 
-📄 Draft: [Confluence URL]
+📄 Draft: [draft URL]
 ```
 
 ---
 
-## Privacy — what happens with private Slack content
+## Privacy — what happens with private chat content
 
-This agent is allowed to search private Slack channels and DMs, but that
+This agent is allowed to search private channels and DMs, but that
 does not mean everything it finds there ends up in your draft or chat
 reply. It withholds — never asks permission to include, always defaults to
 withholding — anything that looks like compensation, performance/HR,
 health, legal, or interpersonal-conflict content, even if it's technically
 on-topic. It also never quotes private messages verbatim (paraphrases
-instead) and never searches Slack to build a picture of what one named
+instead) and never searches chat to build a picture of what one named
 person has said.
 
 If a Slack channel is configured for team-wide use (Option 1 below), the
@@ -107,10 +109,9 @@ Optional parameters you can add:
 
 | Parameter | Example | Effect |
 |-----------|---------|--------|
-| `last N days` | `last 30 days` | Limits Slack search window |
-| `space [KEY]` | `space DT1` | Saves draft to a team space instead of your personal space |
-| `parent [page ID]` | `parent 4643487752` | Sets a parent page in Confluence |
-| `chat only` | `chat only` | Skips creating the Confluence page |
+| `last N days` | `last 30 days` | Limits the chat search window |
+| `save under [page or URL]` | `save under Design / Discovery` | Saves the draft under a team page, space, or database instead of your personal space |
+| `chat only` | `chat only` | Skips creating the draft page |
 | `competitor benchmark` | add to any prompt | Includes a public competitor comparison section |
 
 ---
@@ -133,7 +134,7 @@ Everyone in the configured Slack channel can use `@Cursor` after a one-time admi
 2. Click **Connect** next to Slack → install the Cursor Slack app in your work workspace
 3. Enable usage-based pricing when prompted
 4. Go to [cursor.com/agents](https://cursor.com/agents) → MCP dropdown → connect:
-   - **Atlassian** — authenticate with your work Atlassian account
+   - **Your docs tool and tracker** — Atlassian, Notion, Linear, or GitHub, authenticated with your work account
    - **Slack** — authenticate with your work Slack workspace
    - **Figma** — authenticate with your work Figma account *(optional but recommended)*
    - **Miro** — connect via [miro.com/marketplace/miro-mcp-for-cursor](https://miro.com/marketplace/miro-mcp-for-cursor/) *(optional)*
@@ -149,7 +150,7 @@ Everyone in the configured Slack channel can use `@Cursor` after a one-time admi
 
 No individual Cursor account or installation needed for teammates.
 
-> **Note on Confluence drafts:** In this shared mode the Confluence page is created under the account that owns the Atlassian MCP connection. Add `space DT1, parent [page ID]` to your prompt to route drafts to a shared team space.
+> **Note on drafts:** In this shared mode the page is created under the account that owns the docs-tool connection. Add `save under [page or URL]` to your prompt to route drafts to a shared team space.
 
 ---
 
@@ -172,13 +173,13 @@ If you already use Cursor, the skill is built in. The agent reads `SKILL.md` in 
 **Steps:**
 
 1. Clone this repo and open it in Cursor
-2. Go to [cursor.com/agents](https://cursor.com/agents) → MCP dropdown → connect Atlassian, Slack, Figma, Miro (same as above)
+2. Go to [cursor.com/agents](https://cursor.com/agents) → MCP dropdown → connect your docs tool, tracker, chat, Figma, and Miro (same as above)
 3. Open the Cursor agent panel and type:
    ```
    tell me everything about [topic]
    ```
 
-Confluence drafts land in your own personal space automatically.
+Drafts land in your own personal or private space automatically.
 
 Full MCP setup details: [`docs/setup/cursor-mcp-setup.md`](https://github.com/marcopslopes/design-harness/blob/main/docs/setup/cursor-mcp-setup.md)
 
@@ -186,12 +187,15 @@ Full MCP setup details: [`docs/setup/cursor-mcp-setup.md`](https://github.com/ma
 
 ## What MCPs are needed (for all three options)
 
-| MCP | What it does | Required? |
-|-----|-------------|-----------|
-| Atlassian | Reads Confluence + Jira, writes the draft page | **Yes — onboarding gate** |
-| Slack | Searches messages and threads | **Yes — onboarding gate** |
-| Figma | Opens linked design files and FigJam boards | **Yes — onboarding gate** |
-| Miro | Opens linked workshop boards | **Yes — onboarding gate** |
+| Job | Tools | What it does | If missing |
+|-----|-------|-------------|-----------|
+| Docs | Confluence, Notion, Google Docs | Reads pages, writes the draft page | Draft is written as Markdown in the project folder |
+| Tracker | Jira, Linear, GitHub Issues | Reads tickets and epics | Paste the tickets you want included |
+| Chat | Slack, Teams | Searches messages and threads | Paste the threads that matter |
+| Design | Figma | Opens linked design files and FigJam boards | Skipped, and noted in the draft |
+| Boards | Miro | Opens linked workshop boards | Skipped, and noted in the draft |
+
+How the agent picks the tool for each job: `references/shared/work-tools.md`.
 
 Google Docs do not need a separate MCP — the agent opens them in the browser if you're signed in, or lists them as inaccessible if not.
 
@@ -207,8 +211,8 @@ separate `dist/`, `agents/`, or `.cursor/agents.md` packaging layout here).
 |------|-----------|
 | `SKILL.md` | Full agent specification — workflow, guardrails, MCP requirements |
 | `references/agents.md` | Full agent specification detail — guardrails, domain vocabulary, privacy rules |
-| `references/confluence-template.md` | Confluence section order and scaffold rules |
-| `references/BUILD-BRIEF.md` | Output-structure addenda (priority columns, Jira index rules) |
+| `references/brief-template.md` | Draft section order and scaffold rules |
+| `references/BUILD-BRIEF.md` | Output-structure addenda (priority columns, ticket index rules) |
 | `references/routing-rules.md` | Slack channel / domain routing |
 | `references/roadmap-boards.md` | Pointer — canonical copy is `references/from-workload-agent/roadmap-boards.md` |
 | `references/roadmap-check.md` | Pointer — canonical copy is `references/from-workload-agent/roadmap-check.md` |
@@ -218,4 +222,4 @@ separate `dist/`, `agents/`, or `.cursor/agents.md` packaging layout here).
 | `setup/cursor-mcp-setup.md` | Pointer to the canonical MCP setup guide, `docs/setup/cursor-mcp-setup.md` |
 | `setup/slack-routing-setup.md` | Slack + Cursor routing setup guide |
 | `setup/test-prompts.md` | Test prompts to verify the agent works |
-| `setup/confluence-large-bodies.md` | How to push large draft pages via REST when MCP hits size limits |
+| `setup/confluence-large-bodies.md` | Confluence only: how to push large draft pages via REST when MCP hits size limits |

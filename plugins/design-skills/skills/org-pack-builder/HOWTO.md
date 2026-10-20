@@ -4,7 +4,7 @@
 
 **What it does:** Builds `context/org-pack.local/` (your company's real
 context) from scratch via three modes: MCP extraction (auto-extract from
-Jira/Notion/Figma/Slack — recommended), guided interview, or file upload.
+your tracker, docs tool, chat, and Figma — recommended), guided interview, or file upload.
 Includes **COMPANY-VOCABULARY.md** (domain mapping), which was historically
 missing from the harness.
 
@@ -23,7 +23,9 @@ missing from the harness.
 
 **Fastest path — extracts from tools you already use:**
 
-1. Ensure MCPs are connected (Jira, Notion, Figma, Slack)
+1. Connect the tools your team uses — a tracker (Jira, Linear, or GitHub),
+   a docs tool (Confluence, Notion, or Google Docs), chat (Slack or Teams),
+   and Figma. Any one is enough to start.
 2. Say: "build org-pack from my tools"
 3. Agent calls `org-pack-builder` Mode B (MCP extraction)
 4. Wait ~30-60 seconds for extraction
@@ -32,14 +34,14 @@ missing from the harness.
 
 **What gets extracted:**
 
-- **COMPANY-BUSINESS.md** — from Jira epic descriptions, Notion strategy docs
-- **COMPANY-VOCABULARY.md** — from Jira ticket terms (frequency analysis),
-  Figma component names, Slack channel vocabulary
-- **COMPANY-VOICE.md** — from Notion brand pages, Slack tone analysis
-- **COMPANY-PATTERNS.md** — from Jira bug patterns, Figma component reuse
-- **COMPANY-SQUADS.md** — from Jira project structure
-- **COMPANY-ARCHETYPES.md** — from Jira user story patterns
-- **COMPANY-SOURCES.md** — from Notion/Confluence linked docs
+- **COMPANY-BUSINESS.md** — from epic and project descriptions, strategy pages
+- **COMPANY-VOCABULARY.md** — from ticket terms (frequency analysis),
+  Figma component names, chat channel vocabulary
+- **COMPANY-VOICE.md** — from brand pages in the docs tool, chat tone analysis
+- **COMPANY-PATTERNS.md** — from bug patterns, Figma component reuse
+- **COMPANY-SQUADS.md** — from tracker projects, teams, or repos
+- **COMPANY-ARCHETYPES.md** — from user story patterns
+- **COMPANY-SOURCES.md** — from linked pages in the docs tool
 
 All extracted content is marked `INFERRED` — review before trusting in
 production work.
@@ -168,7 +170,7 @@ You: build org-pack from my tools
 Agent:
 🔍 Extracting company context from MCPs...
 
-✓ Jira: 47 tickets, 12 epics, 4 projects
+✓ Linear: 47 issues, 12 projects, 4 teams
 ✓ Notion: 8 pages (glossary, brand voice, strategy)
 ✓ Figma: Acme Design System (120 components)
 ✓ Slack: 3 channels (tone analysis)
@@ -216,7 +218,7 @@ You: [Update selected]
 
 Agent: How do you want to update?
 
-○ Extract from Jira/Notion/Figma (recommended)
+○ Extract from my tools (recommended)
 ○ I'll answer questions manually
 ○ I'll upload files
 
@@ -225,7 +227,7 @@ Agent: How do you want to update?
 You: Extract from tools
 
 Agent:
-✓ Extracted 12 new terms from recent Jira tickets
+✓ Extracted 12 new terms from recent tickets
 ✓ Updated 5 existing definitions from Notion glossary
 ✓ Detected 2 new terminology conflicts
 
@@ -241,7 +243,7 @@ Other files unchanged.
 
 ## Troubleshooting
 
-**"I don't have Jira/Notion/Figma connected"**
+**"I don't have any tools connected"**
 
 - Use Mode A (guided interview) or Mode C (file upload) instead
 - Or connect MCPs first: see `docs/setup/cursor-mcp-setup.md`

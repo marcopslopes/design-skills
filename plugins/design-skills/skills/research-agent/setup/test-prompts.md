@@ -4,10 +4,14 @@ Run these in order to verify the workflow before production use.
 All tests run in `#product-design` or a dedicated test channel.
 
 The agent spec lives in **`SKILL.md`** (with
-**`references/agents.md`** for full detail). Confluence drafts follow
-**`references/confluence-template.md`**. For **large**
-kickoff bodies when MCP updates fail, see
-**`docs/setup/confluence-large-bodies.md`** and **`npm run confluence:put-draft-body`**.
+**`references/agents.md`** for full detail). Drafts follow
+**`references/brief-template.md`**.
+
+These prompts use **Confluence + Jira + Slack** as the example setup. On other
+tools, swap the names (Notion or Google Docs for docs, Linear or GitHub Issues
+for tickets, Teams for chat) — the expected behaviour is the same. For **large**
+Confluence bodies when MCP updates fail, see
+**`setup/confluence-large-bodies.md`** and **`npm run confluence:put-draft-body`**.
 
 ---
 
@@ -68,16 +72,16 @@ Do not create a Confluence page yet. Just list what you find.
 
 ```
 @Cursor tell me everything about placeholder-topic-xyz for a new project.
-Use my Confluence personal space (default placement per agents.md).
+Use my personal space (default placement per agents.md).
 ```
 
 **Expected:**
 
 - Agent reports thin or empty results per source where applicable
-- Creates a **minimal** Confluence **draft** using the briefing template (still
+- Creates a **minimal** **draft** page using the briefing template (still
   includes confidence rating — likely **Low** — and honest "no documented
   research" style language where appropriate)
-- Slack TL;DR reflects sparsity
+- Chat TL;DR reflects sparsity
 - Page status is **DRAFT**
 - Title pattern like `Design discovery kickoff (draft): placeholder-topic-xyz — [date]` (or `Briefing: …` if the prompt asked for a briefing only)
 
@@ -89,19 +93,19 @@ Use my Confluence personal space (default placement per agents.md).
 
 ```
 @Cursor catch me up on checkout.
-Use my Confluence personal space (default placement per agents.md).
+Use my personal space (default placement per agents.md).
 Title: Test briefing run — checkout — 2026-06-19
 ```
 
 **Expected:**
 
-- Confluence **draft** includes: executive summary **with confidence**, current
+- The **draft** page includes: executive summary **with confidence**, current
   state, research done (or explicit "none found"), relevant links grouped by
-  source; **Google Docs/Sheets** linked from cited Confluence/Jira pages are
+  source; **Google Docs/Sheets** linked from cited pages or tickets are
   summarised when the agent can **open them in the IDE browser** (snapshot) or
   via optional Google MCP / public `fetch`; otherwise listed as blocked (e.g.
   sign-in required)
-- Slack reply: short summary + confidence + draft link + key verify links
+- Chat reply: short summary + confidence + draft link + key verify links
 - Page is **DRAFT** (not published)
 - Claims cite sources; conflicts/staleness called out if present
 
@@ -119,7 +123,7 @@ Title: Test briefing run — checkout — 2026-06-19
 
 - Agent asks one clarifying question — e.g. card reader hardware vs gift cards vs
   card payments
-- Agent does **not** start live Confluence/Jira/Slack retrieval until you
+- Agent does **not** start live docs / tracker / chat retrieval until you
   answer (or it reasonably disambiguates)
 - "cards" is intentionally ambiguous
 
@@ -133,38 +137,37 @@ Title: Test briefing run — checkout — 2026-06-19
 @Cursor what's the status of onboarding
 ```
 
-*(No Confluence URL, space, or parent provided.)*
+*(No destination URL, space, or parent provided.)*
 
 **Expected:**
 
 - Agent **creates the full briefing draft** in the **authenticated user’s
-  personal Confluence space** (resolve with `getConfluenceSpaces` →
-  `type: "personal"` per `.cursor/agents.md`), **without** a parent page unless
+  personal or private space** in the docs tool (on Confluence: `getConfluenceSpaces` →
+  `type: "personal"` per `references/agents.md`), **without** a parent page unless
   the user asked for one
-- The page **note** states filing in personal space (space key like `~…`) and
+- The page **note** states filing in personal space (e.g. a Confluence space key like `~…`) and
   that the owner may **move** the page under a team parent if needed
-- Slack/chat includes the **draft URL**
+- Chat includes the **draft URL**
 
 **Alternate — explicit team parent:**
 
 **Prompt:**
 
 ```
-@Cursor brief me on referrals — file the draft under parent 4643487752 in space DT1
+@Cursor brief me on referrals — file the draft under [team page URL]
 ```
 
-**Expected:** Agent uses **DT1** + that parent (after resolving **spaceId**).
+**Expected:** Agent files under that page (after resolving its ID).
 
 **Alternate — user forbids automatic placement:**
 
 **Prompt:**
 
 ```
-@Cursor brief me on referrals — do NOT pick a Confluence destination for me; I'll give you the space next
+@Cursor brief me on referrals — do NOT pick a destination for me; I'll give you the space next
 ```
 
-**Expected:** Agent asks for personal overview URL or team **space + optional
-parent** and **does not** create the page until you reply.
+**Expected:** Agent asks for a destination (personal space or team page) and **does not** create the page until you reply.
 
 ---
 
@@ -185,7 +188,7 @@ parent** and **does not** create the page until you reply.
 
 ```
 @Cursor benchmark checkout against Airbnb and Uber, then brief me.
-Use my Confluence personal space (default placement per agents.md).
+Use my personal space (default placement per agents.md).
 ```
 
 **Expected:**

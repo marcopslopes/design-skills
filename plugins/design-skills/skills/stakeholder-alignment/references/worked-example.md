@@ -14,7 +14,7 @@ same person, no additional hidden stakeholder found.
 
 | Stakeholder | Optimizes for | Source |
 |---|---|---|
-| PM | Hitting the quarterly referral-growth target tied to PROJ-174 | Stated directly in the Jira epic description |
+| PM | Hitting the quarterly referral-growth target tied to PROJ-174 | Stated directly in the epic description |
 | Eng lead | Not shipping a half-tested change into a payment-adjacent surface again after a past incident | Inferred from a Slack comment referencing "last time" without naming the incident directly — labeled inferred |
 
 ## Step 3 — Where the disagreement lives
@@ -47,7 +47,7 @@ still work," which is easier to resolve second.
 
 | Stakeholder | What they optimize for | Source | Real objection |
 |---|---|---|---|
-| PM | Quarterly referral-growth target (PROJ-174) | Jira epic description | Wants full ship now — risk tolerance |
+| PM | Quarterly referral-growth target (PROJ-174) | Epic description | Wants full ship now — risk tolerance |
 | Eng lead | Avoiding a repeat of a past payment-adjacent incident | Inferred from Slack — not directly named | Wants staged rollout — precedent |
 
 **Root disagreement:** Risk tolerance crossed with precedent — not a

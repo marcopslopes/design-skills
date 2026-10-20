@@ -5,8 +5,8 @@ description: >-
   for engineering. Triggers on: "design handoff this design", "handoff
   spec", "developer-ready specifications", "eng spec from this design",
   "handoff this to developers". Never invents measurements or tokens.
-  Not a chat compact (`session-handoff`), not a Jira work order
-  (`ticket-create`), not a wiki page (`confluence-brief`), not why we
+  Not a chat compact (`session-handoff`), not a tracker work order
+  (`ticket-create`), not a wiki page (`docs-brief`), not why we
   chose X (`design-rationale`), not an a11y ADR
   (`accessibility-decisions`), not a standalone state matrix
   (`interaction-design`). Explicit ask only.
@@ -44,8 +44,8 @@ ticket, not a chat compact, not a rationale essay.
 |-------|-----|
 | **`design-handoff`** (this) | One composed eng spec sheet |
 | **`session-handoff`** | Compact *this chat* for a fresh agent |
-| **`ticket-create`** | Lean Jira work order (draft → go) |
-| **`confluence-brief`** | Wiki page (draft → go) |
+| **`ticket-create`** | Lean tracker work order (draft → go) |
+| **`docs-brief`** | Wiki page (draft → go) |
 | **`design-rationale`** | Why an already-made *decision* sticks |
 | **`accessibility-decisions`** | A11y ADR / a11y-only eng criteria |
 | **`interaction-design`** | Deep state × SR × keyboard × touch matrix |
@@ -58,14 +58,14 @@ ticket, not a chat compact, not a rationale essay.
   `projects/<slug>/` surface).
 - **Does not fire on:** "handoff this session" / "context is full"
   (`session-handoff`). "Create a ticket" (`ticket-create`). "Put this
-  in Confluence" (`confluence-brief`). "Why did we choose X"
+  in the docs tool" (`docs-brief`). "Why did we choose X"
   (`design-rationale`). "Accessibility handoff for eng" / "a11y ADR"
   (`accessibility-decisions`). "State matrix" alone
   (`interaction-design`). "Why does this handoff keep breaking"
   (`research-artifacts` Mode 6).
-- **Hard rule:** never send the spec to eng, Jira, Confluence, or Slack
+- **Hard rule:** never send the spec to eng, the tracker, the docs tool, or chat
   as-is. Banner it **DRAFT — validate before send**. Create / publish
-  only if they then match `ticket-create` or `confluence-brief`.
+  only if they then match `ticket-create` or `docs-brief`.
 
 ---
 
@@ -118,7 +118,7 @@ ticket, not a chat compact, not a rationale essay.
    write into `designer-context.local/` unasked. One line each in the
    task `log.md` (if any) and `harness/logs/routing-log.md`
    (`MATCHED design-handoff`).
-7. **Offer next** via payload B — ticket, Confluence, or stop. Never
+7. **Offer next** via payload B — ticket, docs page, or stop. Never
    auto-run those skills.
 
 ---
@@ -143,7 +143,7 @@ ticket, not a chat compact, not a rationale essay.
 - Invent spacing, hex, type sizes, durations, or ARIA that aren't in
   the design or a loaded source
 - Write `projects/<slug>/handoff.md` (session compact)
-- Auto-create Jira or Confluence
+- Auto-create tickets or docs pages
 - Send the file to eng without the validate banner
 - Critique the work (`ux-pattern`) or run Design Harness `audit` unless they
   also asked
@@ -186,7 +186,7 @@ unused invites. Overflow no longer contains it." History
 | Bare "handoff this" → this skill | Payload A — spec vs session vs ticket |
 | Spec written into `handoff.md` | Use `handoff-spec.md` |
 | Guessed 16px / #FF… | Token name, or Unknown, or `[NOT A TOKEN]` |
-| Auto-filed a Jira from the spec | Payload B; `ticket-create` only on go |
+| Auto-filed a ticket from the spec | Payload B; `ticket-create` only on go |
 | Ran `accessibility-decisions` because the spec has an a11y section | Thin a11y notes here; ADR stays that skill |
 | Spec opens with "this replaced the old overflow…" | Current behavior in the spec; history in `decisions.md` |
 | "Results are preserved automatically" | Name who stores what, and when |
@@ -199,7 +199,7 @@ unused invites. Overflow no longer contains it." History
 |------|------|
 | `../session-handoff/SKILL.md` | Chat compact — different `handoff.md` |
 | `../ticket-create/SKILL.md` | Lean work order after this spec |
-| `../confluence-brief/SKILL.md` | Wiki publish after this spec |
+| `../docs-brief/SKILL.md` | Wiki publish after this spec |
 | `../design-rationale/SKILL.md` | Decision why, not the spec sheet |
 | `../interaction-design/SKILL.md` | Deep state matrix this may pull |
 | `../accessibility-decisions/SKILL.md` | A11y ADR this may pull |

@@ -1,4 +1,4 @@
-# Known Jira Product Discovery boards — moved
+# Known roadmap boards — moved
 
 This file used to duplicate the roadmap board registry. The canonical,
 maintained copy now lives at

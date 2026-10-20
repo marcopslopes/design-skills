@@ -6,7 +6,7 @@ description: >
   "annotate this Figma", "add annotations to this Figma", "audit this Figma with
   notes on the canvas", "put feedback on the canvas", "Figma canvas annotations",
   "annotation cards on the board". Also the optional follow-up after a written
-  design-critique (§2d) when the designer opts in. Cross-references Confluence
+  design-critique (§2d) when the designer opts in. Cross-references docs-page
   signals when a URL is provided. Does NOT replace written findings.md critique
   (ux-pattern → content) — it visualises audit findings on the canvas. Compose
   the same house ground truth as design-critique; never maintain a separate
@@ -73,7 +73,7 @@ Each annotation card must state which layer it draws from (see Card format).
 6. **Place cards** — inject `scripts/card-builder.js` helpers, run via
    `use_figma` (Plugin API code). Load `/figma-use` (or
    `skill://figma/figma-use/SKILL.md`) before writing.
-7. **Cross-reference signals** (optional) — Confluence URL → embed links.
+7. **Cross-reference signals** (optional) — docs page URL (Confluence, Notion, or Google Docs) → embed links.
 8. **Summarise** — First look + cards by severity + top themes; log routing;
    append a short note to `projects/<slug>/findings.md` / `log.md` when a
    task folder applies.
@@ -124,7 +124,7 @@ both layers apply — craft does not soften house rules.
 1. What the problem is
 2. Why it matters / user impact
 3. Suggested fix
-4. (If signals URL was provided) clickable Confluence link at the very end
+4. (If signals URL was provided) clickable docs-page link at the very end
 
 ---
 

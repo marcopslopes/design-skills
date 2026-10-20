@@ -3,7 +3,7 @@ name: org-pack-builder
 description: >-
   Systematically builds `context/org-pack.local/` files (company context,
   domain vocabulary, voice, patterns, squads, archetypes) through three modes:
-  MCP extraction (auto-populate from Jira/Notion/Slack/Figma), guided
+  MCP extraction (auto-populate from the team's tracker, docs tool, chat, and Figma), guided
   interview, or file upload. Includes domain mapping to capture terminology
   conflicts, bounded contexts, and the domain model that other skills depend on.
   Called automatically during onboarding when org-pack.local/ is missing, or
@@ -64,14 +64,14 @@ built=<files>`.
 | Mode | When to use | Input source |
 |------|-------------|--------------|
 | **A. Guided interview** | Designer knows the context, wants to answer questions directly | Plain-text Q&A in chat |
-| **B. MCP extraction (recommended)** | Company uses Jira, Notion, Slack, Figma — auto-extract from real artifacts | MCP tool calls |
+| **B. MCP extraction (recommended)** | Team has a tracker, docs tool, chat, or Figma connected — auto-extract from real artifacts | MCP tool calls |
 | **C. File upload** | Designer has existing docs (brand guidelines, wiki pages, glossaries) to import | Designer drops files, agent parses |
 
 **Default (when called from onboarding):** Mode B (MCP extraction) if MCPs are
 connected, else Mode A (interview).
 
 **When explicitly called:** Ask which mode with `AskQuestion` unless the
-request implies one ("extract from Jira" → B, "I'll answer questions" → A,
+request implies one ("extract from our tools" / "pull from Linear" → B, "I'll answer questions" → A,
 "here's my brand guide" → C).
 
 ---
@@ -248,15 +248,19 @@ Auto-populate org-pack files by extracting domain knowledge from company tools.
 
 Check that required MCPs are connected via `GetDynamicTools`:
 
-| File to build | Required MCP | Fallback |
-|---------------|--------------|----------|
-| COMPANY-BUSINESS.md | Jira or Notion | Interview (Mode A) |
-| COMPANY-VOCABULARY.md | Jira + Figma + Slack (optional) | Interview (Mode A) |
-| COMPANY-VOICE.md | Notion or Slack | Interview (Mode A) |
-| COMPANY-PATTERNS.md | Jira + Figma | Interview (Mode A) |
-| COMPANY-SQUADS.md | Jira | Interview (Mode A) |
-| COMPANY-ARCHETYPES.md | Jira or Notion | Interview (Mode A) |
-| COMPANY-SOURCES.md | Notion or Confluence | Interview (Mode A) |
+Jobs resolve to tools per `references/shared/work-tools.md` — tracker =
+Jira, Linear, or GitHub Issues; docs = Confluence, Notion, or Google Docs;
+chat = Slack or Teams.
+
+| File to build | Needs (any one) | Fallback |
+|---------------|-----------------|----------|
+| COMPANY-BUSINESS.md | Tracker or docs | Interview (Mode A) |
+| COMPANY-VOCABULARY.md | Tracker + Figma + chat (optional) | Interview (Mode A) |
+| COMPANY-VOICE.md | Docs or chat | Interview (Mode A) |
+| COMPANY-PATTERNS.md | Tracker + Figma | Interview (Mode A) |
+| COMPANY-SQUADS.md | Tracker | Interview (Mode A) |
+| COMPANY-ARCHETYPES.md | Tracker or docs | Interview (Mode A) |
+| COMPANY-SOURCES.md | Docs | Interview (Mode A) |
 
 If an MCP is missing, **degrade gracefully**: "I can't extract
 [COMPANY-X.md] without [MCP] — want me to ask you questions for that file
@@ -269,16 +273,16 @@ possible, offer interview fallback for the rest.
 
 **Step 0: Check which MCPs are available**
 
-1. Read `designer-profile.local.md` → check `MCP tools:` list
-2. Filter extraction sources to only selected tools:
-   - If `jira` in list → extract from Jira
-   - If `notion` in list → extract from Notion
-   - If `figma` in list → extract from Figma
-   - If `slack` in list → extract from Slack
-3. If `MCP tools: none` or profile missing → **decline MCP extraction**:
+1. Read `designer-profile.local.md` → `Work tools:` and `MCP tools:` lines
+2. Extract only from the tools actually connected:
+   - **Tracker** (Jira, Linear, or GitHub Issues) → extract from tickets
+   - **Docs** (Confluence, Notion, or Google Docs) → extract from pages
+   - **Figma** → extract from the design system
+   - **Chat** (Slack or Teams) → extract from channels
+3. If nothing is connected or the profile is missing → **decline MCP extraction**:
 
-> "MCP extraction needs at least one connected tool (Jira, Notion, Figma, or
-> Slack). Want me to ask you questions manually instead?" → Mode A (interview)
+> "MCP extraction needs at least one connected tool — a tracker, a docs tool,
+> chat, or Figma. Want me to ask you questions manually instead?" → Mode A (interview)
 
 **Step 1: Authenticate available MCPs**
 
@@ -292,16 +296,16 @@ passed). If called explicitly, check each available MCP's auth state via
 Run extraction in parallel via `scripts/extract-org-pack-from-mcps.mjs` (see
 § Extraction script below). This script:
 
-1. **Jira extraction**
-   - Search epic descriptions, project overviews, custom fields for business
+1. **Tracker extraction** (Jira, Linear, or GitHub Issues)
+   - Search epic / project descriptions, project overviews, custom fields for business
      context → `COMPANY-BUSINESS.md`
    - Extract domain terms from ticket titles, descriptions, labels →
      `COMPANY-VOCABULARY.md` (term frequency analysis + context)
-   - Parse project structure, components, assignees → `COMPANY-SQUADS.md`
+   - Parse project / team / repo structure, components, assignees → `COMPANY-SQUADS.md`
    - Analyze bug reports for recurring edge cases → `COMPANY-PATTERNS.md`
    - Parse user story patterns for archetypes → `COMPANY-ARCHETYPES.md`
 
-2. **Notion extraction** (if connected)
+2. **Docs extraction** (Confluence, Notion, or Google Docs — if connected)
    - Search for: "glossary", "terminology", "vocabulary", "brand voice",
      "content guidelines", "style guide", "strategy", "OKRs", "about us"
    - Parse glossary pages → `COMPANY-VOCABULARY.md`
@@ -315,7 +319,7 @@ Run extraction in parallel via `scripts/extract-org-pack-from-mcps.mjs` (see
    - Analyze repeated component patterns → `COMPANY-PATTERNS.md`
    - Parse marketing page copy → `COMPANY-VOICE.md` (tone analysis)
 
-4. **Slack extraction** (if connected, optional)
+4. **Chat extraction** (Slack or Teams — if connected, optional)
    - Analyze message tone in design/product channels → `COMPANY-VOICE.md`
    - Extract recurring domain terms from high-signal channels →
      `COMPANY-VOCABULARY.md`
@@ -331,7 +335,7 @@ examples).
 attribution:
 
 ```markdown
-**Confidence: INFERRED from 47 Jira tickets, 12 Notion pages, 3 Figma
+**Confidence: INFERRED from 47 Linear issues, 12 Notion pages, 3 Figma
 files (2026-08-28) — review and correct before trusting in production work.**
 ```
 
@@ -343,21 +347,21 @@ Show which tools were used and what was skipped:
 ✓ Built org-pack.local/ from available tools
 
 Extracted from:
-- Jira: 47 tickets, 12 epics, 4 projects
+- Tracker (Linear): 47 issues, 12 projects, 4 teams
 - Figma: Acme Design System (120 components)
-- Slack: 3 channels (tone analysis)
+- Chat (Slack): 3 channels (tone analysis)
 
 Skipped (not connected):
-- Notion (docs/glossary extraction would improve vocabulary coverage)
+- Docs tool (glossary and strategy pages would improve vocabulary coverage)
 
 Files created:
-→ COMPANY-BUSINESS.md (business context from Jira epics)
-→ COMPANY-VOCABULARY.md (89 domain terms from Jira + Figma)
+→ COMPANY-BUSINESS.md (business context from Linear projects)
+→ COMPANY-VOCABULARY.md (89 domain terms from Linear + Figma)
 → COMPANY-VOICE.md (brand personality from Slack tone analysis)
-→ COMPANY-PATTERNS.md (12 recurring UX patterns from Jira bugs + Figma)
-→ COMPANY-SQUADS.md (team structure from Jira projects)
-→ COMPANY-ARCHETYPES.md (4 user types from Jira user stories)
-→ COMPANY-SOURCES.md (external sources from Jira/Slack links)
+→ COMPANY-PATTERNS.md (12 recurring UX patterns from Linear bugs + Figma)
+→ COMPANY-SQUADS.md (team structure from Linear teams)
+→ COMPANY-ARCHETYPES.md (4 user types from Linear user stories)
+→ COMPANY-SOURCES.md (external sources from Linear/Slack links)
 
 ⚠️ These files are INFERRED from available tools — review them in
 context/org-pack.local/ and correct any errors before using in production
@@ -367,9 +371,9 @@ work. Extraction is a starting point, not ground truth.
 **Graceful degradation messaging:**
 - If only 1 tool available → "Extracting from [tool] only — connecting
   additional tools would improve coverage."
-- If 2-3 tools → "Good coverage from [tools] — Notion would add glossary/docs
-  context." (when Notion missing)
-- If all 5 tools → "Complete extraction from all available sources."
+- If 2-3 tools → "Good coverage from [tools] — a docs tool would add glossary
+  and strategy context." (when no docs tool is connected)
+- If every job is covered → "Complete extraction from all available sources."
 
 **Step 5: Offer review**
 
@@ -388,7 +392,7 @@ empty.
 
 ## Mode C: File upload
 
-Designer drops existing docs (brand guidelines PDF, Notion export, Confluence
+Designer drops existing docs (brand guidelines PDF, Notion export, Confluence or Google Docs
 pages, glossary spreadsheet) and the agent parses them into org-pack files.
 
 ### Upload flow
@@ -436,13 +440,13 @@ Show which files were created from which uploads. Offer review.
 **Node.js script** that runs MCP extraction logic. Called from this skill via:
 
 ```javascript
-Shell(`node scripts/extract-org-pack-from-mcps.mjs --mcps jira,notion,figma,slack --output context/org-pack.local`)
+Shell(`node scripts/extract-org-pack-from-mcps.mjs --mcps=<connected tools, e.g. linear,notion,figma,slack> --output=context/org-pack.local`)
 ```
 
 **Script responsibilities:**
 
 1. Authenticate MCPs (if needed)
-2. Run parallel searches across Jira, Notion, Figma, Slack
+2. Run parallel searches across the connected tracker, docs tool, Figma, and chat
 3. Parse and structure findings
 4. Write `COMPANY-*.md` files with proper formatting
 5. Return summary stats (sources, terms extracted, files created)
@@ -451,7 +455,7 @@ Shell(`node scripts/extract-org-pack-from-mcps.mjs --mcps jira,notion,figma,slac
 error but continue with other sources. Never block the whole extraction
 because one source failed.
 
-**Deduplication**: If the same term appears in Jira and Notion, merge
+**Deduplication**: If the same term appears in the tracker and the docs tool, merge
 definitions and note both sources.
 
 See `scripts/extract-org-pack-from-mcps.mjs` for implementation.
@@ -516,7 +520,7 @@ Before marking this skill as complete:
 After using this skill:
 
 1. **Extraction quality**: Did MCP extraction produce usable domain vocabulary,
-   or was it too noisy? Which source (Jira/Notion/Figma/Slack) gave the best
+   or was it too noisy? Which source (tracker, docs, Figma, or chat) gave the best
    signal?
 2. **Interview flow**: Did any question confuse the designer? Which file took
    the longest to build?

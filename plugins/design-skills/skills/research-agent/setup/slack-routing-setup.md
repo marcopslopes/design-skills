@@ -62,8 +62,8 @@ In any configured channel, use **plain language** (no special syntax required):
 |-----------|---------|--------|
 | `last N days` | `last 7 days` | Limits Slack search window |
 | `save under [page name]` | `save under "Checkout Kickoff Jun 2026"` | Sets Confluence page title |
-| `space [KEY]` | `space DT1` | Overrides default (**personal space** per `.cursor/agents.md`) |
-| `parent [page ID]` | `parent 4643487752` | Sets Confluence parent page (use with `space …` for team filing) |
+| `space [KEY]` | `space DESIGN` | Overrides default (**personal space** per `references/agents.md`) |
+| `parent [page ID]` | `parent 123456789` | Sets Confluence parent page (use with `space …` for team filing) |
 
 ---
 
@@ -71,7 +71,7 @@ In any configured channel, use **plain language** (no special syntax required):
 
 ```
 @Cursor brief me on checkout flow before I start designs
-@Cursor catch me up on onboarding — space DT1, parent 4643487752
+@Cursor catch me up on onboarding — space DESIGN, parent 123456789
 @Cursor what do we know about provider payments?
 @Cursor tell me everything about checkout, last 30 days
 ```

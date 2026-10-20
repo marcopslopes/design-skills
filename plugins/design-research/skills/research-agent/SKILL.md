@@ -1,16 +1,17 @@
 ---
 name: research-agent
-description: "Design discovery kickoff PRD scaffold for product designers. Triggered by: \"tell me everything about X\", \"kick off discovery on X\", \"PRD starter for X\", \"catch me up on X\", \"research X for a new project\", \"what do we know about X\", \"give me ideas for X\". Searches Confluence, Jira, and Slack in full depth — plus linked Figma boards, Miro boards, and Google Docs — then writes a structured draft page to Confluence and returns a short executive summary with confidence rating. Most net-new research requests should route through design-kickoff first, which owns the PRD gate — this skill is typically invoked from within that flow (Step 1b), not called directly."
+description: "Design discovery kickoff PRD scaffold for product designers. Triggered by: \"tell me everything about X\", \"kick off discovery on X\", \"PRD starter for X\", \"catch me up on X\", \"research X for a new project\", \"what do we know about X\", \"give me ideas for X\". Searches the team's docs tool (Confluence, Notion, or Google Docs), tracker (Jira, Linear, or GitHub Issues), and chat in full depth — plus linked Figma and Miro boards — then writes a structured draft page to the docs tool and returns a short executive summary with confidence rating. Most net-new research requests should route through design-kickoff first, which owns the PRD gate — this skill is typically invoked from within that flow (Step 1b), not called directly."
 inputs:
   required:
     - topic                # what to research
   optional:
-    - squad                # narrows Jira/JPD scope
-    - date_range           # for Slack/Confluence recency
+    - squad                # narrows tracker and roadmap scope
+    - date_range           # for chat and docs recency
     - task_folder          # projects/<slug>/ if one exists
-  sources:
-    - atlassian            # Jira + Confluence
-    - slack
+  sources:                 # resolved per references/shared/work-tools.md
+    - docs                 # Confluence | Notion | Google Docs
+    - tracker              # Jira | Linear | GitHub Issues
+    - chat                 # Slack | Teams
     
 outputs:
   primary: sourced_findings              # insights with dated citations
@@ -39,22 +40,23 @@ composability:
 
 When a designer or PM asks about a topic, this skill runs a full research pass across internal tools and produces:
 
-1. A **Confluence draft page** — PRD-style scaffold with every section filled where sources exist and intentional placeholder rows where they do not.
+1. A **draft page in the team's docs tool** — PRD-style scaffold with every section filled where sources exist and intentional placeholder rows where they do not. No docs tool connected → the same scaffold as Markdown in the project folder.
 2. A **short executive summary** in chat — confidence rating + link to the draft.
 
-**Not this skill:** “Add a Confluence page under [folder] about what we’ve done / why” for an already-approved topic → that is **`confluence-brief`** (`docs/HOWTO-CONFLUENCE-BRIEF.md`), the thin draft→go twin of `ticket-create`.
+**Not this skill:** “Add a page under [folder] about what we’ve done / why” for an already-approved topic → that is **`docs-brief`**, the thin draft→go twin of `ticket-create`.
 
 ---
 
 ## Load before running
 
 1. **`references/agents.md`** — full agent specification, workflow, guardrails, the company vocabulary, Slack reply format
-2. **`references/confluence-template.md`** — Confluence section order and scaffold rules
+2. **`references/brief-template.md`** — draft section order and scaffold rules
 3. **`references/BUILD-BRIEF.md`** — output-structure addenda (§13–§15)
-4. **`references/shared/source-links.md`** — link every cited Jira/Confluence/Slack/Figma/Miro/Docs URL in chat and drafts
-5. **`docs/setup/cursor-mcp-setup.md`** — MCP configuration (first-time setup)
-6. **`COMPANY-SOURCES.md`** — global seed URL list; open rows whose section/topic matches the research ask (same Google Docs open path as in `references/agents.md`)
-7. **`projects/<slug>/sources.md`** — when a task folder is in play: read existing project links; append durable URLs found or pasted during the pass (create from template if missing). Synthesis still goes to `findings.md`.
+4. **`references/shared/work-tools.md`** — which docs tool, tracker, roadmap, and chat this team uses, and how to search, read, and write each
+5. **`references/shared/source-links.md`** — link every cited ticket, page, thread, Figma, and Miro URL in chat and drafts
+6. **`docs/setup/cursor-mcp-setup.md`** — MCP configuration (first-time setup)
+7. **`COMPANY-SOURCES.md`** — global seed URL list; open rows whose section/topic matches the research ask (same Google Docs open path as in `references/agents.md`)
+8. **`projects/<slug>/sources.md`** — when a task folder is in play: read existing project links; append durable URLs found or pasted during the pass (create from template if missing). Synthesis still goes to `findings.md`.
 
 Optional: `references/routing-rules.md`, `references/taxonomy-example.md`, `setup/test-prompts.md`
 
@@ -65,15 +67,15 @@ Copy `references/test-plan-template.md` into `projects/<slug>/testing/
 test-plan.md` when a study is actually planned or run — not before, and
 not as a permanent placeholder. See `harness/agents/researcher.md`.
 
-**Always check `references/from-workload-agent/roadmap-boards.md`** before the Jira leg of any topic that could span multiple product domains — it maps every known Jira Product Discovery board across teams, so the search isn't limited to whichever project the designer happened to name. (Canonical copy lives under `workload-agent/`, not here — see `references/roadmap-boards.md` in this folder for the pointer.)
+**Always check `references/from-workload-agent/roadmap-boards.md`** before the tracker leg of any topic that could span multiple product domains — it maps every known roadmap board across teams (Jira Product Discovery projects, Linear projects, a Notion roadmap database, or GitHub Projects), so the search isn't limited to whichever project the designer happened to name. (Canonical copy lives under `workload-agent/`, not here — see `references/roadmap-boards.md` in this folder for the pointer.)
 
-**Always check `references/from-workload-agent/roadmap-check.md`** before claiming to know a roadmap board's "current" initiatives — it has no cached list on purpose (goes stale in days), just the live JQL query to run fresh against the relevant board every time.
+**Always check `references/from-workload-agent/roadmap-check.md`** before claiming to know a roadmap board's "current" initiatives — it has no cached list on purpose (goes stale in days), just the live query to run fresh against the relevant board every time.
 
 ---
 
 ## Triggers (natural language)
 
-**Full kickoff pass** (net-new topic, produces a Confluence draft — see Workflow below):
+**Full kickoff pass** (net-new topic, produces a docs draft — see Workflow below):
 - *tell me everything about [topic]*
 - *catch me up on [topic]*
 - *kick off discovery on [topic]*
@@ -81,7 +83,7 @@ not as a permanent placeholder. See `harness/agents/researcher.md`.
 - *what do we know about [topic]*
 - *what is [topic] / is there a project on [topic]* — plain lookup phrasing is **not** an exemption from routing; see below
 
-**These all reach this skill through `design-kickoff`'s front door (`harness/ORCHESTRATOR.md` §2a — "net-new, no exceptions"), as Step 1b — never as a standalone bypass that skips the PRD/gate chain.** A designer asking "what is X" on a topic with no approved `projects/<slug>/` task is exactly as net-new as "let's build X"; both hit `design-kickoff` first. The distinction that actually matters is **gap-fill/verdict modes below** (approved task already exists) vs. **everything else** (net-new → `design-kickoff` → this skill's Step 1b). **Never** answer a net-new "what is X" from local repo files alone (`projects/*`, `src/design-harness/pages/*`) — those are this designer's own in-flight work, not verified ground truth about what the company actually has. Only a live Confluence/Jira/Slack sweep (this skill's Step 1b, reached via `design-kickoff`) answers "is this real" / "is there a project on it."
+**These all reach this skill through `design-kickoff`'s front door (`harness/ORCHESTRATOR.md` §2a — "net-new, no exceptions"), as Step 1b — never as a standalone bypass that skips the PRD/gate chain.** A designer asking "what is X" on a topic with no approved `projects/<slug>/` task is exactly as net-new as "let's build X"; both hit `design-kickoff` first. The distinction that actually matters is **gap-fill/verdict modes below** (approved task already exists) vs. **everything else** (net-new → `design-kickoff` → this skill's Step 1b). **Never** answer a net-new "what is X" from local repo files alone (`projects/*`, `src/design-harness/pages/*`) — those are this designer's own in-flight work, not verified ground truth about what the company actually has. Only a live sweep of the team's docs, tracker, and chat (this skill's Step 1b, reached via `design-kickoff`) answers "is this real" / "is there a project on it."
 
 **Lightweight gap-fill mode** (one named source, on an already-approved `projects/<slug>/` task — see § below):
 - *check Slack [channel/thread] for [topic]*
@@ -114,12 +116,12 @@ already existed).
    holds), save it verbatim to `projects.local/<slug>/inbox/` first —
    `references/shared/project-inbox.md`. The `findings.md` entry cites
    that path.
-1. Read/search only the one named source — not a full Confluence + Jira +
-   Slack + Figma + Miro sweep.
+1. Read/search only the one named source — not a full docs + tracker +
+   chat + Figma + Miro sweep.
 2. Synthesize it against what's already in that task's `findings.md` —
    what's new, what confirms existing findings, what contradicts them.
 3. Append a dated entry to `findings.md` (skill = `research-agent`) and any
-   durable URL to `sources.md` — **no Confluence draft, no PRD scaffold.**
+   durable URL to `sources.md` — **no docs draft, no PRD scaffold.**
 4. If asked to draft a reply (e.g. "what should I reply"), draft it grounded
    in the synthesis — do not send without explicit go, same posture as
    `scheduling`/`ticket-create`.
@@ -177,55 +179,55 @@ already enforces for formal studies.
 
 ---
 
-## Required MCPs
+## Tools by job
 
-| MCP | Used for | If unavailable |
-|-----|----------|----------------|
-| Atlassian | Confluence read + write · Jira read | **Decline** — can't run without Jira/Confluence |
-| Slack | Search public + private messages — private results are filtered per the privacy guardrail below before anything is surfaced | **Decline** — can't search team knowledge without Slack |
-| Miro (optional) | Board scans for links found in Jira/Slack | **Degrade** — skip Miro scans, continue with Jira/Slack/Figma only |
+Resolve each job to this team's tool with `references/shared/work-tools.md`
+(profile `Work tools:` line first, then connected tools, then ask once).
+
+| Job | Tools | Used for | If none is connected |
+|-----|-------|----------|----------------------|
+| **Docs** | Confluence, Notion, Google Docs | Read PRDs and research pages · write the draft | Read pasted docs · write the draft as Markdown in the project folder |
+| **Tracker** | Jira, Linear, GitHub Issues | Read tickets, epics, and comments | Ask the designer to paste the relevant tickets |
+| **Roadmap** | Jira Product Discovery, Linear projects, Notion database, GitHub Projects | Upcoming ideas and initiatives | Skip the roadmap leg and say so |
+| **Chat** | Slack, Teams | Search public + private messages — private results are filtered per the privacy guardrail below before anything is surfaced | Ask the designer to paste the threads that matter |
+| Figma (optional) | — | Linked design files / FigJam boards | Skip and say so |
+| Miro (optional) | — | Linked workshop boards | Skip and say so |
 
 **Availability check (Step 0 — before workflow):**
 
-Before running the workflow, check which MCPs are available:
+1. Read `designer-profile.local.md` → `Work tools:` and `MCP tools:`.
+2. For each job with no tool, use the fallback above and **say what's
+   skipped** in one line before starting:
 
-1. Read `designer-profile.local.md` → check `MCP tools:` list
-2. **If Jira/Atlassian is missing** → **decline plainly:**
+> ⚠️ No tracker is connected — I'll search your docs and chat, and you can
+> paste any tickets you want included.
 
-> "I need Jira and Confluence to run research sweeps, but Jira wasn't set up
-> during onboarding. Want to connect it now? See
-> `docs/setup/cursor-mcp-setup.md`."
-
-3. **If Slack is missing** → **decline plainly:**
-
-> "I need Slack to search team knowledge, but it wasn't set up during
-> onboarding. Want to connect it now? See `docs/setup/cursor-mcp-setup.md`."
-
-4. **If Miro is missing** → **continue with degraded mode:**
-
-> ⚠️ Miro wasn't set up — I'll skip board scans and search Jira, Confluence,
-> Slack, and Figma only.
+3. If **no docs tool and no chat** are connected, a full sweep has nothing to
+   search. Say so plainly and offer to connect one (`docs/setup/cursor-mcp-setup.md`)
+   or to work from pasted material.
 
 **Never** run partial searches without explaining what's skipped.
-| Figma | Linked design files / FigJam boards |
-| Miro | Linked workshop boards |
 
-Google Docs linked from Confluence/Jira: open in IDE browser when signed in.
+Docs linked from other sources (a Google Doc linked from a ticket, a Notion
+page linked from Slack): open them with the matching tool, or in the IDE
+browser when signed in.
 
-**Mandatory legs:** Atlassian + Slack on every full briefing. Miro + Figma when tools respond — fetch every cited board/file URL from fetched bodies, not link-only.
+**Mandatory legs:** every connected docs tool, tracker, and chat on every full
+briefing. Miro + Figma when tools respond — fetch every cited board/file URL
+from fetched bodies, not link-only.
 
 ---
 
 ## Workflow
 
-1. **Search in parallel** — Confluence (full page bodies), Jira (full issues, sweeping every board in `references/from-workload-agent/roadmap-boards.md` when the topic could span domains, running the live roadmap query from `references/from-workload-agent/roadmap-check.md` against any board the topic touches), Slack threads; then Miro/Figma for URLs found in bodies
+1. **Search in parallel** — the docs tool (full page bodies), the tracker (full tickets, sweeping every board in `references/from-workload-agent/roadmap-boards.md` when the topic could span domains, running the live roadmap query from `references/from-workload-agent/roadmap-check.md` against any board the topic touches), chat threads; then Miro/Figma for URLs found in bodies
 2. **Synthesise** — confidence rating (High / Medium / Low), conflict handling, no fabrication
-3. **Write Confluence draft** — full PRD scaffold from `references/confluence-template.md`; blank placeholders where sources are missing; **draft only**, never auto-publish
+3. **Write the draft** — full PRD scaffold from `references/brief-template.md` in the docs tool; blank placeholders where sources are missing; **draft only**, never auto-publish
 4. **Reply in chat** — executive summary + biggest open question + next action + draft link
 
-**Default filing:** authenticated user's **personal Confluence space** (`getConfluenceSpaces` → `type: "personal"`).
+**Default filing:** the designer's **personal or private space** in the docs tool — a personal Confluence space, a private Notion page, or their own Google Drive. Ask once for a shared destination if they want one, and save it to `COMPANY-SOURCES.md` § Destinations.
 
-**Large bodies:** compose full draft in `drafts/_confluence-draft-<topic-slug>-body.md`, then sync with `npm run confluence:put-draft-body` (see `setup/confluence-large-bodies.md`).
+**Large bodies (Confluence only):** the Atlassian MCP can reject very large page bodies. Compose the full draft in `drafts/_draft-<topic-slug>-body.md`, then sync with `npm run confluence:put-draft-body` (see `setup/confluence-large-bodies.md`).
 
 ---
 
@@ -241,7 +243,7 @@ Google Docs linked from Confluence/Jira: open in IDE browser when signed in.
 Biggest open question: [one sentence]
 Next action: [one sentence]
 
-📄 Draft: [Confluence draft URL]
+📄 Draft: [draft URL]
 ```
 
 ---
@@ -249,9 +251,9 @@ Next action: [one sentence]
 ## Guardrails
 
 - Never fabricate names, links, ticket keys, or dates
-- Deep Atlassian: full page bodies and full Jira issues — search snippets alone are not enough
+- Go deep: full page bodies and full tickets — search snippets alone are not enough
 - If a mandatory leg fails, say so explicitly and mark the draft as partial
-- Do not skip the Confluence draft because results are thin — thin passes still get honest gaps
+- Do not skip the draft because results are thin — thin passes still get honest gaps
 - **Privacy (BLOCKING):** searching private Slack is mandatory; surfacing everything found there is not. Never paste comp, HR, health, legal, or interpersonal-conflict content into the draft or chat reply — even as a paraphrase — and never search Slack to profile a named individual. Full rules: `references/agents.md` § Privacy & sensitive content. When in doubt, withhold and say so rather than asking permission to include it.
 
 ---
@@ -261,7 +263,7 @@ Next action: [one sentence]
 | File | Role |
 |------|------|
 | `references/agents.md` | Full agent specification |
-| `references/confluence-template.md` | Confluence section order |
+| `references/brief-template.md` | Draft section order |
 | `references/BUILD-BRIEF.md` | Output-structure addenda |
 | `references/routing-rules.md` | Slack channel / domain routing |
 | `references/roadmap-boards.md` | Pointer — canonical copy is `references/from-workload-agent/roadmap-boards.md` |

@@ -191,11 +191,11 @@ Run the practice around the work: setup, memory, debt, scheduling, tickets, and 
 | Skill | What it does | Single skill |
 |---|---|---|
 | [`case-study`](plugins/design-skills/skills/case-study/SKILL.md) | Write a project case study from its brief, findings, and decisions, with every claim sourced. | [ZIP](downloads/skills/case-study.zip) |
-| [`confluence-brief`](plugins/design-skills/skills/confluence-brief/SKILL.md) | Draft a short status or decision brief as a Confluence page. | [ZIP](downloads/skills/confluence-brief.zip) |
 | [`design-debt-tracker`](plugins/design-skills/skills/design-debt-tracker/SKILL.md) | Standalone triage and review of the per-project design debt register (projects/&lt;slug&gt;/debt.md). | [ZIP](downloads/skills/design-debt-tracker.zip) |
 | [`design-memory`](plugins/design-skills/skills/design-memory/SKILL.md) | Keep a private record of how you tend to design across projects. | [ZIP](downloads/skills/design-memory.zip) |
 | [`design-retrospective`](plugins/design-skills/skills/design-retrospective/SKILL.md) | Reflect on a shipped project: what worked, what didn’t, and what to carry forward. | [ZIP](downloads/skills/design-retrospective.zip) |
 | [`designer-workload`](plugins/design-skills/skills/designer-workload/SKILL.md) | Older version of workload-agent, kept for compatibility. Use workload-agent instead. | [ZIP](downloads/skills/designer-workload.zip) |
+| [`docs-brief`](plugins/design-skills/skills/docs-brief/SKILL.md) | Draft a short status or decision brief as a page in Confluence, Notion, or Google Docs. | [ZIP](downloads/skills/docs-brief.zip) |
 | [`harness-setup`](plugins/design-skills/skills/harness-setup/SKILL.md) | Bring in your design system, brand guidelines, and company context, or start from the examples. | [ZIP](downloads/skills/harness-setup.zip) |
 | [`manager-1on1-prep`](plugins/design-skills/skills/manager-1on1-prep/SKILL.md) | Prepare a 1:1 with a direct report from their live work and recent updates. | [ZIP](downloads/skills/manager-1on1-prep.zip) |
 | [`org-pack-builder`](plugins/design-skills/skills/org-pack-builder/SKILL.md) | Gather your company context, vocabulary, voice, and patterns into files your agent can read. | [ZIP](downloads/skills/org-pack-builder.zip) |
@@ -203,7 +203,7 @@ Run the practice around the work: setup, memory, debt, scheduling, tickets, and 
 | [`presenter`](plugins/design-skills/skills/presenter/SKILL.md) | Choose how to show built screens to a reviewer, then set up that view. | [ZIP](downloads/skills/presenter.zip) |
 | [`publish-project`](plugins/design-skills/skills/publish-project/SKILL.md) | Publish a project’s share pages to a public link when you choose to. | [ZIP](downloads/skills/publish-project.zip) |
 | [`scheduling`](plugins/design-skills/skills/scheduling/SKILL.md) | Find a meeting slot and draft the invite with real context from the project. | [ZIP](downloads/skills/scheduling.zip) |
-| [`ticket-create`](plugins/design-skills/skills/ticket-create/SKILL.md) | On-demand Jira ticket drafting and creation. | [ZIP](downloads/skills/ticket-create.zip) |
+| [`ticket-create`](plugins/design-skills/skills/ticket-create/SKILL.md) | Draft a ticket and file it in Jira, Linear, or GitHub Issues once you say go. | [ZIP](downloads/skills/ticket-create.zip) |
 
 </details>
 

@@ -1,9 +1,10 @@
 ---
 name: ticket-create
 description: >-
-  On-demand Jira ticket drafting and creation. Triggers on: "create a
-  ticket", "file a Jira", "open a DES / ENG for this", "make a design +
-  eng ticket pair". Drafts a lean work-order body first; creates only
+  On-demand ticket drafting and creation in the team's tracker (Jira,
+  Linear, or GitHub Issues). Triggers on: "create a ticket", "file a Jira",
+  "open a Linear issue", "file a GitHub issue", "open a DES / ENG for this",
+  "make a design + eng ticket pair". Drafts a lean work-order body first; creates only
   after explicit go. Never dumps chat essays, meeting retellings, or
   findings into the description. Same shape as scheduling: propose →
   confirm → act. Does not replace design-kickoff, research, or eng
@@ -14,8 +15,11 @@ description: >-
 
 > **Design Skills package.** This skill comes from the Design Harness and works on its own. If a path it mentions isn't in your project, follow [references/standalone-mode.md](references/standalone-mode.md).
 
-A thin, on-demand skill for filing **short Jira work orders** — not a
+A thin, on-demand skill for filing **short work-order tickets** — not a
 research dump, not a PRD, not a findings paste.
+
+Which tracker the team uses (Jira, Linear, or GitHub Issues) and its tool
+names: `references/shared/work-tools.md` § Tracker.
 
 **Invoke in Cursor:** "create a ticket for…", "file this on DES and ENG",
 "open a design ticket for…"
@@ -27,7 +31,7 @@ auto-creates.
 
 ## Scope boundary
 
-- **Fires on:** explicit ask to create / file / open a Jira ticket (one
+- **Fires on:** explicit ask to create / file / open a ticket or issue (one
   board or a design+eng pair).
 - **Does not fire on:** "what's on the board" → `workload-agent`;
   net-new project kickoff → `design-kickoff`; long discovery →
@@ -43,7 +47,7 @@ auto-creates.
 
 ## Hard rules
 
-1. **Draft first.** Show summary, board(s), type, Team (if DES), and the
+1. **Draft first.** Show title, container(s) (project, team, or repo), type, team field if used, and the
    lean body in chat. **Create only after explicit go** ("go", "create
    it", "ship it"). Edits → re-draft; cancel → stop.
 2. **Lean body only.** Use the template in
@@ -55,8 +59,9 @@ auto-creates.
 4. **Depth stays in the project folder.** If a `projects/<slug>/` is
    active, append a one-line dated note to `findings.md` + row(s) to
    `sources.md` after create — not the reverse.
-5. **Atlassian required.** If Jira MCP isn't available, draft in chat
-   only and say so once — never invent ticket keys.
+5. **No tracker connected → draft only.** Show the ticket in chat (or save
+   it to `projects/<slug>/artifacts/`) ready to paste, and say so once —
+   never invent ticket keys.
 
 ---
 
@@ -68,9 +73,9 @@ From the ask, lock:
 
 | Field | Typical |
 |-------|---------|
-| Board(s) | `DES` (design), `ENG` (eng), or both |
-| Issue type | DES → **UX task**; ENG → **Story** (or Task if tracking-only) |
-| Team (DES) | **Engagement Team** when engagement/referrals work — see `references/defaults.md` |
+| Container(s) | Design (`DES` in the example) and/or eng (`ENG`) — a Jira project, Linear team, or GitHub repo |
+| Type | Design → the team's design type (Jira **UX task**, a `design` label on Linear/GitHub); eng → **Story** / Task, or the eng label |
+| Team field | Only if the tracker uses one — see `references/defaults.md` |
 | Pair? | If design + eng → draft both; eng **blocked by** design |
 
 If board or pair is ambiguous, ask **one** short clarifying question
@@ -81,8 +86,8 @@ If board or pair is ambiguous, ask **one** short clarifying question
 Show for each ticket:
 
 ```
-Board: DES | Type: UX task | Team: Engagement Team | Assignee: <you or unset>
-Summary: […]
+Tracker: Jira | Container: DES | Type: UX task | Team: <team or unset> | Assignee: <you or unset>
+Title: […]
 
 --- body ---
 (lean template)
@@ -97,21 +102,22 @@ real acceptance criterion belongs.
 
 ### Step 2 — Wait for go
 
-Do **not** call `createJiraIssue` until the designer confirms.
+Do **not** call the tracker's create call until the designer confirms.
 
 ### Step 3 — Create
 
-1. `createJiraIssue` with markdown description.
-2. If pair: `createIssueLink` type **Blocks** (design blocks eng:
-   inwardIssue = DES key, outwardIssue = ENG key).
-3. Set Team on DES via `additional_fields` /
-   `customfield_10001` per `references/defaults.md`.
-4. Return clickable URLs.
+| Step | Jira | Linear | GitHub Issues |
+|------|------|--------|---------------|
+| Create | `createJiraIssue` with Markdown description | `create_issue` with team + Markdown description | `create_issue` with `owner/repo` + Markdown body |
+| Pair link (design blocks eng) | `createIssueLink` type **Blocks** (inward = design key, outward = eng key) | Set the eng issue as **blocked by** the design issue | Add "Blocked by #<design>" to the eng body (or a sub-issue / tasklist link) |
+| Team field | Per `references/defaults.md` | Team is the container | — |
+
+Return clickable URLs.
 
 ### Step 4 — Persist (if project active)
 
 - `findings.md` — one dated line: keys created + one-line purpose.
-- `sources.md` — Title / Kind=`Jira` / Why / Link / Indexed.
+- `sources.md` — Title / Kind=`Ticket` / Why / Link / Indexed.
 - `log.md` + `harness/logs/routing-log.md` — `MATCHED ticket-create`.
 
 ---
@@ -133,7 +139,8 @@ Do **not** call `createJiraIssue` until the designer confirms.
 | File | Role |
 |------|------|
 | `references/lean-body.md` | Canonical body template |
-| `references/defaults.md` | DES/ENG types, Team id, link convention |
+| `references/defaults.md` | Containers, types, team field, link convention per tracker |
+| `references/shared/work-tools.md` | Which tracker, and its tool names |
 | `docs/HOWTO-TICKET-CREATE.md` | Human-readable guide + flow diagram |
 | `harness/ORCHESTRATOR.md` §2 | Routing row |
 | `../scheduling/SKILL.md` | Same draft→confirm→act posture |

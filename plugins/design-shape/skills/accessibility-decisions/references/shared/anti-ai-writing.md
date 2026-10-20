@@ -1,8 +1,8 @@
 # Anti-AI-writing checklist — shared across every stakeholder-facing doc
 
 Any skill that produces text a stakeholder will actually read — a PRD
-(`design-kickoff`), a Confluence brief or discovery page (`confluence-brief`,
-`research-agent`), a Jira ticket (`ticket-create`), deck narration/copy
+(`design-kickoff`), a docs brief or discovery page (`docs-brief`,
+`research-agent`), a ticket (`ticket-create`), deck narration/copy
 (`deck-builder`), a critique presenter script (`critique-prep`), or an
 eng spec sheet (`design-handoff`) — runs this
 checklist before finalizing. Long-form prose
@@ -166,7 +166,7 @@ requires moving to "Assumptions & open questions" instead.
 "What nobody tells you," "Here's what most people get wrong," "The part
 everyone misses" — flattery that casts the writer as the lone expert
 before the claim. Cut the setup; state the claim. Less common in tickets
-than in Confluence narrative or deck narration, but the same tell when
+than in docs-page narrative or deck narration, but the same tell when
 it appears.
 
 ## Announce-then-state
@@ -269,7 +269,7 @@ manufacturing one for the shape of the ending.
 
 ## Significance inflation
 
-Marking a routine PRD problem statement, ticket, or Confluence update as
+Marking a routine PRD problem statement, ticket, or docs-page update as
 a "pivotal moment," a "watershed," or a "paradigm shift" when it's an
 ordinary feature request or status update. Stakeholders read these words
 as a request for outsized attention/resourcing — inflating a routine ask
@@ -289,12 +289,12 @@ speculative — we don't have data yet."
 
 ## Unfilled placeholders shipped in a stakeholder-facing doc
 
-`[INSERT STAKEHOLDER]`, `[TBD]`, `2026-XX-XX`, a Jira key placeholder like
+`[INSERT STAKEHOLDER]`, `[TBD]`, `2026-XX-XX`, a ticket key placeholder like
 `DES-???` left in a doc that actually gets created/shared. A placeholder
-is fine mid-draft; shipping one in a created Confluence page, a filed
+is fine mid-draft; shipping one in a created docs page, a filed
 ticket, or a PRD marked ready for the kickoff gate is a real defect, not
 a style nit — it reads as unfinished work handed off as done. Before
-`confluence-brief`/`ticket-create`/`research-agent` actually creates
+`docs-brief`/`ticket-create`/`research-agent` actually creates
 anything, or `design-kickoff` moves a PRD's `Status:` line past `DRAFT`,
 grep the draft for bracket-placeholder patterns and resolve or explicitly
 flag every one — never let "creating the page fills in the rest" be the
@@ -302,7 +302,7 @@ plan.
 
 ## Excessive structure
 
-Five+ headers in a 200-word Confluence page, a ticket description broken
+Five+ headers in a 200-word docs page, a ticket description broken
 into "Overview:" / "Context:" / "Key Points:" for three sentences of
 actual content, a PRD section that exists only because the template has a
 slot for it with nothing real to put there. Structure should compress
@@ -364,9 +364,9 @@ rule and this harness's no-invented-findings rule already forbid.
 | Skill | When |
 |---|---|
 | `design-kickoff` | Step 2, before the PRD's `Status:` line moves past `DRAFT` |
-| `confluence-brief` | Step 1, before showing the draft for go/no-go |
+| `docs-brief` | Step 1, before showing the draft for go/no-go |
 | `ticket-create` | Step 1, before showing the draft for go/no-go |
-| `research-agent` | Before the Confluence draft page is written |
+| `research-agent` | Before the draft page is written |
 | `case-study` | Step 4, over headings and chapter prose in `case-study.md` before saving (quotes stay verbatim) |
 | `deck-builder` | Step 2/2.5, over any narration/copy text on slides (not the data itself) |
 | `writing` | Runs this **plus** its own prose-specific rules — see `slop-patterns.md`. Existing-article pass: paste is the source. |

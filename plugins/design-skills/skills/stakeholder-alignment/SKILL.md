@@ -13,7 +13,7 @@ description: >-
   one report's status) and `design-rationale` (documents a decision
   *after* it's final — this skill is about getting to yes *before* it's
   final). Does not draft or send messages on the designer's behalf
-  without an explicit go — same posture as `ticket-create`/`confluence-brief`.
+  without an explicit go — same posture as `ticket-create`/`docs-brief`.
 ---
 
 # Stakeholder Alignment
@@ -41,9 +41,9 @@ align PM and eng on this"
   (`design-rationale` — use that once alignment here is reached).
 - **Never drafts or sends anything on the designer's behalf without an
   explicit go** — this maps the landscape and drafts the ask; a human
-  sends it. Same posture as `ticket-create`/`confluence-brief`.
+  sends it. Same posture as `ticket-create`/`docs-brief`.
 - **Composes with** `references/shared/source-links.md` when citing
-  real Slack/Jira/Confluence threads as evidence of a stated position.
+  real chat threads, tickets, or docs pages as evidence of a stated position.
 
 ---
 
@@ -144,5 +144,5 @@ if a formal record is needed after alignment lands.
 | `../design-rationale/SKILL.md` | Documents the decision once alignment is reached |
 | `../assumption-mapper/SKILL.md` | Same known-vs-inferred honesty discipline applied here to stakeholder motivations |
 | `COMPANY-SQUADS.md` | Source for squad/PM/EM names when mapping stakeholders |
-| `references/shared/source-links.md` | Link real Slack/Jira threads cited as evidence of a stated position |
+| `references/shared/source-links.md` | Link real chat threads and tickets cited as evidence of a stated position |
 | `references/worked-example.md` | Full worked example resolving a PM/eng stalemate |

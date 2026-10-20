@@ -1,7 +1,7 @@
 # Project briefing — BUILD brief
 
 Authoritative **headings, tables, and scaffold rules** for each output block live in
-[`confluence-template.md`](./confluence-template.md).
+[`brief-template.md`](./brief-template.md).
 **Workflow** and **Guardrails** live in [`agents.md`](./agents.md).
 
 ## Output structure
@@ -21,15 +21,15 @@ Items **not** listed below follow the template and `agents.md` unchanged.
   `Priority: unclear — source material doesn't support a confident call` (stated
   limitation on the **ranking**, not a blank column).
 
-### 14 · Jira tickets _(this retrieval pass)_ (template **§14**)
+### 14 · Tickets _(this retrieval pass)_ (template **§14**)
 
 **Table (required):** `Ticket` (markdown link — see `references/shared/source-links.md`) · `Summary` · `Status` · `Assignee` · `Team / squad`
 
-- List **every** issue judged **relevant to the topic** during retrieval (after
-  narrowing noisy JQL), **deduped by key** — a **scannable index**, not prose and
+- List **every** ticket judged **relevant to the topic** during retrieval (after
+  narrowing noisy queries), **deduped by key** — a **scannable index**, not prose and
   **not** “only tickets already mentioned in §4–§10.”
-- **Team / squad:** infer from **project**, **components**, **labels**, or Slack
-  / programme context when Jira does not state a squad — mark **`(inferred)`** in
+- **Team / squad:** infer from **project**, **components**, **labels**, or chat
+  / programme context when the tracker does not state a squad — mark **`(inferred)`** in
   the cell; never present a guess as a confirmed fact without that marking.
 
 ### 15 · Who's involved (template **§15**)

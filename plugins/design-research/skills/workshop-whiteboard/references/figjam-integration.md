@@ -173,7 +173,7 @@ Append to `projects/<slug>/findings.md`:
 
 **Next steps:**
 - Prioritize top 3 voted ideas
-- Assign action items in Jira
+- Assign action items in the tracker
 - Schedule follow-up session
 ```
 

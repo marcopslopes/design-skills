@@ -1,8 +1,8 @@
 # Calendar connection check — on-demand, non-blocking
 
-**Not part of the mandatory MCP gate.** The four-MCP install
-(`harness/designer-onboarding/references/mcp-check.md`) is Atlassian +
-Slack + Figma + Miro, full stop — Calendar is never added to that list,
+**Not part of onboarding tool setup.** The onboarding list
+(`harness/designer-onboarding/references/mcp-check.md`) covers the work
+tools (docs, tracker, roadmap, chat) plus Figma and Miro, full stop — Calendar is never added to that list,
 never checked during onboarding, and never blocks any other skill. This
 file exists so `scheduling` (and `manager-1on1-prep`'s optional offer
 into it) have one shared place to check Calendar availability,
@@ -25,12 +25,12 @@ again.
    by default** — the catalog available to this harness does not include
    one. Treat Calendar as **not connected** unless a probe this session
    actually shows a connected server. Don't assume one exists because
-   other MCPs (Atlassian, Slack, Figma, Miro) do.
+   other MCPs (a tracker, docs tool, chat, Figma) do.
 3. If a Calendar MCP server is found and connected, confirm it actually
    works with one cheap read (e.g. a free/busy or "list my calendars"
    call) before relying on it for a real proposal — same "listed ≠
    authenticated" discipline `mcp-check.md` §A already applies to
-   Atlassian.
+   every work tool.
 
 ## If connected
 

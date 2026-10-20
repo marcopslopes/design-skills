@@ -33,9 +33,9 @@ another skill. This is not gated to a role, unlike `manager-1on1-prep`.
 
 ## Read this first — optional, never a gate
 
-**Calendar is not a 5th mandatory MCP.** The onboarding gate
-(`harness/designer-onboarding/references/mcp-check.md`) is exactly
-Atlassian + Slack + Figma + Miro — this skill does not add to that list,
+**Calendar is not part of onboarding.** The onboarding tool setup
+(`harness/designer-onboarding/references/mcp-check.md`) covers the work
+tools (docs, tracker, roadmap, chat) plus Figma and Miro — this skill does not add to that list,
 does not check Calendar during onboarding, `design-kickoff`, or any other
 mandatory-path skill, and no other skill's behavior changes based on
 whether Calendar is connected.
@@ -149,7 +149,7 @@ Infer from the request, and ask only what's missing (batch into one
      inferable" discipline `harness/ORCHESTRATOR.md` §1 applies
      everywhere else in this repo.
   2. **`designer-profile.local.md` / `COMPANY-SQUADS.md`** — if
-     the request's context (a squad, a project, a Jira ticket) points
+     the request's context (a squad, a project, a ticket) points
      at one candidate more plausibly than the other (e.g. a design
      topic naming the Senior Product Designer candidate over the
      Program Manager one), that's a real signal, not a coin flip — but
@@ -277,7 +277,7 @@ report a clean success if any part of it wasn't confirmed.
 This skill is meant to be **called into**, not duplicated, by anything
 that hits a scheduling need mid-task — the same relationship
 `manager-1on1-prep` already has with `workload-agent` (composes its
-manager-mode output for one report, doesn't re-implement Jira querying
+manager-mode output for one report, doesn't re-implement tracker querying
 itself).
 
 - **`manager-1on1-prep`** — after producing a prep doc, if Calendar is
@@ -394,7 +394,7 @@ itself).
 
 > Request: *"Find time with Leo this week to sync on the checkout
 > redesign — no calendar, draft the message."* `projects/checkout-
-> redesign/decisions.md` has a recent entry; a Jira ticket was named
+> redesign/decisions.md` has a recent entry; a ticket was named
 > earlier in the conversation.
 >
 > "Here's a draft:
@@ -404,7 +404,7 @@ itself).
 > A few things that might be worth covering:
 > - `projects/checkout-redesign/decisions.md` logged going with the
 >   card-list layout on [date] — still holding, or has that shifted?
-> - [PROJ-482](https://your-org.atlassian.net/browse/PROJ-482) is still In
+> - [PROJ-482](<ticket URL>) is still In
 >   Progress — good time to check in on it?
 >
 > (Pulled from the project folder and that one ticket — nothing beyond

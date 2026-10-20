@@ -41,15 +41,17 @@ Must match a new or existing entry in `GALLERY_DESIGNER_ROUTES`
 
 ### B. Title (required)
 
-1. `lookupJiraAccountId` (or Atlassian user search) for the designer name.
-2. Prefer Atlassian profile `job_title` / extended profile.
-3. Fallback: Confluence people page in Design Team space (`DT1`) titled with
-   their name — look for a Roles / title line.
+1. Look the designer up in a connected directory that exposes job titles —
+   the Atlassian user profile (`lookupJiraAccountId`), the Slack or Teams
+   profile, or the Google Workspace directory.
+2. Prefer the profile's job title field.
+3. Fallback: a team people page in the docs tool (location recorded in
+   `COMPANY-SOURCES.md`) titled with their name — look for a Roles / title line.
 4. If neither yields a job title → **FAIL** (see Failure).
 
 ### C. Focus areas (required, 2–4 labels)
 
-1. Search Confluence for the designer + their squad/domain (e.g. domain
+1. Search the docs tool for the designer + their squad/domain (e.g. domain
    reference pages, people pages).
 2. Extract **2–4 short public focus labels** (e.g. `Referrals`,
    `Navigation`, `Design system`).
@@ -64,12 +66,12 @@ Must match a new or existing entry in `GALLERY_DESIGNER_ROUTES`
 
 ### D. Avatar (required for real designers)
 
-1. From Atlassian profile `picture` URL.
+1. From the same directory profile's picture URL (Atlassian, Slack, Teams, or Google).
 2. Download into `public/design-harness/avatars/<slug>.png` (commit the file).
 3. Set `avatarUrl: '/design-harness/avatars/<slug>.png'`.
-4. **Do not** hotlink atl-paas URLs (auth / expiry).
+4. **Do not** hotlink profile-picture URLs (auth / expiry).
 5. Verification fixtures only may omit `avatarUrl` (UI shows initials).
-   Real the company designers: missing avatar after a failed download → **FAIL**.
+   Real designers: missing avatar after a failed download → **FAIL**.
 
 ### E. Squad (optional)
 
@@ -115,7 +117,7 @@ If title, focus areas, or avatar cannot be resolved:
 
    ```
    [GALLERY-ENRICHMENT] Could not resolve card profile for "<Name>"
-   from Atlassian/Confluence (title / focusAreas / avatar).
+   from the directory / docs tool (title / focusAreas / avatar).
    Left unlisted — fix sources or re-run after profile exists; never invent.
    ```
 
@@ -127,6 +129,6 @@ If title, focus areas, or avatar cannot be resolved:
 
 ## Speed / UX
 
-Keep this invisible when it works: one account lookup + one Confluence
+Keep this invisible when it works: one profile lookup + one docs
 search + one avatar download. Only surface `[GALLERY-ENRICHMENT]` when
 resolution genuinely fails.

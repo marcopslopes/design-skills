@@ -57,7 +57,7 @@ when a designer happens to have it connected — that's a genuine bonus
 opt-in.** Nobody needs to go set up Mobbin to use this skill, this skill
 never nags anyone to connect it, and it is **not** part of this repo's
 onboarding MCP gate (`docs/setup/cursor-mcp-setup.md` §0b covers only
-Atlassian/Slack/Figma/Miro — Mobbin is deliberately not on that list).
+the work tools (docs, tracker, roadmap, chat) plus Figma and Miro — Mobbin is deliberately not on that list).
 
 **Before running, check whether a Mobbin MCP tool happens to be available
 in this session** (list current servers/tools; look for anything

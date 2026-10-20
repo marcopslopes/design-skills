@@ -1,7 +1,7 @@
 ---
 name: critique-prep
 description: >-
-  Turns Figma (+ brief/BRD/Confluence) into a short presenter script
+  Turns Figma (+ brief/BRD/docs page) into a short presenter script
   for a group design critique — frame, walk order, feedback ask,
   lenses to invite, blank capture sheet. Triggers on: "prep me for
   critique", "critique presenter script", "help me present this in
@@ -51,7 +51,7 @@ script**, not a critique.
 | **`deck-builder`** | Slides (case study / workshop / stakeholder) |
 | **`research-shareout`** | Research readout to stakeholders |
 | **`design-rationale`** | Why a *finished* decision sticks |
-| **`confluence-brief`** | Handoff page to build, not critique theatre |
+| **`docs-brief`** | Handoff page to build, not critique theatre |
 | **`synthetic-user-testing`** | Persona walkthrough as validation theatre |
 
 - **Fires on:** an explicit ask to prepare / frame / script a **presentation
@@ -74,10 +74,10 @@ script**, not a critique.
    `COMPANY-PATTERNS.md` when they exist (resolved per
    `harness/ORCHESTRATOR.md` §0a) — company-aware framing, never invented
    metrics.
-4. A pasted "How we critique" / UX-review Confluence URL if they gave one;
+4. A pasted "How we critique" / UX-review docs page URL (Confluence, Notion, or Google Docs) if they gave one;
    else a `COMPANY-SOURCES.md` row that names the critique ritual.
 5. Figma screenshot / metadata (MCP) when a URL is present.
-6. Linked Confluence / BRD / PRD / Jira if provided.
+6. Linked docs page / BRD / PRD / ticket if provided.
 7. Task folder `brief.md` / `decisions.md` if an active `projects/<slug>/`
    matches.
 
@@ -97,7 +97,7 @@ work they made; they do not walk in already answering the review.
    let either pass read the other's output.
 2. **Inputs.** Required: Figma / FigJam URL or a clear frame set. If
    missing → one chat line asking for the paste (not a fake menu).
-   Optional: brief/BRD/Confluence/Jira, time budget (default **15–20
+   Optional: brief/BRD/docs page/ticket, time budget (default **15–20
    min**), what they think they need feedback on, journey stage if known.
 3. **Infer stage** from the file + brief (early concept / mid-fi / final
    check). Ask only if still ambiguous — payload B. Infer the feedback
@@ -109,8 +109,8 @@ work they made; they do not walk in already answering the review.
    final-check). Company-aware only from loaded sources. Run the
    anti-slop pass.
 6. **Sign-up row.** Draft Presenter / Links / Stage / Feedback wanted /
-   Time needed **in chat only**. Never create or edit a Confluence page
-   unless they explicitly ask — then `confluence-brief`.
+   Time needed **in chat only**. Never create or edit a docs page
+   unless they explicitly ask — then `docs-brief`.
 7. **Persist + log.** Chat + append to `projects/<slug>/findings.md`
    titled **Critique presenter script — YYYY-MM-DD**. No matching
    folder → chat only, offer to open/create a task folder; do not write
@@ -136,7 +136,7 @@ work they made; they do not walk in already answering the review.
 
 - Critique the screens, or sneak findings in as "watch for…"
 - Auto-run because someone dropped a Figma URL
-- Auto-write Confluence
+- Auto-write a docs page
 - Emit slides (`deck-builder`) or an eight-chapter case-study (`writing`)
 - Read `ux-pattern` findings to "help them defend the work"
 - Script every frame in a large file

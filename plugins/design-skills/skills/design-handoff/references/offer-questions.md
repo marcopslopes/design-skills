@@ -29,7 +29,7 @@ or "create a ticket" (`ticket-create`).
       "options": [
         { "id": "spec", "label": "Developer spec for this design" },
         { "id": "session", "label": "Compact this chat for a fresh session" },
-        { "id": "ticket", "label": "A Jira work-order ticket" }
+        { "id": "ticket", "label": "A work-order ticket" }
       ]
     }
   ]
@@ -59,8 +59,8 @@ auto-run the next skill.
       "prompt": "The spec is a draft. Validate it before anyone builds from it. What next?",
       "allow_multiple": false,
       "options": [
-        { "id": "ticket", "label": "Draft a Jira ticket that points at this spec" },
-        { "id": "wiki", "label": "Draft a Confluence page" },
+        { "id": "ticket", "label": "Draft a ticket that points at this spec" },
+        { "id": "wiki", "label": "Draft a docs page (Confluence, Notion, or Google Docs)" },
         { "id": "stop", "label": "Done — I'll review the spec first" }
       ]
     }
@@ -71,6 +71,6 @@ auto-run the next skill.
 | Choice | Next |
 |---|---|
 | `ticket` | `ticket-create` — lean body; link `handoff-spec.md`; do not paste the spec into the ticket |
-| `wiki` | `confluence-brief` — draft first, create on go |
+| `wiki` | `docs-brief` — draft first, create on go |
 | `stop` | stop |
 | tool's built-in "Other…" | one clarifying follow-up |

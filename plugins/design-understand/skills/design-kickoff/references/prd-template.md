@@ -1,6 +1,6 @@
 # PRD — [Project name]
 **Status: DRAFT — pending kickoff gate approval · Author: [designer] + Claude · Date: [date]**
-**Sources swept:** Confluence [n pages] · Jira [n issues] · Slack [n threads] · Figma [n files] · Miro [n boards] · workload snapshot [date] — [date of sweep]
+**Sources swept:** [docs tool] [n pages] · [tracker] [n tickets] · [chat] [n threads] · Figma [n files] · Miro [n boards] · workload snapshot [date] — [date of sweep]
 
 ## The three questions
 - **Why are we doing this?** [answer + source, or UNKNOWN — owner to decide]
@@ -81,4 +81,4 @@ skip to screens). If present: `ui-agent` → `icon-usage` (if needed) →
 `ux-pattern` (if structure question) → `audit`.
 
 ---
-**Confluence copy:** [link, if created in Step 2.5 — otherwise "none, kept chat-only"]
+**Docs copy:** [link, if created in Step 2.5 — otherwise "none, kept chat-only"]
