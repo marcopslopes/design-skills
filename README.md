@@ -86,7 +86,9 @@ Or [download design-skills.zip](downloads/plugins/design-skills.zip) to upload i
 
    <img src="assets/claude-add-marketplace.png" alt="Claude's Add marketplace dialog with the design-skills GitHub URL and Sync automatically turned on" width="560">
 
-4. Open **Design skills** and click **Add**. Claude runs a short security scan, then the skills are ready.
+4. Open **Design skills**. Claude runs a security scan first (1–2 minutes), and the **Add** button stays grey until it passes.
+5. Click **Add** once it turns black. The skills are not active until you do.
+6. Start a new chat and type `/` plus a skill name, for example `/ux-pattern`. Or just ask for the work in plain words.
 
    <img src="assets/claude-design-skills-plugin.png" alt="The Design skills plugin in Claude, listing 69 skills and an Add button" width="560">
 
