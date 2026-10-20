@@ -81,11 +81,17 @@ Or [download design-skills.zip](downloads/plugins/design-skills.zip) to upload i
 **Claude (claude.ai and the desktop app)**
 
 1. Settings → Capabilities → turn on **Code execution and file creation**.
-2. Customize → Plugins → **Add** → **Add marketplace**, and enter `marcopslopes/design-skills`.
-3. Add **design-skills**.
+2. Customize → Plugins → **Add** → **Add marketplace**.
+3. Paste `https://github.com/marcopslopes/design-skills`, keep **Sync automatically** on, and click **Sync**.
+4. Add **design-skills** from the list.
 
-Or choose **Add → Upload plugin** and pick `design-skills.zip`. The skills then
-also work in Cowork and in Claude Code on the same account.
+With sync on, new versions arrive on their own. The skills also work in Cowork
+and in Claude Code on the same account.
+
+On Team and Enterprise plans, an Owner can add the same marketplace in the
+organization's plugin settings and make it available to everyone.
+
+No marketplace option? Choose **Add → Upload plugin** and pick `design-skills.zip`.
 
 **ChatGPT** (Business, Enterprise, and Edu plans)
 
