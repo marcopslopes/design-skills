@@ -1,0 +1,783 @@
+---
+name: ux-review
+description: >
+  Run a multi-persona UX review on any URL, local HTML file, screenshot image, or Figma frame.
+  Five parallel sub-agents (configurable user, mobile low-tech user, NNG heuristic expert,
+  UI quality & brand reviewer, JTBD reviewer) evaluate the page and produce a unified report
+  with UX health score, cognitive walkthrough, design pattern gap analysis, priority matrix,
+  and top 5 fixes. Use when the user says "ux review", "review this page", "review this site",
+  "ux audit", or provides a URL/file path/Figma link and asks for UX feedback.
+---
+
+# UX Review Skill
+
+> **Design Skills package.** This skill comes from the Design Harness and works on its own. If a path it mentions isn't in your project, follow [references/standalone-mode.md](references/standalone-mode.md).
+
+Run a comprehensive UX evaluation using 5 parallel persona-based sub-agents.
+
+## Prerequisites
+
+This skill requires a Python venv with Playwright at `~/.claude/skills/ux-review/venv/`.
+
+**First-run check:** Before doing anything else, verify the venv exists:
+
+```bash
+test -f ~/.claude/skills/ux-review/venv/bin/python && ~/.claude/skills/ux-review/venv/bin/python -c "import playwright" 2>/dev/null
+```
+
+If that fails, tell the user:
+
+> Playwright is not set up yet. Run these commands to install (one-time, ~500MB for Chromium):
+>
+> ```
+> python3 -m venv ~/.claude/skills/ux-review/venv
+> source ~/.claude/skills/ux-review/venv/bin/activate
+> pip install playwright
+> playwright install chromium
+> ```
+>
+> Then re-run `/ux-review`.
+
+**Do NOT proceed until the venv check passes.** Exception: Mode 3 (screenshot) and Mode 4 (Figma) do not require Playwright — skip the check for those modes.
+
+---
+
+## Step 1 — Detect Input Mode
+
+Auto-detect the input mode from the argument. No extra questions — just pattern match:
+
+| Mode | Detection rule | Example inputs |
+|---|---|---|
+| **Mode 1: Live URL** | Starts with `http://` or `https://` (not figma.com) | `https://example.com` |
+| **Mode 2: Local HTML** | File path ending in `.html` or `.htm` | `./prototype.html`, `/path/to/index.html` |
+| **Mode 3: Screenshot** | File path ending in `.png`, `.jpg`, `.jpeg`, `.webp`, `.gif` | `./design.png`, `~/screens/home.jpg` |
+| **Mode 4: Figma** | Contains `figma.com` in URL, or user mentions "figma" | `https://figma.com/design/...`, "review my Figma frame" |
+
+Extract the **site name** for the report filename:
+- `https://www.example.com/pricing` → `example-com`
+- `./prototype.html` → `prototype`
+- `./design.png` → `design`
+- Figma URL → extract file name or use `figma-review`
+
+Set a `mode` variable (1, 2, 3, or 4) used throughout the remaining steps.
+
+---
+
+## Step 2 — Prepare Artifacts (mode-dependent)
+
+### Mode 1: Live URL
+
+No preparation needed. URL is used directly in Step 4.
+
+### Mode 2: Local HTML File
+
+1. Verify the file exists
+2. Pick a random port between 8000-9000
+3. Start a background HTTP server:
+   ```bash
+   python3 -m http.server PORT --directory "PARENT_DIR" &
+   ```
+4. Record the PID for cleanup in Step 8
+5. Construct the URL: `http://localhost:PORT/FILENAME`
+6. **Additionally**, read the raw HTML source directly with the Read tool and extract:
+   - All `<form>` elements with their fields, validation attributes (`required`, `pattern`, `type`, `minlength`, `maxlength`)
+   - All interactive elements (`<button>`, `<a>`, `<input>`, `<select>`, elements with `onclick`/`@click`)
+   - CSS `@media` queries (responsive breakpoints)
+   - Whether JavaScript event handlers are present (click, submit, change listeners)
+7. Save this as `code-analysis.md` in the output directory — passed to all agents as extra context
+
+### Mode 3: Screenshot Image
+
+1. Verify the image file exists
+2. Copy (or note the path to) the image file — this becomes the sole artifact
+3. Create the output directory at `/tmp/ux-review-TIMESTAMP/`
+4. Copy the image as `screenshot.png` into the output directory
+5. **No Playwright, no DOM, no a11y tree.** Set flags:
+   - `has_dom = false`
+   - `has_a11y = false`
+
+### Mode 4: Figma
+
+1. Invoke the `figma:figma-use` skill to load Figma tool prerequisites
+2. If the user provided a Figma URL, parse the `fileKey` and `nodeId` from it
+3. If no specific frame/node was mentioned, ask ONE question using AskUserQuestion:
+   > "Which frame or screen should I review?"
+4. Use `get_screenshot` (from Figma MCP) to export the specified frame as a PNG
+5. Save the exported image as `screenshot.png` in the output directory
+6. **No DOM, no a11y tree.** Set flags:
+   - `has_dom = false`
+   - `has_a11y = false`
+   - `is_figma = true`
+
+---
+
+## Step 3 — Configuration Questions (3 questions max)
+
+Ask the user exactly three questions using AskUserQuestion, one at a time:
+
+**Question 1:**
+> Who is Persona A for this review? (e.g. "senior developer", "first-time shopper", "enterprise IT admin")
+
+**Question 2:**
+> What device are they on? (e.g. "desktop", "iPad", "iPhone 14")
+
+**Question 3:**
+> What type of product is this?
+> a) Marketplace or booking platform
+> b) SaaS or dashboard
+> c) E-commerce or retail
+> d) Content, media or blog
+> e) Marketing or landing page
+> f) Other — describe briefly
+
+Map the device answer to a Playwright device descriptor (used in Mode 1 and 2 only):
+- "desktop" → `"Desktop Chrome"`
+- "iphone" / "iphone 14" → `"iPhone 14"`
+- "iphone 15" → `"iPhone 15"`
+- "ipad" → `"iPad Pro 11"`
+- "android" / "pixel" → `"Pixel 7"`
+- Other → `"Desktop Chrome"` (default, note in report)
+
+Note the business type in the report header (e.g. `**Product Type:** Marketplace`).
+
+Embed the following product type context in ALL agent prompts as `PRODUCT TYPE CONTEXT:`:
+
+- **Marketplace or booking platform:** Judge primarily on trust signals (reviews, ratings, verified badges), result quality and relevance, search-to-booking friction, and provider credibility. The core question: does this page help someone find and commit to a provider?
+- **SaaS or dashboard:** Judge primarily on onboarding clarity, time-to-value, feature discoverability, and whether the interface teaches itself. The core question: can a new user accomplish something meaningful in their first session?
+- **E-commerce or retail:** Judge primarily on product discovery, checkout flow friction, shipping/return transparency, and purchase confidence. The core question: does this page remove every reason not to buy?
+- **Content, media or blog:** Judge primarily on readability, content hierarchy, ad/content ratio, and whether the user can find and consume what they came for. The core question: does the content respect the reader's attention?
+- **Marketing or landing page:** Judge primarily on single-CTA clarity, value proposition speed, social proof placement, and scroll-to-conversion path. The core question: does every element on this page serve the one action it wants the user to take?
+- **Other:** Use the user's description to calibrate what "success" looks like for this product, then evaluate accordingly.
+
+---
+
+## Step 4 — Capture Page Artifacts (Mode 1 and 2 only)
+
+**Skip this step for Mode 3 and Mode 4** — artifacts are already prepared in Step 2.
+
+Run the Playwright capture script ONCE:
+
+```bash
+~/.claude/skills/ux-review/venv/bin/python ~/.claude/skills/ux-review/scripts/run_persona.py \
+  --url "TARGET_URL" \
+  --output-dir "/tmp/ux-review-TIMESTAMP" \
+  --device "DEVICE_DESCRIPTOR" \
+  --timeout 30000
+```
+
+This produces:
+- `screenshot.png` — full-page screenshot
+- `dom.html` — cleaned DOM (scripts stripped)
+- `a11y-tree.txt` — accessibility tree snapshot
+- `metadata.json` — capture metadata
+- `error.txt` — only if capture failed
+
+**If `error.txt` exists:** Read it, report the error to the user, kill the HTTP server if running, and stop.
+
+---
+
+## Step 4b — Read Artifacts Into Memory (CRITICAL)
+
+**Sub-agents cannot read files from `/tmp/` due to permission restrictions.** The parent agent MUST read all artifacts into memory here, then embed the content directly in each sub-agent prompt in Step 5.
+
+### For Mode 1 and Mode 2:
+
+1. **Screenshot** — Read the screenshot image file using the Read tool. Write a detailed visual description (300-500 words) covering:
+   - Header layout and elements
+   - Hero section content, colors, typography
+   - Any overlays or dialogs visible
+   - Below-fold sections in scroll order
+   - Footer content
+   - Overall visual impression
+   Store this as `screenshot_description` for embedding in agent prompts.
+
+2. **Accessibility tree** — Read the full `a11y-tree.txt` file using the Read tool. Store the complete text content as `a11y_tree_content` for embedding verbatim in agent prompts. This file is typically 100-300 lines and fits easily in a prompt.
+
+3. **DOM** — The `dom.html` file is often very large (30K+ tokens). Do NOT attempt to embed it in full. Instead:
+   - Read it using the Read tool (use offset/limit if it exceeds the Read tool's token limit)
+   - Extract and summarize the key structural findings as `dom_summary` (200-400 words):
+     - What elements are used for interactive components (buttons vs spans vs divs)
+     - Form fields and their attributes (labels, required, validation patterns)
+     - Heading hierarchy (H1, H2, H3 structure)
+     - Any accessibility issues visible in the HTML (missing alt, missing labels, non-semantic elements)
+     - Notable CSS or layout patterns
+     - Any hidden content (display:none, aria-hidden)
+   - Include specific code snippets for problematic elements (e.g., a city list using `<span>` instead of `<button>`)
+
+4. **Code analysis (Mode 2 only)** — Read the `code-analysis.md` file and store as `code_analysis_content`.
+
+### For Mode 3 and Mode 4:
+
+1. **Screenshot only** — Read the screenshot image file using the Read tool. Write a detailed visual description (300-500 words) as `screenshot_description`. This is the sole artifact.
+
+---
+
+## Step 4c — DOM Pre-Audit (Mode 1 and 2 only)
+
+**Skip this step for Mode 3 and Mode 4** — no DOM available.
+
+Before dispatching agents, scan the `dom_summary` and `a11y_tree_content` from Step 4b to run 13 binary pass/fail checks. These produce ground-truth facts that agents can reference without guessing.
+
+### Checks
+
+| # | Check | Rule | Notes |
+|---|---|---|---|
+| 1 | Images without dimensions | `<img>` missing `width` or `height` — causes layout shift | Only functional/informational images. Skip decorative images (`alt=""`, `aria-hidden="true"`, or clearly presentational). |
+| 2 | Images without alt text | `<img>` with no `alt` attribute at all | Only functional/informational images. `alt=""` on decorative images is correct — do not flag. |
+| 3 | Inputs without labels | `<input>`, `<select>`, `<textarea>` with no `<label>`, `aria-label`, or `aria-labelledby` | Check both DOM and a11y tree. |
+| 4 | Icon buttons without accessible name | `<button>` containing only `<img>` or `<svg>` with no `aria-label`, no visible text | Check a11y tree for buttons with empty names. |
+| 5 | Div/span click handlers | `<div>` or `<span>` using `onclick`, `role="button"`, or `role="link"` instead of `<button>` or `<a>` | Semantic HTML required. |
+| 6 | Missing input types | `<input>` for email/phone/URL using `type="text"` instead of `type="email"`, `type="tel"`, `type="url"` | Infer from field name, placeholder, or label context. |
+| 7 | Missing autocomplete | Form inputs for name, email, phone, address without `autocomplete` attribute | Only flag on fields where autocomplete adds clear value. |
+| 8 | Zoom disabled | `<meta name="viewport">` containing `user-scalable=no` or `maximum-scale=1` | Direct accessibility violation. |
+| 9 | Missing lang attribute | `<html>` without `lang` attribute | Check DOM. |
+| 10 | Outline removed without replacement | CSS contains `outline: none` or `outline: 0` without a corresponding `:focus-visible` or `:focus` style | Check stylesheets in DOM if visible. If CSS is external and not in DOM, mark N/A. |
+| 11 | Empty links | `<a>` with `href=""` or `href="#"` and no meaningful content or `aria-label` | Check a11y tree for links with empty names or empty URLs. |
+| 12 | Missing touch-action | No `touch-action: manipulation` found in CSS on interactive elements | Flags absence at page level, not per-element. Mark N/A if not detectable. |
+| 13 | Visual affordance without interaction | Elements styled with `cursor: pointer`, underline, or button-like appearance (pill shape, background colour, border) but with no `href`, `onclick`, `role="button"`, or event handler | Catches "looks clickable but does nothing." Cross-reference a11y tree — if the element has no interactive role, it fails. |
+
+### Output Format
+
+Produce a `verified_violations` block formatted as:
+
+```
+VERIFIED_VIOLATIONS (confirmed facts from DOM inspection — not opinions):
+  FAIL [3]: Images without alt text — header search icon, location icon, Google Play badge ("Combined Shape")
+  FAIL [4]: Icon buttons without accessible name — 2 header buttons (search, location) have no aria-label
+  FAIL [13]: Visual affordance without interaction — "Iniciar sesión/Registrarse" styled as nav item but is plain <span> with no href/onclick
+  PASS [8]: Viewport does not disable zoom
+  PASS [9]: html lang="es" present
+  N/A [10]: External CSS not available for outline inspection
+  N/A [12]: CSS not available for touch-action inspection
+```
+
+Rules:
+- Each line starts with FAIL, PASS, or N/A
+- FAIL lines include the specific elements that failed (by name or description)
+- PASS lines are brief — just confirm what passed
+- N/A when the check cannot be performed (external CSS, no forms on page, etc.)
+- Order: all FAILs first, then PASSes, then N/As
+
+### Embedding in Agent Prompts
+
+Include the `verified_violations` block in **every** agent prompt in Step 5, after the artifact content and before the trends content:
+
+```
+VERIFIED_VIOLATIONS (confirmed facts from DOM inspection — not opinions):
+{verified_violations content}
+
+IMPORTANT: These are confirmed facts. Do not re-evaluate items marked PASS.
+Do not flag items already listed as FAIL — reference them if relevant to your
+analysis but do not duplicate them as new findings. Focus your analysis on
+issues NOT covered by these checks.
+```
+
+---
+
+## Step 5 — Dispatch 5 Sub-Agents in Parallel
+
+Read the reference files to construct agent prompts:
+- Read `~/.claude/skills/ux-review/references/persona-generic.md` for prompt templates
+- Read `~/.claude/skills/ux-review/references/heuristics.md` for Persona C's evaluation framework
+- Read `~/.claude/skills/ux-review/references/trends.md` for current UX best practices context
+
+Launch exactly 5 agents **in parallel** using the Agent tool.
+
+### Artifact Embedding Per Mode
+
+**IMPORTANT: Sub-agents cannot access files in `/tmp/`. All artifact content MUST be embedded directly in the agent prompt text. Never pass file paths to sub-agents.**
+
+**Mode 1 (Live URL) and Mode 2 (Local HTML):**
+Each agent prompt includes these sections with the content from Step 4b:
+- `SCREENSHOT DESCRIPTION:` followed by `screenshot_description`
+- `ACCESSIBILITY TREE (full):` followed by `a11y_tree_content` (verbatim)
+- `KEY DOM FINDINGS:` followed by `dom_summary`
+- Mode 2 agents also receive `CODE ANALYSIS:` followed by `code_analysis_content`
+
+**Mode 3 (Screenshot) and Mode 4 (Figma):**
+Each agent prompt includes `SCREENSHOT DESCRIPTION:` followed by `screenshot_description`. Add this context:
+
+```
+NOTE: This is a visual-only review ({source}). No DOM or accessibility tree is available.
+- Evaluate based on what you can see in the screenshot description only
+- Skip any checks that require DOM inspection or accessibility tree data
+- For WCAG checks, only evaluate what is visually assessable (contrast, text size, tap targets, visual hierarchy)
+- Do NOT score the Accessibility (WCAG) category — leave it out of your scores
+```
+
+Where `{source}` is "screenshot image" for Mode 3 or "Figma design export" for Mode 4.
+
+### Agent Guardrails (embedded in ALL agent prompts)
+
+Every agent prompt MUST include these guardrails at the top, before the persona instructions:
+
+```
+GUARDRAILS — READ BEFORE EVALUATING:
+
+1. COOKIE BANNERS: Cookie consent banners are a legal requirement in EU/UK
+   under GDPR and ePrivacy. Never assign Critical or P1 severity to a cookie
+   banner's existence. Only flag if:
+   - Banner is in wrong language for the page locale
+   - Banner physically blocks 100% of content with no way to dismiss
+   Maximum severity for cookie issues: Minor. Note it briefly and move on.
+
+2. CONFIDENCE THRESHOLD: The VERIFIED_VIOLATIONS section contains confirmed
+   facts from DOM inspection — trust those. For everything else, do not state
+   something is broken without evidence. If an element appears non-interactive
+   but the DOM shows it has valid href, onclick, or event handlers — it is NOT
+   broken. When uncertain, write "appears to" or "may be" rather than stating
+   as fact.
+
+3. SCORE CALIBRATION: Scores must reflect real user impact, not issue count.
+   - 7-10: Production ready, minor polish needed
+   - 5-7: Functional product with meaningful issues affecting some users
+   - 3-5: Significant problems affecting conversion and trust for many users
+   - 1-3: Core flows fundamentally broken, product unusable for primary use case
+   A widely-used commercial product with millions of active users should rarely
+   score below 4 in any category unless core flows are genuinely broken.
+```
+
+### Agent Prompts
+
+Each agent receives:
+1. The guardrails block above (at the top of the prompt)
+2. Its persona prompt (from persona-generic.md, with variables filled in)
+3. The artifact content embedded directly in the prompt (from Step 4b — NEVER file paths)
+4. The trends.md content as additional context
+5. Agent C also receives the full heuristics.md content
+6. Explicit instruction to return **valid JSON only** in the format specified in its prompt template
+
+### Agent A — Sarah Chen, Principal Product Designer
+
+```
+prompt: |
+  {Insert Global Guardrails block from persona-generic.md}
+
+  You are conducting a UX review as Sarah Chen.
+
+  YOUR PERSONA CONTEXT:
+  - User type: {user's answer to Q1}
+  - Device: {user's answer to Q2}
+
+  {Insert Agent A prompt template from persona-generic.md}
+
+  PAGE BEING REVIEWED: {URL or file path}
+
+  SCREENSHOT DESCRIPTION:
+  {Insert screenshot_description from Step 4b}
+
+  ACCESSIBILITY TREE (full):
+  {Insert a11y_tree_content from Step 4b — verbatim, or omit for Mode 3/4}
+
+  KEY DOM FINDINGS:
+  {Insert dom_summary from Step 4b — or omit for Mode 3/4}
+
+  CURRENT UX TRENDS (use as context):
+  {Insert trends.md content}
+
+  IMPORTANT: Return ONLY valid JSON in the format specified above. No markdown, no explanation outside the JSON.
+```
+
+### Agent B — Carlos Mendez, Senior UX Researcher
+
+```
+prompt: |
+  {Insert Global Guardrails block from persona-generic.md}
+
+  You are conducting a UX review as Carlos Mendez.
+
+  {Insert Agent B prompt template from persona-generic.md}
+
+  PAGE BEING REVIEWED: {URL or file path}
+
+  SCREENSHOT DESCRIPTION:
+  {Insert screenshot_description from Step 4b}
+
+  ACCESSIBILITY TREE (full):
+  {Insert a11y_tree_content from Step 4b — verbatim, or omit for Mode 3/4}
+
+  KEY DOM FINDINGS:
+  {Insert dom_summary from Step 4b — or omit for Mode 3/4}
+
+  CURRENT UX TRENDS (use as context):
+  {Insert trends.md content}
+
+  IMPORTANT: Return ONLY valid JSON in the format specified above. No markdown, no explanation outside the JSON.
+```
+
+### Agent C — Priya Sharma, Principal CRO Specialist
+
+```
+prompt: |
+  {Insert Global Guardrails block from persona-generic.md}
+
+  You are conducting a UX review as Priya Sharma.
+
+  {Insert Agent C prompt template from persona-generic.md}
+
+  HEURISTIC FRAMEWORK:
+  {Insert full heuristics.md content}
+
+  PAGE BEING REVIEWED: {URL or file path}
+
+  SCREENSHOT DESCRIPTION:
+  {Insert screenshot_description from Step 4b}
+
+  ACCESSIBILITY TREE (full):
+  {Insert a11y_tree_content from Step 4b — verbatim, or omit for Mode 3/4}
+
+  KEY DOM FINDINGS:
+  {Insert dom_summary from Step 4b — or omit for Mode 3/4}
+
+  CURRENT UX TRENDS (use as context):
+  {Insert trends.md content}
+
+  IMPORTANT: Return ONLY valid JSON in the format specified above. No markdown, no explanation outside the JSON.
+```
+
+### Agent D — Marcus Weber, Creative Director
+
+```
+prompt: |
+  {Insert Global Guardrails block from persona-generic.md}
+
+  You are conducting a UX review as Marcus Weber.
+
+  {Insert Agent D prompt template from persona-generic.md}
+
+  PAGE BEING REVIEWED: {URL or file path}
+
+  SCREENSHOT DESCRIPTION:
+  {Insert screenshot_description from Step 4b}
+
+  CURRENT UX TRENDS (use as context):
+  {Insert trends.md content}
+
+  IMPORTANT: Return ONLY valid JSON in the format specified above. No markdown, no explanation outside the JSON.
+```
+
+Note: Agent D receives only the screenshot description — DOM/a11y details are not relevant for visual design evaluation.
+
+### Agent E — Yuki Tanaka, Head of Product Strategy
+
+```
+prompt: |
+  {Insert Global Guardrails block from persona-generic.md}
+
+  You are conducting a UX review as Yuki Tanaka.
+
+  {Insert Agent E prompt template from persona-generic.md}
+
+  PAGE BEING REVIEWED: {URL or file path}
+
+  SCREENSHOT DESCRIPTION:
+  {Insert screenshot_description from Step 4b}
+
+  ACCESSIBILITY TREE HIGHLIGHTS:
+  {Insert key highlights from a11y_tree_content — interactive elements, CTAs, navigation structure, or omit for Mode 3/4}
+
+  CURRENT UX TRENDS (use as context):
+  {Insert trends.md content}
+
+  IMPORTANT: Return ONLY valid JSON in the format specified above. No markdown, no explanation outside the JSON.
+```
+
+Note: Agent E receives a11y highlights (not full tree) focused on interactive elements and CTAs relevant to job completion.
+
+---
+
+## Step 6 — Compile Unified Report
+
+Once all 5 agents return, parse their JSON responses and compile:
+
+### 6a. Calculate Scores
+
+For each category, average only the scores that were provided:
+
+| Category | Scored by |
+|---|---|
+| First Impression & Trust | A only |
+| Emotional Experience | B only |
+| Conversion & Flow | C only |
+| UI Quality & Craft | D only |
+| Jobs To Be Done | E only |
+
+Each agent provides a single score (1-10) for their category.
+
+**Overall Score** = (average of all 5 category scores) x 10, rounded to nearest integer. Out of 100. If an agent is unavailable, average across the agents that completed.
+
+**Score calibration check:** Before finalizing scores, verify they reflect real user impact:
+- 70-100: Production ready, minor polish needed
+- 50-70: Functional product with meaningful issues affecting some users
+- 30-50: Significant problems affecting conversion and trust for many users
+- Below 30: Core flows fundamentally broken, product unusable for primary use case
+
+A widely-used commercial product with millions of active users should rarely score below 40 unless core flows are genuinely broken. If the overall score is below 40, re-examine whether the category scores are calibrated against real user impact rather than issue count. WCAG details and cookie banners alone should not drag a functional product into the 30s.
+
+### 6b. Deduplicate, Rank & Assign Effort
+
+1. Collect all issues from all 5 agents
+2. Group similar issues (same element/area + same problem)
+3. For grouped issues, keep the most specific recommendation and note **which agents flagged it**
+4. **Cross-agent agreement rule:** Any issue flagged by 3+ agents is automatically elevated to Critical severity
+5. Assign **effort estimate** to every issue:
+   - **Low** — CSS/copy change, config tweak, single-file edit (< 1 hour)
+   - **Medium** — Component refactor, new element, moderate code change (1-4 hours)
+   - **High** — Architecture change, new feature, multi-file refactor (4+ hours)
+6. Sort by: critical > major > minor, then by number of agents who flagged it
+7. Select **Top 5 Priority Fixes** from the sorted list
+
+### 6c. Enrich Each Issue
+
+Before writing the report, enrich every issue (top 5 and per-agent) with these fields. Infer them from the agent's finding, the screenshot, and the DOM (if available):
+
+- **Location** — Where on the page (e.g. "Hero section search bar", "Footer social links", "Cookie dialog")
+- **Why** — One sentence: what goes wrong for the user (combines the old Flow + Moment fields)
+- **Fix** — One sentence: specific, actionable recommendation
+- **Effort** — Low / Medium / High (from step 6b)
+- **Agents** — Which agents flagged this issue (e.g. "A, B, C")
+
+### 6d. Build Cognitive Walkthrough
+
+Construct a step-by-step walkthrough of the **primary user flow** on the page (inferred from the page's purpose — e.g. "Book an appointment", "Sign up", "Find a product"). Use the screenshot, DOM, and all agent findings to populate it.
+
+Steps should follow the user's natural journey from landing to completing their goal. For each step, assess the risk level based on the issues found at that point.
+
+### 6e. Build Design Pattern Gaps
+
+Check the page for the presence of 10 standard UX patterns. Determine status from the DOM, a11y tree, and screenshot. For Mode 3/4 (visual only), assess only what's visible in the screenshot.
+
+**Only evaluate patterns relevant to the page type being reviewed.** A homepage does not need a progress indicator or save-draft — mark those N/A. A multi-step form does. Judge each pattern against what the page actually is, not against an abstract checklist.
+
+Patterns to check:
+1. Progress indicator (for multi-step flows)
+2. Save draft / auto-save
+3. Required field legend / indicator
+4. Help/support link
+5. Breadcrumb navigation
+6. Mobile responsiveness
+7. Error recovery (undo, back, cancel)
+8. Confirmation step before submit
+9. Empty states
+10. Loading states
+
+### 6f. Build Priority Matrix
+
+Create a matrix of ALL deduplicated issues ranked by Severity + Effort:
+
+| Priority | Rule |
+|---|---|
+| **P1** | Critical severity, any effort — OR — any severity flagged by 3+ agents |
+| **P2** | Major severity + Low/Medium effort — OR — Minor severity flagged by 2+ agents |
+| **P3** | Everything else |
+
+### 6g. Write the Report
+
+Save to: `{cwd}/ux-review-{site-name}-{date}.md`
+
+**Format guardrails:**
+- Markdown only, no raw HTML
+- Max 500 lines total
+- Per-agent narrative: max 150 words
+- No nested lists deeper than 2 levels
+- Report should feel like a clean Notion doc, not a dashboard
+- Reserve emojis for health score indicators and severity labels ONLY — no emoji on every line
+- Clean whitespace between sections (use `---` dividers)
+
+**Score emoji indicators (used in health score table only):**
+- 🔴 below 5
+- 🟡 5-7
+- 🟢 above 7
+
+**Effort labels (plain text, no emoji):**
+- Low
+- Medium
+- High
+
+Use this structure:
+
+```markdown
+# UX Review: {site-name}
+
+**Date:** {YYYY-MM-DD}
+**URL:** {target URL or file path}
+**Mode:** {Live URL | Local HTML | Screenshot | Figma}
+**Business Type:** {business type}
+**Personas:** A: Sarah Chen ({tech level} on {device}) · B: Carlos Mendez · C: Priya Sharma · D: Marcus Weber · E: Yuki Tanaka
+
+{If Mode 3 or 4, add this notice:}
+> Visual-only review — no DOM or accessibility data available. Export to HTML and rerun for full WCAG audit.
+
+---
+
+## UX Health Score: {overall}/100
+
+| Category | Score | |
+|---|---|---|
+| First Impression & Trust | {score}/10 | {emoji} |
+| Emotional Experience | {score}/10 | {emoji} |
+| Conversion & Flow | {score}/10 | {emoji} |
+| UI Quality & Craft | {score}/10 | {emoji} |
+| Jobs To Be Done | {score}/10 | {emoji} |
+
+---
+
+## Top 5 Priority Fixes
+
+**1. {Title}**
+**Why:** {One sentence — what goes wrong for the user}
+**Fix:** {One sentence — specific, actionable recommendation}
+**Effort:** {Low / Medium / High} · **Flagged by:** {A, B, C, D, E}
+
+**2. {Title}**
+**Why:** {one sentence}
+**Fix:** {one sentence}
+**Effort:** {effort} · **Flagged by:** {agents}
+
+**3. {Title}**
+**Why:** ...
+**Fix:** ...
+**Effort:** ... · **Flagged by:** ...
+
+**4. {Title}**
+**Why:** ...
+**Fix:** ...
+**Effort:** ... · **Flagged by:** ...
+
+**5. {Title}**
+**Why:** ...
+**Fix:** ...
+**Effort:** ... · **Flagged by:** ...
+
+---
+
+## Cognitive Walkthrough: {primary flow name}
+
+| Step | Action | Risk | Issue |
+|---|---|---|---|
+| 1 | {User lands on page} | {🟢 Low / 🟡 Medium / 🟠 High / 🔴 Critical} | {Primary issue at this step, or "None"} |
+| 2 | {User looks for search/CTA} | ... | ... |
+| 3 | ... | ... | ... |
+
+---
+
+## Design Pattern Gaps
+
+| Pattern | Status |
+|---|---|
+| Progress indicator | {✅ Present / ❌ Missing / ⚠️ Broken / N/A} |
+| Save draft / auto-save | ... |
+| Required field legend | ... |
+| Help/support link | ... |
+| Breadcrumb navigation | ... |
+| Mobile responsiveness | ... |
+| Error recovery | ... |
+| Confirmation before submit | ... |
+| Empty states | ... |
+| Loading states | ... |
+
+---
+
+## Detailed Findings
+
+### Agent A — Sarah Chen ({tech level} on {device})
+
+{Agent A's narrative — max 150 words, plain paragraph, no sub-headers}
+
+| # | Finding | Location | Effort | Agents |
+|---|---|---|---|---|
+| 1 | {finding} | {location} | {Low/Med/High} | {A, B, ...} |
+| 2 | ... | ... | ... | ... |
+
+### Agent B — Carlos Mendez
+
+{narrative — max 150 words}
+
+| # | Finding | Location | Effort | Agents |
+|---|---|---|---|---|
+| 1 | ... | ... | ... | ... |
+
+### Agent C — Priya Sharma
+
+{narrative — max 150 words}
+
+| # | Finding | Location | Effort | Agents |
+|---|---|---|---|---|
+| 1 | ... | ... | ... | ... |
+
+### Agent D — Marcus Weber
+
+{narrative — max 150 words}
+
+| # | Finding | Location | Effort | Agents |
+|---|---|---|---|---|
+| 1 | ... | ... | ... | ... |
+
+### Agent E — Yuki Tanaka
+
+{narrative — max 150 words}
+
+| # | Finding | Location | Effort | Agents |
+|---|---|---|---|---|
+| 1 | ... | ... | ... | ... |
+
+---
+
+## Priority Matrix
+
+| Issue | Effort | Agents | Priority |
+|---|---|---|---|
+| {issue title} | {Low/Med/High} | A, B, C | **P1** |
+| {issue title} | {Low/Med/High} | B, C | **P2** |
+| {issue title} | {Low/Med/High} | C | **P3** |
+| ... | ... | ... | ... |
+```
+
+**Table rules:**
+- Issues tables (per-agent): 5 columns max — #, Finding, Location, Effort, Agents
+- Rows ordered by priority (most critical first) — row order encodes severity, no Sev column needed
+- Priority matrix: 4 columns — Issue, Effort, Agents, Priority
+- No emoji in tables except the health score table
+
+### 6h. Print Terminal Summary
+
+After writing the file, print a concise summary to the terminal. **Max 15 lines.** Clean, no emoji clutter.
+
+```
+UX Review: {site-name} — {overall}/100
+
+  First Impression   {score}/10  {emoji}
+  Emotional UX       {score}/10  {emoji}
+  Conversion & Flow  {score}/10  {emoji}
+  UI Quality         {score}/10  {emoji}
+  Jobs To Be Done    {score}/10  {emoji}
+
+Top fixes:
+  1. {title} ({effort})
+  2. {title} ({effort})
+  3. {title} ({effort})
+  4. {title} ({effort})
+  5. {title} ({effort})
+
+Saved: {filename}
+```
+
+---
+
+## Step 7 — Cleanup
+
+1. If an HTTP server was started in Step 2, kill it: `kill PID`
+2. Optionally clean up `/tmp/ux-review-TIMESTAMP/` artifacts (or leave for debugging)
+
+---
+
+## Error Handling
+
+- **Playwright not installed:** Detected in prerequisite check. Print setup instructions and stop. (Skipped for Mode 3/4.)
+- **Page load failure:** `error.txt` created by script. Report to user, skip review, cleanup.
+- **File not found (Mode 2/3):** Report to user that the file path doesn't exist. Stop.
+- **Figma access failure (Mode 4):** Report Figma MCP error to user. Suggest checking authentication. Stop.
+- **One agent fails:** Compile report from the agents that succeeded. Note the missing persona in the report header. Adjust score averages to only include available scores.
+- **All agents fail:** Report the error to the user. Cleanup.
+- **HTTP server cleanup:** Always kill the server process, even if agents fail. Use the recorded PID.
+- **JSON parse failure from agent:** If an agent returns invalid JSON, attempt to extract JSON from the response using regex (`\{[\s\S]*\}`). If that fails, skip that agent and note it in the report.

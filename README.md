@@ -5,7 +5,7 @@
 <h1 align="center">Design Skills</h1>
 
 <p align="center">
-  69 design workflows for your AI agent. Free and open source.<br>
+  70 design workflows for your AI agent. Free and open source.<br>
   Research a problem, shape the experience, build on your design system, and check the work before you share it.
 </p>
 
@@ -69,13 +69,13 @@ npx skills add marcopslopes/design-skills
 
 The installer asks which agent you use.
 
-Want one workflow instead of all 69? In Claude Code, install its plugin, for
+Want one workflow instead of all 70? In Claude Code, install its plugin, for
 example `/plugin install design-research@design-skills`. The plugin names are in
 [the catalog](#the-skills).
 
 ### 2. Chat apps: add the full package as a plugin
 
-All 69 skills arrive as one plugin, **design-skills**.
+All 70 skills arrive as one plugin, **design-skills**.
 Or [download design-skills.zip](downloads/plugins/design-skills.zip) to upload it yourself.
 
 **Claude (claude.ai and the desktop app)**
@@ -218,6 +218,7 @@ Critique and check work before sharing: UX patterns, accessibility, live pages, 
 | [`synthetic-user-testing`](plugins/design-skills/skills/synthetic-user-testing/SKILL.md) | Walk a prototype through key tasks as named personas to find friction before real testing. | [ZIP](downloads/skills/synthetic-user-testing.zip) |
 | [`taste-feedback`](plugins/design-skills/skills/taste-feedback/SKILL.md) | Check visual density, weight, and hierarchy mid-build, before a full critique. | [ZIP](downloads/skills/taste-feedback.zip) |
 | [`ux-pattern`](plugins/design-skills/skills/ux-pattern/SKILL.md) | Review a flow’s structure against how your product works, not just how it looks. | [ZIP](downloads/skills/ux-pattern.zip) |
+| [`ux-review`](plugins/design-skills/skills/ux-review/SKILL.md) | Run a five-persona UX review on a URL, HTML file, screenshot, or Figma frame and get one scored report. | [ZIP](downloads/skills/ux-review.zip) |
 
 ### Explain and hand off
 

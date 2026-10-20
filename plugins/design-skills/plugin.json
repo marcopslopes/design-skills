@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "design-skills",
   "version": "0.1.0",
-  "description": "All 69 design skills: research, UX, content, accessibility, build, review, and handoff.",
+  "description": "All 70 design skills: research, UX, content, accessibility, build, review, and handoff.",
   "author": {
     "name": "Marco Paulo Lopes",
     "url": "https://github.com/marcopslopes"
@@ -22,7 +22,7 @@
     "com.openai": {
       "interface": {
         "displayName": "Design Skills",
-        "shortDescription": "All 69 design skills: research, UX, content, accessibility, build, review, and handoff.",
+        "shortDescription": "All 70 design skills: research, UX, content, accessibility, build, review, and handoff.",
         "developerName": "Marco Paulo Lopes",
         "category": "Design",
         "capabilities": [
