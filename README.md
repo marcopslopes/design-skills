@@ -83,7 +83,12 @@ Or [download design-skills.zip](downloads/plugins/design-skills.zip) to upload i
 1. Settings → Capabilities → turn on **Code execution and file creation**.
 2. Customize → Plugins → **Add** → **Add marketplace**.
 3. Paste `https://github.com/marcopslopes/design-skills`, keep **Sync automatically** on, and click **Sync**.
-4. Add **design-skills** from the list.
+
+   <img src="assets/claude-add-marketplace.png" alt="Claude's Add marketplace dialog with the design-skills GitHub URL and Sync automatically turned on" width="560">
+
+4. Open **Design skills** and click **Add**. Claude runs a short security scan, then the skills are ready.
+
+   <img src="assets/claude-design-skills-plugin.png" alt="The Design skills plugin in Claude, listing 69 skills and an Add button" width="560">
 
 With sync on, new versions arrive on their own. The skills also work in Cowork
 and in Claude Code on the same account.
