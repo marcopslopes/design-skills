@@ -217,11 +217,24 @@ a prototype app, use the [Design Harness](https://github.com/marcopslopes/design
 This is an early release. Tell me what worked, what broke, and which workflow you
 wish existed.
 
-- [Report an issue](https://github.com/marcopslopes/design-skills/issues)
+- [Report an issue](https://github.com/marcopslopes/design-skills/issues) when a skill breaks, gives a weak result, or a workflow is missing.
 - [The Design Harness site](https://thedesignharness.com)
 
-The skills are generated from `harness/skills/` in the Design Harness. To change
-a skill, open an issue or a pull request there.
+## Contribute
+
+You can improve a skill or add a new one. The skills in this repo are
+generated from `harness/skills/` in the
+[Design Harness](https://github.com/marcopslopes/design-harness), so a pull
+request here would be overwritten by the next build. Open it in the Harness
+instead:
+
+1. Fork the [Design Harness](https://github.com/marcopslopes/design-harness).
+2. Edit the skill in `harness/skills/<skill>/SKILL.md`, or add a new skill folder.
+3. Open a pull request and say what design problem the change solves.
+
+The [contributing guide](https://github.com/marcopslopes/design-harness/blob/main/CONTRIBUTING.md)
+covers the skill format and what makes a good skill. Not sure your idea fits?
+[Open an issue](https://github.com/marcopslopes/design-skills/issues) first.
 
 Created by **[Marco Paulo Lopes](https://github.com/marcopslopes)**. Version 0.1.0.
 
