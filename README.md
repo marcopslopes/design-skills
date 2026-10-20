@@ -36,54 +36,75 @@ drop into the agent you already use.
 
 ## Install
 
-The package comes as plugins: `design-skills` holds all 69 skills, and seven
-smaller plugins hold one workflow each (see [the catalog](#the-skills)). Install
-whichever you want, in the app you use.
+Pick the way that fits how you work.
 
-### Claude (claude.ai and the desktop app)
+| You use | Do this |
+| --- | --- |
+| Claude Code, Codex, Cursor, or another coding agent | [1. Run the install command](#1-coding-agents-run-the-install-command) |
+| Claude (claude.ai or the desktop app), ChatGPT, or another chat app | [2. Add the full package as a plugin](#2-chat-apps-add-the-full-package-as-a-plugin) |
+| Any of them, and you only want one skill | [3. Download a single skill](#3-one-skill-download-its-zip) |
 
-1. Settings → Capabilities → turn on **Code execution and file creation**.
-2. Customize → Plugins → **Add** → **Add marketplace**, and enter `marcopslopes/design-skills`.
-3. Add **design-skills** for everything, or one workflow plugin.
+### 1. Coding agents: run the install command
 
-The skills then work in chat, in Cowork, and in Claude Code signed in to the same account.
-No marketplace? Use **Add → Upload plugin** with [design-skills.zip](downloads/plugins/design-skills.zip) instead.
-
-### ChatGPT
-
-Skills in ChatGPT are available on Business, Enterprise, and Edu plans.
-
-- **Whole package (workspace admin):** Admin console → Plugins → **Add** → **Import marketplace**, and enter `https://github.com/marcopslopes/design-skills`. Or **Upload plugin** with [design-skills.zip](downloads/plugins/design-skills.zip). Then make the plugins available to your members.
-- **One skill (any member):** Plugins → Skills → **Create** → **Upload from your computer**, with a single-skill zip from [the catalog](#the-skills).
-
-### Claude Code
+**Claude Code**
 
 ```text
 /plugin marketplace add marcopslopes/design-skills
 /plugin install design-skills@design-skills
 ```
 
-For one workflow, install its plugin instead, for example `/plugin install design-research@design-skills`.
-
-### Codex (CLI and the ChatGPT desktop app)
+**Codex**
 
 ```bash
 codex plugin marketplace add marcopslopes/design-skills
 ```
 
-Open `/plugins`, choose the **Design Skills** marketplace, and install the plugins you want. Start a new session to use them.
+Then open `/plugins`, choose **Design Skills**, and install. Start a new session to use them.
 
-### Cursor and other agents
+**Cursor and any other agent** (Windsurf, Gemini CLI, Copilot, and more)
 
 ```bash
 npx skills add marcopslopes/design-skills
 ```
 
-The installer asks which agent you use. To add a single skill, name it:
+The installer asks which agent you use.
 
-```bash
-npx skills add marcopslopes/design-skills --skill research-synthesis
-```
+Want one workflow instead of all 69? In Claude Code, install its plugin, for
+example `/plugin install design-research@design-skills`. The plugin names are in
+[the catalog](#the-skills).
+
+### 2. Chat apps: add the full package as a plugin
+
+All 69 skills arrive as one plugin, **design-skills**.
+Or [download design-skills.zip](downloads/plugins/design-skills.zip) to upload it yourself.
+
+**Claude (claude.ai and the desktop app)**
+
+1. Settings → Capabilities → turn on **Code execution and file creation**.
+2. Customize → Plugins → **Add** → **Add marketplace**, and enter `marcopslopes/design-skills`.
+3. Add **design-skills**.
+
+Or choose **Add → Upload plugin** and pick `design-skills.zip`. The skills then
+also work in Cowork and in Claude Code on the same account.
+
+**ChatGPT** (Business, Enterprise, and Edu plans)
+
+A workspace admin goes to Admin console → Plugins → **Add**, then either
+**Import marketplace** with `https://github.com/marcopslopes/design-skills`, or
+**Upload plugin** with `design-skills.zip`. Then make it available to members.
+
+**Other apps** that accept Claude or Codex plugins can use the same zip.
+
+Each workflow also has its own smaller plugin zip in [the catalog](#the-skills).
+
+### 3. One skill: download its zip
+
+Every skill in [the catalog](#the-skills) has a **ZIP** link.
+
+- **Claude:** Customize → Skills → **+** → Create skill → **Upload a skill**.
+- **ChatGPT:** Plugins → Skills → **Create** → **Upload from your computer**.
+- **A coding agent:** unzip it into the agent's skills folder, or run
+  `npx skills add marcopslopes/design-skills --skill <skill-name>`.
 
 ## Try it
 
