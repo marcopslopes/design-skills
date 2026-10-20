@@ -2,28 +2,17 @@
   <img src="assets/logo.png" alt="The Design Harness wizard" width="160">
 </p>
 
-<h1 align="center">Design Skills</h1>
+# Design Skills
 
-<p align="center">
-  70 design workflows for your AI agent. Free and open source.<br>
-  Research a problem, shape the experience, build on your design system, and check the work before you share it.
-</p>
+70 design workflows for the AI agent you already use. Free and open source.
+Research a problem, shape the experience, build on your design system, and check
+the work before you share it.
 
-<p align="center">
-  <a href="https://thedesignharness.com/skills.html"><strong>Browse the skills</strong></a> ·
-  <a href="#install">Install</a> ·
-  <a href="https://github.com/marcopslopes/design-harness">The full Design Harness</a>
-</p>
+A skill is a written playbook your agent follows for one kind of design work: what
+to bring, which steps to take, what to check, and what to hand back. You get the
+same careful process every time instead of a fresh prompt.
 
----
-
-A skill is a written playbook your agent follows for one kind of design work.
-It says what to bring, which steps to take, what to check, and what to hand back.
-Instead of a fresh prompt every time, you get the same careful process every time.
-
-These skills come from the [Design Harness](https://github.com/marcopslopes/design-harness),
-a complete design workspace. This package is the skills on their own, ready to
-drop into the agent you already use.
+**[Browse the skills](https://thedesignharness.com/skills.html) · [Get started](#get-started) · [The full Design Harness](https://github.com/marcopslopes/design-harness)**
 
 ## What you can do
 
@@ -31,111 +20,55 @@ drop into the agent you already use.
 - **Run research.** Write screeners and test guides, synthesize interviews into evidence-backed patterns, and write insights that pass a so-what check.
 - **Shape the experience.** Spec interaction states, motion, responsive behaviour, and product copy, with accessibility built in.
 - **Build on your design system.** Compose screens from your real tokens and components, and keep Figma and code in sync.
-- **Review before you share.** Critique flows against UX patterns, check accessibility, and review live pages and Figma files.
+- **Review before you share.** Critique flows, check accessibility, and review live pages and Figma files.
 - **Explain and hand off.** Document the rationale, write handoff specs, and turn findings into reports and decks.
 
-## Install
+Install all 70 skills as one plugin, one workflow at a time, or a single skill.
 
-Pick the way that fits how you work.
+## Get started
 
-| You use | Do this |
-| --- | --- |
-| Claude Code, Codex, Cursor, or another coding agent | [1. Run the install command](#1-coding-agents-run-the-install-command) |
-| Claude (claude.ai or the desktop app), ChatGPT, or another chat app | [2. Add the full package as a plugin](#2-chat-apps-add-the-full-package-as-a-plugin) |
-| Any of them, and you only want one skill | [3. Download a single skill](#3-one-skill-download-its-zip) |
+**In Claude (claude.ai or the desktop app).** Go to Customize → Plugins → Add →
+**Add marketplace**, paste `https://github.com/marcopslopes/design-skills`, and click
+**Sync**. Open **Design skills**, wait for the security scan to finish, then click
+**Add**. Code execution must be on in Settings → Capabilities.
 
-### 1. Coding agents: run the install command
+<img src="assets/claude-add-marketplace.png" alt="Claude's Add marketplace dialog with the design-skills GitHub URL and Sync automatically turned on" width="520">
 
-**Claude Code**
+**In Claude Code:**
 
 ```text
 /plugin marketplace add marcopslopes/design-skills
 /plugin install design-skills@design-skills
 ```
 
-**Codex**
+**In Codex:** run `codex plugin marketplace add marcopslopes/design-skills`, then
+install from `/plugins`.
 
-```bash
-codex plugin marketplace add marcopslopes/design-skills
-```
-
-Then open `/plugins`, choose **Design Skills**, and install. Start a new session to use them.
-
-**Cursor and any other agent** (Windsurf, Gemini CLI, Copilot, and more)
+**In Cursor or any other agent:**
 
 ```bash
 npx skills add marcopslopes/design-skills
 ```
 
-The installer asks which agent you use.
+**In ChatGPT** (Business, Enterprise, and Edu), a workspace admin imports the same
+GitHub URL under Admin console → Plugins → **Import marketplace**.
 
-Want one workflow instead of all 70? In Claude Code, install its plugin, for
-example `/plugin install design-research@design-skills`. The plugin names are in
-[the catalog](#the-skills).
+**Just one skill?** Every skill below has a ZIP you can upload under Skills in
+Claude or ChatGPT, or add with `npx skills add marcopslopes/design-skills --skill <name>`.
 
-### 2. Chat apps: add the full package as a plugin
-
-All 70 skills arrive as one plugin, **design-skills**.
-Or [download design-skills.zip](downloads/plugins/design-skills.zip) to upload it yourself.
-
-**Claude (claude.ai and the desktop app)**
-
-1. Settings → Capabilities → turn on **Code execution and file creation**.
-2. Customize → Plugins → **Add** → **Add marketplace**.
-3. Paste `https://github.com/marcopslopes/design-skills`, keep **Sync automatically** on, and click **Sync**.
-
-   <img src="assets/claude-add-marketplace.png" alt="Claude's Add marketplace dialog with the design-skills GitHub URL and Sync automatically turned on" width="560">
-
-4. Open **Design skills**. Claude runs a security scan first (1–2 minutes), and the **Add** button stays grey until it passes.
-5. Click **Add** once it turns black. The skills are not active until you do.
-6. Start a new chat and type `/` plus a skill name, for example `/ux-pattern`. Or just ask for the work in plain words.
-
-   <img src="assets/claude-design-skills-plugin.png" alt="The Design skills plugin in Claude, listing 69 skills and an Add button" width="560">
-
-With sync on, new versions arrive on their own. The skills also work in Cowork
-and in Claude Code on the same account.
-
-On Team and Enterprise plans, an Owner can add the same marketplace in the
-organization's plugin settings and make it available to everyone.
-
-No marketplace option? Choose **Add → Upload plugin** and pick `design-skills.zip`.
-
-**ChatGPT** (Business, Enterprise, and Edu plans)
-
-A workspace admin goes to Admin console → Plugins → **Add**, then either
-**Import marketplace** with `https://github.com/marcopslopes/design-skills`, or
-**Upload plugin** with `design-skills.zip`. Then make it available to members.
-
-**Other apps** that accept Claude or Codex plugins can use the same zip.
-
-Each workflow also has its own smaller plugin zip in [the catalog](#the-skills).
-
-### 3. One skill: download its zip
-
-Every skill in [the catalog](#the-skills) has a **ZIP** link.
-
-- **Claude:** Customize → Skills → **+** → Create skill → **Upload a skill**.
-- **ChatGPT:** Plugins → Skills → **Create** → **Upload from your computer**.
-- **A coding agent:** unzip it into the agent's skills folder, or run
-  `npx skills add marcopslopes/design-skills --skill <skill-name>`.
-
-## Try it
-
-Ask for the work in plain words. Your agent picks the matching skill, or you can name it.
+Then ask for the work in plain words. Your agent picks the matching skill:
 
 > Map the assumptions behind our new referral feature. Separate what we know from what we believe.
 
-> Synthesize these six interview transcripts. Tag the evidence and show which patterns are strong enough to act on.
-
 > Review this checkout flow against common UX patterns and flag anything that will confuse first-time users.
 
-> Write the handoff spec for this settings screen: states, edge cases, and accessibility notes for engineering.
-
-Each skill tells you what it needs. Most work best with your product context nearby: a brief, research notes, your design tokens, or the screens you're reviewing.
+Most skills work best with your product context nearby: a brief, research notes,
+your design tokens, or the screens you're reviewing.
 
 ## The skills
 
-### Understand the problem
+<details>
+<summary><strong>Understand the problem</strong> · 10 skills</summary>
 
 Frame the problem before designing: assumptions, objects, decisions, strategy, and priorities. Plugin: `design-understand` · [download zip](downloads/plugins/design-understand.zip)
 
@@ -152,7 +85,10 @@ Frame the problem before designing: assumptions, objects, decisions, strategy, a
 | [`stakeholder-alignment`](plugins/design-skills/skills/stakeholder-alignment/SKILL.md) | Identify who needs to agree, what matters to them, and the decision to ask for. | [ZIP](downloads/skills/stakeholder-alignment.zip) |
 | [`workload-agent`](plugins/design-skills/skills/workload-agent/SKILL.md) | Check the live product roadmap and design workload from connected boards. | [ZIP](downloads/skills/workload-agent.zip) |
 
-### Research and synthesize
+</details>
+
+<details>
+<summary><strong>Research and synthesize</strong> · 13 skills</summary>
 
 Plan, run, and synthesize research: screeners, test guides, synthesis, insights, and share-outs. Plugin: `design-research` · [download zip](downloads/plugins/design-research.zip)
 
@@ -172,7 +108,10 @@ Plan, run, and synthesize research: screeners, test guides, synthesis, insights,
 | [`usability-test-guide`](plugins/design-skills/skills/usability-test-guide/SKILL.md) | Prepare the tasks, questions, and measures for a usability test. | [ZIP](downloads/skills/usability-test-guide.zip) |
 | [`workshop-whiteboard`](plugins/design-skills/skills/workshop-whiteboard/SKILL.md) | Run a timed research-scoping board with your team, from problem to plan. | [ZIP](downloads/skills/workshop-whiteboard.zip) |
 
-### Shape the experience
+</details>
+
+<details>
+<summary><strong>Shape the experience</strong> · 8 skills</summary>
 
 Shape interaction, content, motion, accessibility, and responsive behaviour. Plugin: `design-shape` · [download zip](downloads/plugins/design-shape.zip)
 
@@ -187,7 +126,10 @@ Shape interaction, content, motion, accessibility, and responsive behaviour. Plu
 | [`motion-choreography`](plugins/design-skills/skills/motion-choreography/SKILL.md) | Spec, review, and plan purposeful animation, always with a reduced-motion alternative. | [ZIP](downloads/skills/motion-choreography.zip) |
 | [`responsive-patterns`](plugins/design-skills/skills/responsive-patterns/SKILL.md) | Content-driven breakpoint strategy, reflow, priority shifting, and 200% zoom / WCAG 1.4.10 discipline for multi-width layouts. | [ZIP](downloads/skills/responsive-patterns.zip) |
 
-### Build and prototype
+</details>
+
+<details>
+<summary><strong>Build and prototype</strong> · 9 skills</summary>
 
 Build screens on real design tokens and components, and keep Figma and code in sync. Plugin: `design-build` · [download zip](downloads/plugins/design-build.zip)
 
@@ -203,7 +145,10 @@ Build screens on real design tokens and components, and keep Figma and code in s
 | [`mobile-shell`](plugins/design-skills/skills/mobile-shell/SKILL.md) | Keep phone-frame prototypes consistent: status bar, navigation, tab bar, and sheets. | [ZIP](downloads/skills/mobile-shell.zip) |
 | [`ui-agent`](plugins/design-skills/skills/ui-agent/SKILL.md) | Build a screen using your product’s design tokens and shared components. | [ZIP](downloads/skills/ui-agent.zip) |
 
-### Review and validate
+</details>
+
+<details>
+<summary><strong>Review and validate</strong> · 10 skills</summary>
 
 Critique and check work before sharing: UX patterns, accessibility, live pages, and audits. Plugin: `design-review` · [download zip](downloads/plugins/design-review.zip)
 
@@ -220,7 +165,10 @@ Critique and check work before sharing: UX patterns, accessibility, live pages, 
 | [`ux-pattern`](plugins/design-skills/skills/ux-pattern/SKILL.md) | Review a flow’s structure against how your product works, not just how it looks. | [ZIP](downloads/skills/ux-pattern.zip) |
 | [`ux-review`](plugins/design-skills/skills/ux-review/SKILL.md) | Run a five-persona UX review on a URL, HTML file, screenshot, or Figma frame and get one scored report. | [ZIP](downloads/skills/ux-review.zip) |
 
-### Explain and hand off
+</details>
+
+<details>
+<summary><strong>Explain and hand off</strong> · 6 skills</summary>
 
 Explain decisions and hand work off: rationale, handoff specs, reports, decks, and writing. Plugin: `design-handoff` · [download zip](downloads/plugins/design-handoff.zip)
 
@@ -233,7 +181,10 @@ Explain decisions and hand work off: rationale, handoff specs, reports, decks, a
 | [`session-handoff`](plugins/design-skills/skills/session-handoff/SKILL.md) | Save the decisions and open questions so the next agent session can continue. | [ZIP](downloads/skills/session-handoff.zip) |
 | [`writing`](plugins/design-skills/skills/writing/SKILL.md) | Write long-form pieces such as articles, essays, and case-study write-ups, with every claim sourced. | [ZIP](downloads/skills/writing.zip) |
 
-### Run the design practice
+</details>
+
+<details>
+<summary><strong>Run the design practice</strong> · 14 skills</summary>
 
 Run the practice around the work: setup, memory, debt, scheduling, tickets, and team coaching. Plugin: `design-operate` · [download zip](downloads/plugins/design-operate.zip)
 
@@ -254,43 +205,27 @@ Run the practice around the work: setup, memory, debt, scheduling, tickets, and 
 | [`scheduling`](plugins/design-skills/skills/scheduling/SKILL.md) | Find a meeting slot and draft the invite with real context from the project. | [ZIP](downloads/skills/scheduling.zip) |
 | [`ticket-create`](plugins/design-skills/skills/ticket-create/SKILL.md) | On-demand Jira ticket drafting and creation. | [ZIP](downloads/skills/ticket-create.zip) |
 
-## Using the skills without the Harness
+</details>
 
-Some skills were written around Harness files: company context, a design-system
-folder, a project folder for findings and decisions. Every skill ships a short
-`references/standalone-mode.md` that tells the agent what to use instead when
-those files aren't in your project. Usually that means your own design system, a
-folder you pick for the work, or a few questions for you.
+## Use them on their own or with the Harness
 
-When you want the whole setup, with routing between skills, company context, and
-a prototype app, use the [Design Harness](https://github.com/marcopslopes/design-harness).
+These skills come from the [Design Harness](https://github.com/marcopslopes/design-harness),
+a complete design workspace with routing between skills, company context, and a
+prototype app. Each skill also works on its own: a short
+`references/standalone-mode.md` tells the agent what to use when the Harness files
+aren't there, usually your own design system, a folder you pick, or a few questions.
 
-## Feedback
+## Feedback and contributing
 
-This is an early release. Tell me what worked, what broke, and which workflow you
-wish existed.
+Design Skills is an early release. Feedback about what worked, what broke, and which
+workflow you wish existed helps improve it.
 
-- [Report an issue](https://github.com/marcopslopes/design-skills/issues) when a skill breaks, gives a weak result, or a workflow is missing.
-- [The Design Harness site](https://thedesignharness.com)
-
-## Contribute
-
-You can improve a skill or add a new one. The skills in this repo are
-generated from `harness/skills/` in the
-[Design Harness](https://github.com/marcopslopes/design-harness), so a pull
-request here would be overwritten by the next build. Open it in the Harness
-instead:
-
-1. Fork the [Design Harness](https://github.com/marcopslopes/design-harness).
-2. Edit the skill in `harness/skills/<skill>/SKILL.md`, or add a new skill folder.
-3. Open a pull request and say what design problem the change solves.
-
-The [contributing guide](https://github.com/marcopslopes/design-harness/blob/main/CONTRIBUTING.md)
-covers the skill format and what makes a good skill. Not sure your idea fits?
-[Open an issue](https://github.com/marcopslopes/design-skills/issues) first.
+- [Report an issue](https://github.com/marcopslopes/design-skills/issues) — a skill breaks, gives a weak result, or a workflow is missing.
+- [Contributing](CONTRIBUTING.md) — skills are generated from the Harness, so improvements go there as a pull request.
+- [The Design Harness site](https://thedesignharness.com) — guides and the full skill library.
 
 Created by **[Marco Paulo Lopes](https://github.com/marcopslopes)**. Version 0.1.0.
 
 ## License
 
-[MIT](LICENSE). Fork it, adapt it, share it.
+[MIT](LICENSE).
