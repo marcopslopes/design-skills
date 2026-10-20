@@ -184,7 +184,7 @@ parent** and **does not** create the page until you reply.
 **Counter-prompt (when you want to test opt-in):**
 
 ```
-@Cursor benchmark checkout against Fresha and Treatwell, then brief me.
+@Cursor benchmark checkout against Airbnb and Uber, then brief me.
 Use my Confluence personal space (default placement per agents.md).
 ```
 

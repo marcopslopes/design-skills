@@ -2,8 +2,8 @@
 name: competitor-scan
 description: >-
   Targeted reference pull on what one named competitor does for one
-  specific feature or flow. Triggers on: "what does Fresha do for
-  waitlist", "how does Vagaro handle referrals", "how does [competitor]
+  specific feature or flow. Triggers on: "what does Airbnb do for
+  waitlist", "how does Dropbox handle referrals", "how does [competitor]
   handle [flow]", "compare this to [named competitor]". Does NOT trigger
   on a vague "what's out there" sweep (see `benchmark` for scored
   comparison, or a plain `research-agent` sweep for open-ended discovery)
@@ -30,8 +30,8 @@ actual shipped pattern — nothing more.
 ## Scope boundary — read this before anything else
 
 - **Fires on:** a **named competitor** + a **specific feature/flow**. "What
-  does Fresha do for waitlist," "how does Vagaro handle referrals," "how
-  does Boulevard do deposits" — concrete, answerable, one competitor at a
+  does Airbnb do for waitlist," "how does Dropbox handle referrals," "how
+  does Stripe do deposits" — concrete, answerable, one competitor at a
   time.
 - **Does not fire on:** "what's out there for waitlist" or "show me some
   booking apps" with no named competitor — that vague-sweep shape belongs
@@ -42,7 +42,7 @@ actual shipped pattern — nothing more.
   that's `ui-agent`.
 - **Does not judge the company's own screens.** This skill never says "and here's
   how ours compares" — that comparison, with a rubric and scoring, is
-  `benchmark`'s job. If a request asks for both ("what does Fresha do for
+  `benchmark`'s job. If a request asks for both ("what does Airbnb do for
   waitlist, and how do we compare") — hand off: run this skill for the
   lookup half, then explicitly route the comparison half to `benchmark`
   rather than freelancing a verdict here.
@@ -121,7 +121,7 @@ there's nothing to apologize for or push someone toward.
    `projects/<slug>/sources.md`** (create from `projects/_template/sources.md`
    if missing) — Title / Kind=`Competitor` / Why it matters / Link /
    Indexed. **If there's no task folder in play** — a bare, standalone
-   "what does Fresha do for X" with no project context — answer in chat
+   "what does Airbnb do for X" with no project context — answer in chat
    only. This skill never creates a new `projects/<slug>/` folder on its
    own just to have somewhere to write; that's `design-kickoff`'s job, and
    a one-off lookup doesn't need one.

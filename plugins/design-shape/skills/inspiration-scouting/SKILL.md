@@ -32,7 +32,7 @@ for this checkout calm", "cross-domain references for trust"
 | **`competitor-scan`** | Factual pattern on one *named* competitor + one feature |
 | **`benchmark`** | Scored gap analysis of a company screen vs best-in-class |
 
-- **Does not fire on:** "how does Fresha handle tips" → `competitor-scan`.
+- **Does not fire on:** "how does Airbnb handle tips" → `competitor-scan`.
 - **Does not** override Foundations / `ds` tokens when later building.
 - **Composes with:** `taste-feedback` (mid-build checks against the chosen
   feel), `ui-agent` (build), `ux-pattern` decision/debate modes.
