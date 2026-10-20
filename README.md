@@ -36,18 +36,25 @@ drop into the agent you already use.
 
 ## Install
 
-Install all 69 skills, or one workflow. Each plugin is listed in [the catalog](#the-skills) below.
+The package comes as plugins: `design-skills` holds all 69 skills, and seven
+smaller plugins hold one workflow each (see [the catalog](#the-skills)). Install
+whichever you want, in the app you use.
 
-### Claude (claude.ai and Desktop)
-
-The chat app at [claude.ai](https://claude.ai) and the Claude desktop app. They cannot run the Claude Code marketplace command. Upload a zip instead.
+### Claude (claude.ai and the desktop app)
 
 1. Settings → Capabilities → turn on **Code execution and file creation**.
-2. Download one skill, for example [research-synthesis.zip](downloads/skills/research-synthesis.zip). Or download a whole workflow from [the catalog](#the-skills), unzip it, then upload each skill zip.
-3. Customize → Skills → **+** → Create skill → **Upload a skill**.
-4. Turn the skill on, then ask Claude to use it.
+2. Customize → Plugins → **Add** → **Add marketplace**, and enter `marcopslopes/design-skills`.
+3. Add **design-skills** for everything, or one workflow plugin.
 
-Every skill in the catalog has a **ZIP** link ready to upload. Free, Pro, Max, Team, and Enterprise plans can do this.
+The skills then work in chat, in Cowork, and in Claude Code signed in to the same account.
+No marketplace? Use **Add → Upload plugin** with [design-skills.zip](downloads/plugins/design-skills.zip) instead.
+
+### ChatGPT
+
+Skills in ChatGPT are available on Business, Enterprise, and Edu plans.
+
+- **Whole package (workspace admin):** Admin console → Plugins → **Add** → **Import marketplace**, and enter `https://github.com/marcopslopes/design-skills`. Or **Upload plugin** with [design-skills.zip](downloads/plugins/design-skills.zip). Then make the plugins available to your members.
+- **One skill (any member):** Plugins → Skills → **Create** → **Upload from your computer**, with a single-skill zip from [the catalog](#the-skills).
 
 ### Claude Code
 
@@ -58,7 +65,7 @@ Every skill in the catalog has a **ZIP** link ready to upload. Free, Pro, Max, T
 
 For one workflow, install its plugin instead, for example `/plugin install design-research@design-skills`.
 
-### Codex
+### Codex (CLI and the ChatGPT desktop app)
 
 ```bash
 codex plugin marketplace add marcopslopes/design-skills
@@ -96,9 +103,9 @@ Each skill tells you what it needs. Most work best with your product context nea
 
 ### Understand the problem
 
-Frame the problem before designing: assumptions, objects, decisions, strategy, and priorities. Claude Code: `design-understand@design-skills`. Claude (claude.ai): [download this workflow](downloads/claude/design-understand.zip), unzip, then upload each skill zip.
+Frame the problem before designing: assumptions, objects, decisions, strategy, and priorities. Plugin: `design-understand` · [download zip](downloads/plugins/design-understand.zip)
 
-| Skill | What it does | Claude |
+| Skill | What it does | Single skill |
 |---|---|---|
 | [`assumption-mapper`](plugins/design-skills/skills/assumption-mapper/SKILL.md) | Separate what the team knows from what it assumes before research or building begins. | [ZIP](downloads/skills/assumption-mapper.zip) |
 | [`conceptual-model`](plugins/design-skills/skills/conceptual-model/SKILL.md) | Define the product’s objects, relationships, states, and vocabulary before drawing screens. | [ZIP](downloads/skills/conceptual-model.zip) |
@@ -113,9 +120,9 @@ Frame the problem before designing: assumptions, objects, decisions, strategy, a
 
 ### Research and synthesize
 
-Plan, run, and synthesize research: screeners, test guides, synthesis, insights, and share-outs. Claude Code: `design-research@design-skills`. Claude (claude.ai): [download this workflow](downloads/claude/design-research.zip), unzip, then upload each skill zip.
+Plan, run, and synthesize research: screeners, test guides, synthesis, insights, and share-outs. Plugin: `design-research` · [download zip](downloads/plugins/design-research.zip)
 
-| Skill | What it does | Claude |
+| Skill | What it does | Single skill |
 |---|---|---|
 | [`benchmark`](plugins/design-skills/skills/benchmark/SKILL.md) | Score your own flow against best-in-class examples and name the gaps worth closing. | [ZIP](downloads/skills/benchmark.zip) |
 | [`competitor-scan`](plugins/design-skills/skills/competitor-scan/SKILL.md) | Find how one competitor handles a specific feature or flow. | [ZIP](downloads/skills/competitor-scan.zip) |
@@ -133,9 +140,9 @@ Plan, run, and synthesize research: screeners, test guides, synthesis, insights,
 
 ### Shape the experience
 
-Shape interaction, content, motion, accessibility, and responsive behaviour. Claude Code: `design-shape@design-skills`. Claude (claude.ai): [download this workflow](downloads/claude/design-shape.zip), unzip, then upload each skill zip.
+Shape interaction, content, motion, accessibility, and responsive behaviour. Plugin: `design-shape` · [download zip](downloads/plugins/design-shape.zip)
 
-| Skill | What it does | Claude |
+| Skill | What it does | Single skill |
 |---|---|---|
 | [`accessibility-decisions`](plugins/design-skills/skills/accessibility-decisions/SKILL.md) | Record accessibility decisions and trade-offs, with handoff criteria engineering can build to. | [ZIP](downloads/skills/accessibility-decisions.zip) |
 | [`adaptive-interfaces`](plugins/design-skills/skills/adaptive-interfaces/SKILL.md) | Spec how a screen responds to reduced motion, contrast, text size, and density preferences. | [ZIP](downloads/skills/adaptive-interfaces.zip) |
@@ -148,9 +155,9 @@ Shape interaction, content, motion, accessibility, and responsive behaviour. Cla
 
 ### Build and prototype
 
-Build screens on real design tokens and components, and keep Figma and code in sync. Claude Code: `design-build@design-skills`. Claude (claude.ai): [download this workflow](downloads/claude/design-build.zip), unzip, then upload each skill zip.
+Build screens on real design tokens and components, and keep Figma and code in sync. Plugin: `design-build` · [download zip](downloads/plugins/design-build.zip)
 
-| Skill | What it does | Claude |
+| Skill | What it does | Single skill |
 |---|---|---|
 | [`design-system`](plugins/design-skills/skills/design-system/SKILL.md) | Check whether a style value already exists as a token before anything is written. | [ZIP](downloads/skills/design-system.zip) |
 | [`figma-asset-sync`](plugins/design-skills/skills/figma-asset-sync/SKILL.md) | Download icons and images from Figma and package them for code. | [ZIP](downloads/skills/figma-asset-sync.zip) |
@@ -164,9 +171,9 @@ Build screens on real design tokens and components, and keep Figma and code in s
 
 ### Review and validate
 
-Critique and check work before sharing: UX patterns, accessibility, live pages, and audits. Claude Code: `design-review@design-skills`. Claude (claude.ai): [download this workflow](downloads/claude/design-review.zip), unzip, then upload each skill zip.
+Critique and check work before sharing: UX patterns, accessibility, live pages, and audits. Plugin: `design-review` · [download zip](downloads/plugins/design-review.zip)
 
-| Skill | What it does | Claude |
+| Skill | What it does | Single skill |
 |---|---|---|
 | [`accessibility`](plugins/design-skills/skills/accessibility/SKILL.md) | Check semantics, labels, contrast, keyboard access, and focus before sharing. | [ZIP](downloads/skills/accessibility.zip) |
 | [`audit`](plugins/design-skills/skills/audit/SKILL.md) | Check a prototype’s design system, accessibility, and copy before sharing. | [ZIP](downloads/skills/audit.zip) |
@@ -180,9 +187,9 @@ Critique and check work before sharing: UX patterns, accessibility, live pages, 
 
 ### Explain and hand off
 
-Explain decisions and hand work off: rationale, handoff specs, reports, decks, and writing. Claude Code: `design-handoff@design-skills`. Claude (claude.ai): [download this workflow](downloads/claude/design-handoff.zip), unzip, then upload each skill zip.
+Explain decisions and hand work off: rationale, handoff specs, reports, decks, and writing. Plugin: `design-handoff` · [download zip](downloads/plugins/design-handoff.zip)
 
-| Skill | What it does | Claude |
+| Skill | What it does | Single skill |
 |---|---|---|
 | [`deck-builder`](plugins/design-skills/skills/deck-builder/SKILL.md) | Turn finished findings into a presentation deck, using only evidence from the project. | [ZIP](downloads/skills/deck-builder.zip) |
 | [`design-handoff`](plugins/design-skills/skills/design-handoff/SKILL.md) | Capture layout, components, states, and edge cases in a draft engineering spec. | [ZIP](downloads/skills/design-handoff.zip) |
@@ -193,9 +200,9 @@ Explain decisions and hand work off: rationale, handoff specs, reports, decks, a
 
 ### Run the design practice
 
-Run the practice around the work: setup, memory, debt, scheduling, tickets, and team coaching. Claude Code: `design-operate@design-skills`. Claude (claude.ai): [download this workflow](downloads/claude/design-operate.zip), unzip, then upload each skill zip.
+Run the practice around the work: setup, memory, debt, scheduling, tickets, and team coaching. Plugin: `design-operate` · [download zip](downloads/plugins/design-operate.zip)
 
-| Skill | What it does | Claude |
+| Skill | What it does | Single skill |
 |---|---|---|
 | [`case-study`](plugins/design-skills/skills/case-study/SKILL.md) | Write a project case study from its brief, findings, and decisions, with every claim sourced. | [ZIP](downloads/skills/case-study.zip) |
 | [`confluence-brief`](plugins/design-skills/skills/confluence-brief/SKILL.md) | Draft a short status or decision brief as a Confluence page. | [ZIP](downloads/skills/confluence-brief.zip) |
