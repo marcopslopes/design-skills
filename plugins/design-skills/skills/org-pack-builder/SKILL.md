@@ -101,7 +101,7 @@ e. "Anything designers should never assume about your product?" → **§ What
 [Product] is not** + **§ Never do this**
 
 Write to `context/org-pack.local/COMPANY-BUSINESS.md` following the structure
-in `context/org-pack/COMPANY-BUSINESS.md` (Fernwell example) — same headers
+in `context/org-pack/COMPANY-BUSINESS.md` (Northline example) — same headers
 (**Prevents** / **Confidence** / sections), replace facts.
 
 **2. COMPANY-VOCABULARY.md** (NEW — Layer 2: domain mapping)
@@ -183,7 +183,7 @@ c. "Any specific writing rules? (e.g. sentence case, no exclamation marks)" →
 d. "Show me 2-3 examples of good vs. bad copy for your product." → **§
 Do/Don't examples**
 
-Write to `context/org-pack.local/COMPANY-VOICE.md` following Fernwell example
+Write to `context/org-pack.local/COMPANY-VOICE.md` following Northline example
 structure.
 
 **4. COMPANY-PATTERNS.md** (3 questions)
@@ -234,7 +234,7 @@ Write to `context/org-pack.local/COMPANY-SOURCES.md`.
 2. **Summary**: Show which files were created, which were skipped (already
    existed in update mode).
 3. **What's next**: "Your org-pack is ready. All harness skills will now use
-   your company context instead of the Fernwell example. You can edit these
+   your company context instead of the Northline example. You can edit these
    files anytime in `context/org-pack.local/`."
 
 ---
@@ -324,7 +324,7 @@ Run extraction in parallel via `scripts/extract-org-pack-from-mcps.mjs` (see
 **Step 3: Structure and write files**
 
 Parse extraction results and write to `context/org-pack.local/COMPANY-*.md`
-following the template structures from `context/org-pack/*.md` (Fernwell
+following the template structures from `context/org-pack/*.md` (Northline
 examples).
 
 **Confidence tagging**: Mark extracted content as `INFERRED` with source

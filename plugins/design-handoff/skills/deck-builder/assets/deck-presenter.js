@@ -1,4 +1,4 @@
-/* deck-presenter.js — Fernwell deck-builder presenter mode
+/* deck-presenter.js — Northline deck-builder presenter mode
  *
  * Opens same-origin /deck-builder/presenter.html (not about:blank + document.write).
  *
@@ -8,7 +8,7 @@
 (function () {
   'use strict';
 
-  var BOOT_KEY = 'fernwell-deck-presenter-boot';
+  var BOOT_KEY = 'northline-deck-presenter-boot';
   var PRESENTER_PATH = '/deck-builder/presenter.html';
 
   function ready(fn) {
@@ -74,7 +74,7 @@
       return;
     }
 
-    var CHANNEL = 'fernwell-deck-presenter-' + location.pathname;
+    var CHANNEL = 'northline-deck-presenter-' + location.pathname;
     var bc = null;
     try { bc = new BroadcastChannel(CHANNEL); } catch (e) {}
 
@@ -140,7 +140,7 @@
           presenterWin = null;
         }
       }
-      presenterWin = window.open(url, 'fernwell-deck-presenter', 'width=1280,height=820,menubar=no,toolbar=no');
+      presenterWin = window.open(url, 'northline-deck-presenter', 'width=1280,height=820,menubar=no,toolbar=no');
       if (!presenterWin) {
         alert('Allow pop-ups for this site, then press S again.');
         return;

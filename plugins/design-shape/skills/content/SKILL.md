@@ -46,7 +46,7 @@ don't support.
 
 Before writing a single word of copy, ask for the following if not already provided:
 
-1. **Screen name or location** — Where does this live in the app? (e.g. "Fernwell Holds setup flow, step 2")
+1. **Screen name or location** — Where does this live in the app? (e.g. "Northline Holds setup flow, step 2")
 2. **User audience** — Is this for a **provider** (provider app) or a **client** (client-facing app)? — resolve real product names from `COMPANY-BUSINESS.md` (org-pack)
 3. **Market / locale** — Which market(s) will see this? (e.g. US English, UK English, Poland, Spain) — this affects currency format, date format, terminology, and regulatory constraints
 4. **Job to be done** — What does the user need to do or understand on this screen? What's their goal, and what's the business goal?
@@ -179,8 +179,8 @@ wins — flag the conflict, don't silently override.
 ### Terminology
 Always check `references/vocabulary.md`. Key reminders:
 - "clients" not "customers" (for providers' end-users)
-- "appointment" preferred over "booking" for **client-facing** copy; **provider-facing** copy prefers "booking" instead — see `references/vocabulary.md` and `audit` Check 3
-- "business" not "salon"
+- "order" for what a trade customer places — see `references/vocabulary.md` and `audit` Check 3
+- "store" not "merchant"
 - Named features exactly as the vocabulary lists them (title case, full name on first use)
 - "Deposits" not "Prepayments"
 - "continue" not "next"

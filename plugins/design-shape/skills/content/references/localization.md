@@ -1,6 +1,6 @@
-# Fernwell Localization Guide – Reference (example pack)
+# Northline Localization Guide – Reference (example pack)
 
-**Confidence: EXAMPLE — Fernwell and its feature names are invented for this harness.**
+**Confidence: EXAMPLE — Northline and its feature names are invented for this harness.**
 If `context/org-pack.local/COMPANY-LOCALIZATION.md` exists, read that instead
 — it's your real, gitignored feature-name table (source sheet link, every
 locale). This file stays short and fictional so the repo ships public-safe.
@@ -22,7 +22,7 @@ Use when writing copy for non-English markets, or when flagging terms for your t
 
 | Feature | App | EN | ES | PT | FR |
 |---------|-----|----|----|----|----|
-| Fernwell Holds | Studio | Fernwell Holds ("Holds" when space-limited; never "no-show protection") | Fernwell Holds | Fernwell Holds | Fernwell Holds |
+| Northline Holds | Studio | Northline Holds ("Holds" when space-limited; never "no-show protection") | Northline Holds | Northline Holds | Northline Holds |
 | Deposits | Studio | Deposits (not "Prepayments") | Depósitos | Depósitos | Acomptes |
 | Broadcasts | Studio | Broadcasts (not "mass messages") | Difusiones | Transmissões | Diffusions |
 | Spotlight | Studio | Spotlight (never as a verb) | Spotlight | Spotlight | Spotlight |
@@ -49,7 +49,7 @@ Use when writing copy for non-English markets, or when flagging terms for your t
 
 ## Notes on markets
 
-**Brand names stay in English.** "Fernwell Holds" and "Spotlight" are never translated; descriptive features ("Deposits", "Rebook") are.
+**Brand names stay in English.** "Northline Holds" and "Spotlight" are never translated; descriptive features ("Deposits", "Rebook") are.
 
 **Regional variants:** if your product serves both Spain and Latin America (or France and Quebec), keep separate columns — terms often differ.
 

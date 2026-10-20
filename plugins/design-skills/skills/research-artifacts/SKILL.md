@@ -75,8 +75,8 @@ existing `COMPANY-ARCHETYPES.md` entry fits.
    ability into bio, goals, and frustrations — not a bolted-on
    "Challenges: blind" line. Prefer showing how AT and context shape
    what good/bad looks like. If there's no sourced permanent disability,
-   still note 1–2 **situational** the company contexts (chair-side one-handed,
-   glare in a salon, interrupted mid-booking) so the persona isn't
+   still note 1–2 **situational** the company contexts (behind a counter
+   one-handed, glare on a shop floor, interrupted mid-sale) so the persona isn't
    ability-blind by default. Label every ability claim
    Known / Believed / Assumed.
 4. Name the primary persona if there's more than one — the one the

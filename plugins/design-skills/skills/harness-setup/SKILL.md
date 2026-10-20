@@ -18,7 +18,7 @@ Guides the designer through customizing the harness with their existing design s
 **What it does:**
 - Asks about existing files (design tokens, brand docs, patterns, etc.)
 - Imports their files into the harness structure
-- Falls back to defaults (Fernwell/Design Harness kit) for missing files
+- Falls back to defaults (Northline/Design Harness kit) for missing files
 - Creates customized `org-pack.local/` folder
 - Verifies everything works
 - Shows what's using custom vs. default
@@ -84,7 +84,7 @@ Ask each question in sequence. For each "Yes", ask for file path and import. For
 5. Confirm: "✓ Imported your brand voice. Skills will now use YOUR voice."
 
 **If No:**
-1. Confirm: "✓ Using Fernwell example voice (friendly B2B SaaS)"
+1. Confirm: "✓ Using Northline example voice (friendly B2B SaaS)"
 2. Copy `context/org-pack/COMPANY-VOICE.md` as reference
 3. Note: "Skills will use the example voice. You can customize later."
 
@@ -107,7 +107,7 @@ Ask each question in sequence. For each "Yes", ask for file path and import. For
 5. Confirm: "✓ Imported your user personas. UX patterns will reference these."
 
 **If No:**
-1. Confirm: "✓ Using Fernwell example personas (Provider, Client, Admin)"
+1. Confirm: "✓ Using Northline example personas (Provider, Client, Admin)"
 2. Note: "Skills will use example personas for UX decisions."
 
 ---
@@ -151,7 +151,7 @@ Ask each question in sequence. For each "Yes", ask for file path and import. For
 5. Confirm: "✓ Imported your company context. Skills will understand your product."
 
 **If No:**
-1. Confirm: "✓ Using Fernwell example (appointment booking SaaS)"
+1. Confirm: "✓ Using Northline example (appointment booking SaaS)"
 2. Note: "Skills will use the example company context."
 
 ---
@@ -213,7 +213,7 @@ Setup Complete! Here's your configuration:
    Preview: http://localhost:3001/design-system
 
 📝 Brand Voice
-   ○ Using default (Fernwell example)
+   ○ Using default (Northline example)
    You can add yours by running /harness-setup again
 
 👥 User Personas
@@ -223,7 +223,7 @@ Setup Complete! Here's your configuration:
    ✓ Using YOUR patterns (imported from ~/path/to/patterns.md)
 
 🏢 Company Context
-   ○ Using default (Fernwell example)
+   ○ Using default (Northline example)
 
 📚 Vocabulary
    ○ Using default

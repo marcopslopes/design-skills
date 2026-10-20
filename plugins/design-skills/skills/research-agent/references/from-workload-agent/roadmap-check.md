@@ -55,7 +55,7 @@ product term the designer used): `AND text ~ "<keyword>"` on either
 level, project-scoped or dropped entirely to search across boards.
 
 - `<KEY>` = the JPD project key from the org pack's `COMPANY-SOURCES.md`
-  § Roadmap boards (Fernwell example: `CORE`, `PAY`, `CON`, `GROW`,
+  § Roadmap boards (Northline example: `CORE`, `PAY`, `CON`, `GROW`,
   `TECH`, `PROMO`, `OPS` — see `references/roadmap-boards.md`).
 - **Don't assume `Backlog`/`Done`/`Abandoned`/`Opportunity` apply
   everywhere** — `references/roadmap-boards.md` has a vocabulary table;

@@ -39,7 +39,7 @@ import { Icon } from '../../../context/design-system/ds' // adjust relative path
 
 ## Picking an icon
 
-1. Think of the semantic action/object (share, calendar, settings, scissors for a hair-salon service, coins for rewards, etc.) rather than trying to pixel-match a Figma icon exactly.
+1. Think of the semantic action/object (share, calendar, settings, a paint roller for a paint line, coins for rewards, etc.) rather than trying to pixel-match a Figma icon exactly.
 2. Search [tabler.io/icons](https://tabler.io/icons) for that word.
 3. Prefer the plain outline icon unless the design calls for a solid/filled glyph (e.g. a filled rating star → `IconStarFilled`).
 4. If genuinely nothing fits (rare), fall back to the closest conceptual match rather than hand-drawing — one consistent icon system everywhere beats pixel-perfect fidelity per icon.

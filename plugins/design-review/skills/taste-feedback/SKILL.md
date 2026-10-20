@@ -155,7 +155,7 @@ Light checks only — do not invent a second type scale or tracking values:
    mobile inputs (or scale with a documented recipe) — don't silently
    shrink fields below that floor.
 7. **Keep useful text selectable** — don't `user-select: none` on
-   application chrome just to hide highlights; suppress selection only
+   application chrome just to hide sale items; suppress selection only
    on a specific drag/gesture surface where it fights the interaction.
 8. **One filled primary per view** — when fill encodes the primary
    action, one control gets it; peer actions stay neutral. Don't invent

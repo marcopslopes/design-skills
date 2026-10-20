@@ -1,4 +1,4 @@
-# Fernwell Product Content Style Guide – Reference (example pack)
+# Northline Product Content Style Guide – Reference (example pack)
 
 **Confidence: EXAMPLE — fictional company pack shipped with the harness.**
 If `context/org-pack.local/COMPANY-STYLE-GUIDE.md` exists, read that
@@ -19,16 +19,16 @@ for tone-by-surface guidance that overlaps with this file's spirit.
 ### Core voice (both apps)
 Calm, specific, on your side.
 
-### Fernwell Studio (provider app)
+### Northline Studio (provider app)
 Goal: providers feel the app is a capable colleague that handles the admin.
 
-### Fernwell (client app)
+### Northline (client app)
 Goal: clients can book, move or pay in a few taps and trust what they see.
 
 ---
 
 ## Writing essentials
-- Write about the reader's job, not about Fernwell's features
+- Write about the reader's job, not about Northline's features
 - If cutting words makes something harder to understand, keep the words
 - Active voice by default; passive is fine to soften an error ("Your card wasn't charged")
 - Gender-neutral, no slang or idioms that won't travel

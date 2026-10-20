@@ -36,7 +36,7 @@ any app?"
 
 ### Tasks
 Task 1 — Goal: complete a booking within a price constraint /
-Scenario: "You want a haircut before a weekend trip. Find a stylist
+Scenario: "You want a paint mix before a weekend trip. Find an advisor
 available this Saturday who charges less than $60. Start from the home
 screen." / End state: booking confirmation screen / Metrics: task
 success, time on task, SEQ

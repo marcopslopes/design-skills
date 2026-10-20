@@ -142,7 +142,7 @@ Once built, every skill resolves org-pack files per `harness/ORCHESTRATOR.md`
 §0a:
 
 1. Check `context/org-pack.local/COMPANY-*.md` first (your real company)
-2. Fall back to `context/org-pack/COMPANY-*.md` (Fernwell example) if local
+2. Fall back to `context/org-pack/COMPANY-*.md` (Northline example) if local
    doesn't exist
 
 **Skills that depend on org-pack:**
@@ -155,7 +155,7 @@ Once built, every skill resolves org-pack files per `harness/ORCHESTRATOR.md`
 - `research-agent` — uses `COMPANY-ARCHETYPES.md` for user types
 - `workload-agent` — uses `COMPANY-SQUADS.md` for squad-scoped queries
 
-Without org-pack.local/, these skills use generic Fernwell examples — correct
+Without org-pack.local/, these skills use generic Northline examples — correct
 patterns, wrong facts.
 
 ---
@@ -279,7 +279,7 @@ Other files unchanged.
 - **Onboarding integration:** `harness/designer-onboarding/SKILL.md` § Org-pack
   setup
 - **Org-pack resolution:** `harness/ORCHESTRATOR.md` §0a
-- **Example org-pack:** `context/org-pack/` (Fernwell fictional company)
+- **Example org-pack:** `context/org-pack/` (Northline fictional company)
 - **Design methodology resources:** Product design frameworks and domain
   modeling approaches
 

@@ -20,7 +20,7 @@ Knockout logic: Q1 (no relevant booking in 3 months), Q4 (works in UX
 research or for a competitor)
 
 PARTICIPANT CRITERIA
-1. Has booked the same category of service (e.g. haircut, cleaning,
+1. Has booked the same category of service (e.g. paint mix, cleaning,
    fitness class) at least twice in the past 3 months
 2. Has NOT used a "repeat/recurring booking" feature on this or a
    competitor's app before

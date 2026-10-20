@@ -57,7 +57,7 @@ what follows*, without inventing facts that are not sourced below.
 Keep the whole blockquote **short**, for example:
 
 - **What this is** — one sentence: kickoff PRD scaffold from internal sources; blanks are intentional.
-- **In / out** — one clause if scope is clear (e.g. “US Nails onboarding only — not consumer HR onboarding”).
+- **In / out** — one clause if scope is clear (e.g. “US Screws onboarding only — not consumer HR onboarding”).
 - **File** — one italic line: e.g. *File:* Draft in **personal space** `~7120…`
   (agent default) — move under a team parent if needed. If the user overrode
   placement, say so (e.g. parent `4643487752`, space DT1).

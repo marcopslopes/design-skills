@@ -20,7 +20,7 @@
   var fallback = '/settings-ia-stakeholder-update.html';
   var target = fallback;
   try {
-    var boot = JSON.parse(localStorage.getItem('fernwell-deck-presenter-boot') || '');
+    var boot = JSON.parse(localStorage.getItem('northline-deck-presenter-boot') || '');
     if (boot && boot.deckUrl) target = boot.deckUrl;
   } catch (e) {}
   var a = document.getElementById('back');

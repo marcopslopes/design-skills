@@ -116,8 +116,8 @@ long sessions — beyond that both participant and researcher fatigue).
 own):
 - Weak: "Find a service provider you'd love to book." — no context, no
   constraints, no end state, relies on personal preference.
-- Strong: "You want to get a haircut before a weekend trip. Find a
-  stylist available this Saturday who charges less than $60. Start from
+- Strong: "You want to get a paint mix before a weekend trip. Find a
+  advisor available this Saturday who charges less than $60. Start from
   the home screen." — context + constraint (price, day) + starting point
   + reachable end state (booking confirmation screen).
 

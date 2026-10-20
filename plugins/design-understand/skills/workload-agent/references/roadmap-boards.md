@@ -19,7 +19,7 @@ JPD URLs still use Atlassian's internal product name:
 
 ---
 
-## Board list shape (example — Fernwell pack)
+## Board list shape (example — Northline pack)
 
 | Project | Key | Ideas view |
 |---|---|---|
@@ -33,14 +33,14 @@ JPD URLs still use Atlassian's internal product name:
 
 Record a **domain orientation** line next to the list (which boards are
 provider-side, consumer-side, mixed, or neither — e.g. engineering or
-internal ops). In the Fernwell example: `CORE` and `GROW` are
+internal ops). In the Northline example: `CORE` and `GROW` are
 provider-only, `PAY` is mixed, `CON` and `PROMO` are consumer-only, `TECH`
 and `OPS` are neither — don't include them when a request specifically
 means "provider teams."
 
 **Issue-type and status vocabulary is NOT uniform across boards —
 verify per-board, don't assume.** Example of what a live check found
-(Fernwell keys):
+(Northline keys):
 
 | Project | Issue types present | Status vocabulary |
 |---|---|---|

@@ -337,7 +337,7 @@ Flag any sentence that uses Title Case where Sentence case is expected. House st
 
 - `"Add Your Photos"` → flag
 - `"Add your photos"` → correct
-- `"Fernwell Holds"` → correct (product name)
+- `"Northline Holds"` → correct (product name)
 
 **Flag as:** `[COPY-CASE]`
 
